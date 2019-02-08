@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 declare var jQuery: any;
 declare var  $: any;
+
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   posi: Boolean = false;
   constructor() {   }
 
   ngOnInit() {
     (function($) {
-      const navbarCollapse = function() {
-      if ($('#mainNav').offset().top > 100) {
-        $('#mainNav').addClass('navbar-shrink');
+      var navbarCollapse = function() {
+      if ($("#mainNav").offset().top > 100) {
+        $("#mainNav").addClass("navbar-shrink");
       } else {
-        $('#mainNav').removeClass('navbar-shrink');
+        $("#mainNav").removeClass("navbar-shrink");
       }
       };
       // Collapse now if page is not at top
@@ -29,9 +30,9 @@ export class NavbarComponent implements OnInit {
 
   onClick( ) {
     (function($) {
-      // desplazamiento suave
+      //desplazamiento suave
       $(document).ready(function() {
-        $('a[href^="home#"]:not([href="home#"])').click(function() {
+        $('a[href^="#"]:not([href="#"])').click(function() {
           var destino = $(this.hash);
           if (destino.length == 0) {
             destino = $('a[name="' + this.hash.substr(1) + '"]');

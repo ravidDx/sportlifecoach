@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // rutas
-import { APP_ROUTING } from './app-routing.module';
+import { APP_ROUTING } from './app.routes';
 // servicios
 // componentes
 import { AppComponent } from './app.component';
@@ -12,6 +12,8 @@ import { AboutComponent } from './componentes/about/about.component';
 import { ServiciosComponent } from './componentes/servicios/servicios.component';
 import { CompromisoComponent } from './componentes/compromiso/compromiso.component';
 import { ContactoComponent } from './componentes/contacto/contacto.component';
+import { LoginComponent } from './componentes/login/login.component';
+import { HomeComponent } from './componentes/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,9 @@ import { ContactoComponent } from './componentes/contacto/contacto.component';
     AboutComponent,
     ServiciosComponent,
     CompromisoComponent,
-    ContactoComponent
+    ContactoComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

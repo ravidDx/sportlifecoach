@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {NavbarComponent} from './componentes/navbar/navbar.component';
 declare var jQuery:any;
 declare var  $:any;
 @Component({
@@ -8,10 +9,10 @@ declare var  $:any;
 })
 export class AppComponent {
   title = 'fit';
+  tu = true;
 
   constructor() {
     (function($) {
-      
       // Scroll to top button appear
         $(document).scroll(function() {
           var scrollDistance = $(this).scrollTop();
@@ -23,7 +24,5 @@ export class AppComponent {
         });
     })(jQuery);
   }
-
- 
 
 }
