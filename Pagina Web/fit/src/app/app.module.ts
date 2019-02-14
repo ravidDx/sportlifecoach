@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import {FlxUiDatatableModule,FlxUiDataTable} from 'flx-ui-datatable';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 
 //firebase
 import {environment} from '../environments/environment';
@@ -13,7 +15,11 @@ import {AngularFireAuth} from '@angular/fire/auth';
 
 // rutas
 import { APP_ROUTING } from './app.routes';
+
+
 // servicios
+
+
 // componentes
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
@@ -32,8 +38,6 @@ import { AthletesComponent } from './componentes/admin/athletes/athletes.compone
 import { ExercisesComponent } from './componentes/admin/exercises/exercises.component';
 import { FeedingComponent } from './componentes/admin/feeding/feeding.component';
 import { SidebarComponent } from './componentes/admin/sidebar/sidebar.component';
-
-
 
 
 
@@ -61,6 +65,9 @@ import { SidebarComponent } from './componentes/admin/sidebar/sidebar.component'
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgbModule,
+    NgbPaginationModule, 
+    NgbAlertModule,
     FlxUiDatatableModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
