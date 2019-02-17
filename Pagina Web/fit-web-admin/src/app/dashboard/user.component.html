@@ -1,0 +1,63 @@
+<form class="panel panel-defaultform-horizontal animated fadeInRight" novalidate #form="ngForm" (ngSubmit)="update(form)">
+  <div class="panel-heading bg-primary"><span> Personal information</span></div>
+  <div class="panel-body">
+    <fieldset>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Personal website:</label>
+        <div class="col-sm-10">
+          <a href="{{personUrl}}" target="_blank">{{personUrl}}</a>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Login Email:</label>
+        <div class="col-sm-10">
+          <label>{{email}}</label>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Avatar *</label>
+        <div class="col-sm-10">
+          <label for="file-upload-avatar-poster" class="custom-file-upload bg-purple-light">
+            <i class="fa fa-folder-open"></i> Choose File
+          </label>
+          <input id="file-upload-avatar-poster" type="file" ng2FileSelect [uploader]="avatarUploader"/>
+          <label class="custom-file-upload bg-success-light" (click)="avatarUploader.uploadAll();avatarUploading=true"
+                 *ngIf="avatarUploader.queue.length && !avatarUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+          </label>
+          <label class="custom-file-upload bg-pink-light" *ngIf="avatarUploading">
+            <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+          </label>
+          <div class="row" *ngIf="info.avatarUrl">
+            <div class="col-sm-2">
+              <div class="media">
+                <img src="{{info.avatarUrl}}?x-oss-process=style/w-100"
+                     class="img-responsive img-thumbnail animated zoomIn">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Note *</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" name="note" [(ngModel)]="info.note" required></textarea>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="panel-footer">
+    <button [disabled]="!form.valid|| !info.avatarUrl" type="submit" class="btn btn-primary">
+      Update
+    </button>
+    <label class="btn btn-success btn-flat" *ngIf="updateSuccess">Update successfully</label>
+  </div>
+</form>

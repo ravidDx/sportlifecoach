@@ -1,0 +1,199 @@
+<!--{{model}}-->
+<!--{{getModels()|json}}-->
+<div class="row op animated fadeInRight">
+  <div class="col-sm-4">
+    <span>page size:&nbsp;&nbsp;</span>
+    <select class="form-control pagesize" [value]="limit"
+            (change)="changePageSize($event.target.value)"
+    >
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+  </div>
+  <div class="col-sm-6">
+    <span>Search:&nbsp;&nbsp;</span>
+
+    <input type="text" class="form-control search" [(ngModel)]="filter" placeholder="{{searchPlaceHolder}}">
+  </div>
+  <div class="col-sm-2">
+    <button type="button" class="btn btn-success" routerLink="/dashboard/{{model}}/create">
+      <i class="fa fa-plus"></i> Create</button>
+  </div>
+</div>
+<div class="panel panel-default animated fadeInRight">
+  <div [ngSwitch]="model">
+    <div *ngSwitchCase="'photo'">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Poster</th>
+            <th>Album</th>
+            <th>Picture Amount</th>
+            <th>CreatedAt</th>
+            <th>Note</th>
+            <th>Operation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of getModels() | filterModel:model:filter">
+            <td>
+              <div class="media">
+                <img src="{{item.posterUrl}}?x-oss-process=style/w-100" alt="Image" class="img-responsive img-circle">
+              </div>
+            </td>
+            <td>{{item.album}}</td>
+            <td>{{item.pictures.length}}</td>
+            <td>{{item.createdAt| date: 'yyyy-MM-dd'}}</td>
+            <td>
+              {{ item.note | truncate:20 }}
+            </td>
+            <td>
+          <span class="op-col">
+            <a class="text-warning" [routerLink]="['/dashboard/photo/edit', item._id]" title="Edit"><i class="fa fa-edit"></i></a>
+            <a class="text-danger" (click)="deleteModel(item._id)" title="Delete"><i class="fa fa-trash-o"></i></a>
+            <a class="text-info" title="preview" href="{{'https://tsq.me/photo/' + item._id}}" target="_blank"><i class="fa fa-eye"></i></a>
+          </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    
+    <div *ngSwitchCase="'music'">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Poster</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>CreatedAt</th>
+            <th>Note</th>
+            <th>Operation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of getModels() | filterModel:model:filter">
+            <td>
+              <div class="media">
+                <img src="{{item.posterUrl}}?x-oss-process=style/w-100" alt="Image" class="img-responsive img-circle">
+              </div>
+            </td>
+            <td>{{item.name}}</td>
+            <td>{{item.author}}</td>
+            <td>{{item.createdAt| date: 'yyyy-MM-dd'}}</td>
+            <td>
+              {{ item.note | truncate:20 }}
+            </td>
+            <td>
+          <span class="op-col">
+            <a class="text-warning" [routerLink]="['/dashboard/music/edit', item._id]" title="Edit"><i class="fa fa-edit"></i></a>
+            <a class="text-danger" (click)="deleteModel(item._id)" title="Delete"><i class="fa fa-trash-o"></i></a>
+          </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    
+    <div *ngSwitchCase="'video'">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Poster</th>
+            <th>Name</th>
+            <th>CreatedAt</th>
+            <th>Note</th>
+            <th>Operation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of getModels() | filterModel:model:filter">
+            <td>
+              <div class="media">
+                <img src="{{item.posterUrl}}?x-oss-process=style/w-100" alt="Image" class="img-responsive img-circle">
+              </div>
+            </td>
+            <td>{{item.name}}</td>
+            <td>{{item.createdAt| date: 'yyyy-MM-dd'}}</td>
+            <td>
+              {{ item.note | truncate:20 }}
+            </td>
+            <td>
+          <span class="op-col">
+            <a class="text-warning" [routerLink]="['/dashboard/video/edit', item._id]" title="Edit"><i class="fa fa-edit"></i></a>
+            <a class="text-danger" (click)="deleteModel(item._id)" title="Delete"><i class="fa fa-trash-o"></i></a>
+           <a class="text-info" title="preview" href="{{'https://tsq.me/video/' + item._id}}" target="_blank"><i class="fa fa-eye"></i></a>
+          </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    
+    <div *ngSwitchCase="'story'">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Poster</th>
+            <th>Title</th>
+            <th>CreatedAt</th>
+            <th>Content</th>
+            <th>Operation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of getModels() | filterModel:model:filter">
+            <td>
+              <div class="media">
+                <img src="{{item.posterUrl}}?x-oss-process=style/w-100" alt="Image" class="img-responsive img-circle">
+              </div>
+            </td>
+            <td>{{item.title}}</td>
+            <td>{{item.createdAt| date: 'yyyy-MM-dd'}}</td>
+            <td>
+              {{ item.content | truncate:20 }}
+            </td>
+            <td>
+          <span class="op-col">
+            <a class="text-warning" [routerLink]="['/dashboard/story/edit', item._id]" title="Edit"><i class="fa fa-edit"></i></a>
+            <a class="text-danger" (click)="deleteModel(item._id)" title="Delete"><i class="fa fa-trash-o"></i></a>
+            <a class="text-info" title="preview" href="{{'https://tsq.me/story/' + item._id}}" target="_blank"><i class="fa fa-eye"></i></a>
+
+          </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-footer">
+    <pagination
+        [boundaryLinks]="true"
+        [totalItems]="getAmount()"
+        [itemsPerPage]="limit"
+        (pageChanged)="pageChanged($event)"
+        [(ngModel)]="currentPage"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;"
+        class="pagination-sm"
+    >
+    </pagination>
+    <p class="text-muted">Total: {{getAmount()}}</p>
+  </div>
+</div>

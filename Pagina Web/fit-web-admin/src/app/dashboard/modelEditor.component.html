@@ -1,0 +1,351 @@
+<!--{{currentObject|json}}-->
+<form class="panel panel-defaultform-horizontal animated fadeInRight" novalidate #form="ngForm" (ngSubmit)="save(form)">
+  <div class="panel-heading bg-primary" [class.bg-warning]="editing"><span>{{editing ? 'Edit' : 'Create'}} {{model}}</span></div>
+
+  <div [ngSwitch]="model">
+    <div *ngSwitchCase="'photo'">
+      <div class="panel-body">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Album *</label>
+            <div class="col-sm-10">
+              <input type="text" name="album" [(ngModel)]="photo.album" required class="form-control">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Poster *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-photo-poster" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-photo-poster" type="file" ng2FileSelect [uploader]="photoPosterUploader" />
+              <label class="custom-file-upload bg-success-light" (click)="photoPosterUploader.uploadAll();photoPosterUploading=true" *ngIf="photoPosterUploader.queue.length && !photoPosterUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="photoPosterUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div class="row" *ngIf="photo.posterUrl">
+                <div class="col-sm-2">
+                  <div class="media">
+                    <div class="img-wrapper">
+                      <img src="{{photo.posterUrl}}?x-oss-process=style/w-100" class="img-responsive img-thumbnail animated zoomIn">
+                      <i class="fa fa-trash text-danger" (click)="deletePoster(photo.posterUrl)" title="delete"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Pictures *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-photo-pictures" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-photo-pictures" type="file" ng2FileSelect [uploader]="photoPicturesUploader" multiple  />
+              <label class="custom-file-upload bg-success-light" (click)="photoPicturesUploader.uploadAll();photoPicturesUploading=true" *ngIf="photoPicturesUploader.queue.length && !photoPicturesUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="photoPicturesUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div *ngIf="photo.pictures">
+                <div class="row" *ngFor="let item of photo.pictures; let i = index">
+                  <div class="col-sm-2">
+                    <div class="media">
+                      <div class="img-wrapper">
+                        <img src="{{item.downloadUrl}}?x-oss-process=style/w-100" class="img-responsive img-thumbnail animated zoomIn">
+                        <i class="fa fa-trash text-danger" (click)="deletePictures(item.downloadUrl)" title="delete"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" name="title-{{i}}" [(ngModel)]="item.title" placeholder="Enter description">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Note *</label>
+            <div class="col-sm-10">
+              <!--<input type="te" name="album" [(ngModel)]="photo.album" required>-->
+              <textarea class="form-control" name="note" [(ngModel)]="photo.note" required></textarea>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer">
+        <button [disabled]="!form.valid || !photo.posterUrl || (!photo.pictures) || (!photo.pictures.length)" type="submit" class="btn btn-primary"
+                [class.btn-warning]="editing">
+          {{editing ? 'Save' : 'Create'}}
+        </button>
+        <button type="reset" class="btn btn-danger" routerLink="/dashboard/photo">Cancel</button>
+      </div>
+    </div>
+
+
+
+    <div *ngSwitchCase="'music'">
+      <div class="panel-body">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name *</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" [(ngModel)]="music.name" required class="form-control">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Author *</label>
+            <div class="col-sm-10">
+              <input type="text" name="author" [(ngModel)]="music.author" required class="form-control">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Album *</label>
+            <div class="col-sm-10">
+              <input type="text" name="album" [(ngModel)]="music.album" required class="form-control">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Poster *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-music-poster" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-music-poster" type="file" ng2FileSelect [uploader]="musicPosterUploader" />
+              <label class="custom-file-upload bg-success-light" (click)="musicPosterUploader.uploadAll();musicPosterUploading=true" *ngIf="musicPosterUploader.queue.length && !musicPosterUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="musicPosterUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div class="row" *ngIf="music.posterUrl">
+                <div class="col-sm-2">
+                  <div class="media">
+                    <div class="img-wrapper">
+                      <img src="{{music.posterUrl}}?x-oss-process=style/w-100" class="img-responsive img-thumbnail animated zoomIn">
+                      <i class="fa fa-trash text-danger" (click)="deletePoster(music.posterUrl)" title="delete"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">File *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-music-downloadurl" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-music-downloadurl" type="file" ng2FileSelect [uploader]="musicDownloadUrlUploader" />
+              <label class="custom-file-upload bg-success-light" (click)="musicDownloadUrlUploader.uploadAll();musicDownloadUrlUploading=true" *ngIf="musicDownloadUrlUploader.queue.length && !musicDownloadUrlUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="musicDownloadUrlUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div class="row" *ngIf="music.downLoadUrl">
+                <div class="img-wrapper m-lg p-lg">
+                  <audio controls src="{{music.downLoadUrl}}" class="img-responsive img-thumbnail animated zoomIn"></audio>
+                  <i class="fa fa-trash text-danger" (click)="deletePoster(music.downLoadUrl)" title="delete"></i>
+                </div>
+                <div class="m-lg p-lg text-ellipsis"><a target="_blank" href="{{music.downLoadUrl}}">{{music.downLoadUrl}}</a></div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Note *</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" name="note" [(ngModel)]="music.note" required></textarea>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer">
+        <button [disabled]="!form.valid || !music.posterUrl || (!music.downLoadUrl)" type="submit" class="btn btn-primary"
+                [class.btn-warning]="editing">
+          {{editing ? 'Save' : 'Create'}}
+        </button>
+        <button type="reset" class="btn btn-danger" routerLink="/dashboard/music">Cancel</button>
+      </div>
+    </div>
+
+
+
+    <div *ngSwitchCase="'video'">
+      <div class="panel-body">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name *</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" [(ngModel)]="video.name" required class="form-control">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Poster *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-video-poster" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-video-poster" type="file" ng2FileSelect [uploader]="videoPosterUploader" />
+              <label class="custom-file-upload bg-success-light" (click)="videoPosterUploader.uploadAll();videoPosterUploading=true" *ngIf="videoPosterUploader.queue.length && !videoPosterUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="videoPosterUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div class="row" *ngIf="video.posterUrl">
+                <div class="col-sm-2">
+                  <div class="media">
+                    <div class="img-wrapper">
+                      <img src="{{video.posterUrl}}?x-oss-process=style/w-100" class="img-responsive img-thumbnail animated zoomIn">
+                      <i class="fa fa-trash text-danger" (click)="deletePoster(video.posterUrl)" title="delete"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">File *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-video-downloadurl" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-video-downloadurl" type="file" ng2FileSelect [uploader]="videoDownloadUrlUploader" />
+              <label class="custom-file-upload bg-success-light" (click)="videoDownloadUrlUploader.uploadAll();videoDownloadUrlUploading=true" *ngIf="videoDownloadUrlUploader.queue.length && !videoDownloadUrlUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="videoDownloadUrlUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div class="row" *ngIf="video.downLoadUrl">
+                <div class="img-wrapper m-lg p-lg">
+                  <video controls src="{{video.downLoadUrl}}" class="img-responsive img-thumbnail animated zoomIn"></video>
+                  <i class="fa fa-trash text-danger" (click)="deletePoster(video.downLoadUrl)" title="delete"></i>
+                </div>
+                <div class="m-lg p-lg text-ellipsis"><a target="_blank" href="{{video.downLoadUrl}}">{{video.downLoadUrl}}</a></div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Note *</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" name="note" [(ngModel)]="video.note" required></textarea>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer">
+        <button [disabled]="!form.valid || !video.posterUrl || (!video.downLoadUrl)" type="submit" class="btn btn-primary"
+                [class.btn-warning]="editing">
+          {{editing ? 'Save' : 'Create'}}
+        </button>
+        <button type="reset" class="btn btn-danger" routerLink="/dashboard/video">Cancel</button>
+      </div>
+    </div>
+
+
+
+    <div *ngSwitchCase="'story'">
+      <div class="panel-body">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Title *</label>
+            <div class="col-sm-10">
+              <input type="text" name="title" [(ngModel)]="story.title" required class="form-control">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Poster *</label>
+            <div class="col-sm-10">
+              <label for="file-upload-story-poster" class="custom-file-upload bg-purple-light">
+                <i class="fa fa-folder-open"></i> Choose File
+              </label>
+              <input id="file-upload-story-poster" type="file" ng2FileSelect [uploader]="storyPosterUploader" />
+              <label class="custom-file-upload bg-success-light" (click)="storyPosterUploader.uploadAll();storyPosterUploading=true" *ngIf="storyPosterUploader.queue.length && !storyPosterUploading">
+             <span>
+               <i class="fa fa-cloud-upload"></i> Click Upload
+             </span>
+              </label>
+              <label class="custom-file-upload bg-pink-light" *ngIf="storyPosterUploading">
+                <span><i class="fa fa-spinner fa-pulse fa-fw"></i> Uploading</span>
+              </label>
+              <div class="row" *ngIf="story.posterUrl">
+                <div class="col-sm-2">
+                  <div class="media">
+                    <div class="img-wrapper">
+                      <img src="{{story.posterUrl}}?x-oss-process=style/w-100" class="img-responsive img-thumbnail animated zoomIn">
+                      <i class="fa fa-trash text-danger" (click)="deletePoster(story.posterUrl)" title="delete"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Content *</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" name="content" [(ngModel)]="story.content" required></textarea>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer">
+        <button [disabled]="!form.valid || !story.posterUrl" type="submit" class="btn btn-primary"
+                [class.btn-warning]="editing">
+          {{editing ? 'Save' : 'Create'}}
+        </button>
+        <button type="reset" class="btn btn-danger" routerLink="/dashboard/story">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>
