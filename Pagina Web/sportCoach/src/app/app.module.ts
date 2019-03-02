@@ -5,6 +5,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
+//Restfull
+import {HttpClientModule} from '@angular/common/http';
 
 //firebase
 import {environment} from '../environments/environment';
@@ -15,6 +17,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 
 //Services
 import {AuthService} from './services/auth.service';
+import {DeportistaService} from './services/deportista.service';
 
 
 
@@ -66,9 +69,10 @@ import { SingleComponent } from './pages/single/single.component';
     MDBBootstrapModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
+    HttpClientModule,
     /*AngularFullpageModule*/
   ],
-  providers: [AngularFireAuth, AuthService],
+  providers: [AngularFireAuth, AuthService, DeportistaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
