@@ -1,6 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
+import {AuthGuard} from './guards/auth.guard';
+
+
 //one page component
 import { ContentComponent } from './pages/content/content.component';
 import { SingleComponent } from './pages/single/single.component';
@@ -20,10 +23,12 @@ import { DietaComponent }       	  from './admin/dieta/dieta.component';
 import { PromocionesComponent }       from './admin/promociones/promociones.component';
 
 
+
+
 const app_routes:Routes = [
 	{path:"", 						component:SingleComponent,},
 	{path: 'signin',           		component: SigninComponent},
-	{ path: 'dashboard',        	component: DashboardComponent, children: [
+	{ path: 'dashboard',        	component: DashboardComponent, canActivate:[AuthGuard], children: [
         { path: 'home',       		component: HomeComponent},
         { path: 'deportistas',      component: DeportistasComponent},
         { path: 'ejercicios',      component: EjerciciosComponent},
@@ -34,8 +39,6 @@ const app_routes:Routes = [
 	{path:"**", pathMatch:"full", redirectTo:""},
 
 ];
-
-
 
 
 

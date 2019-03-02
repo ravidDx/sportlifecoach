@@ -6,10 +6,22 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
+//firebase
+import {environment} from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {AngularFireAuth} from '@angular/fire/auth';
+
+
+//Services
+import {AuthService} from './services/auth.service';
+
+
 
 /*Rutas*/
 import {AppRoutingModule} from './app-routing.module';
-//import { AngularFullpageModule } from '@fullpage/angular-fullpage';
+
+
 
 /*Componenetes*/
 import { AppComponent } from './app.component';
@@ -51,10 +63,12 @@ import { SingleComponent } from './pages/single/single.component';
     AppRoutingModule,
     FormsModule,
     NgbModule,NgbPaginationModule, NgbAlertModule,
-        MDBBootstrapModule.forRoot(),
+    MDBBootstrapModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     /*AngularFullpageModule*/
   ],
-  providers: [],
+  providers: [AngularFireAuth, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

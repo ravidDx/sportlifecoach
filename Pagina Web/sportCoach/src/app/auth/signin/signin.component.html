@@ -1,16 +1,18 @@
 <div class="is-auth">
-  <form novalidate #signinForm="ngForm" (ngSubmit)="signin(signinForm)">
+
+  <form novalidate #formLogin="ngForm" (ngSubmit)="onLogin()" >
+
     <div class="form-heading">
       <h1>TSQ ADMIN</h1>
     </div>
-    <div class="form-body">
 
+    <div class="form-body">
       <div class="form-group has-feedback">
-        <input  name="email" required type="email" placeholder="Enter email" class="form-control form-control-lg">
+        <input  class="form-control form-control-lg" name="email" required type="email" placeholder="Enter email" [(ngModel)]="email" >
         <span class="fa fa-envelope form-control-feedback text-muted"></span>
       </div>
       <div class="form-group has-feedback">
-        <input  name="password" required type="password" placeholder="Password" class="form-control form-control-lg">
+        <input  class="form-control form-control-lg" name="password" required type="password" placeholder="Password" [(ngModel)]="password" c>
         <span class="fa fa-lock form-control-feedback text-muted"></span>
       </div>
       <div class="clearfix mt-lg">
@@ -25,8 +27,9 @@
       <button type="submit" class="btn btn-block btn-primary btn-lg mt-lg">
         Login 
       </button>
-
-
     </div>
+
   </form>
+
 </div>
+
