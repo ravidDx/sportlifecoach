@@ -29,9 +29,9 @@
             ],
             "scripts": [
               /*"node_modules/fullpage.js/vendors/scrolloverflow.min.js"*/
-               //"node_modules/jquery/dist/jquery.js",
+              // "node_modules/jquery/dist/jquery.js",
               //"node_modules/bootstrap/dist/js/bootstrap.js"
-              "node_modules/datatables.net/js/jquery.dataTables.js",
+             "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/datatables.net-responsive/js/dataTables.responsive.min.js",
             ]
           },

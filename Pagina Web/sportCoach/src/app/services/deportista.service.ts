@@ -20,6 +20,10 @@ export class DeportistaService {
     return this._http.post<Deportista>(this.deportistaUrl,nuevo);
   }
 
+  consultarDesportistas():Observable<Deportista[]>{
+  	return this._http.get<Deportista[]>(this.deportistaUrl);
+  }
+
 
 }
 

@@ -11,6 +11,8 @@
 <br>
 
 <!-- DATA TABLE -->
+
+<!--
 <div class="panel panel-default animated fadeInRight">
   <table  #dataTable id="data" class="table table-hover display responsive nowrap" style="width:100%">
             <thead class="thead-dark">
@@ -24,35 +26,82 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo@mdo.com</td>
-                <td>0998088058</td>
+              <tr *ngFor="let deportista of deportistas; let i=index ">
+                <th scope="row">{{i+1}}</th>
+                <td>{{deportista.nombre}}</td>
+                <td>{{deportista.apellido}}</td>
+                <td>{{deportista.email}}</td>
+                <td>{{deportista.telefono}}</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-user"></i></button>  
                   <button type="button" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></button>  
                   <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></button>     
                 </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>0998088058</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-user"></i></button>  
-                  <button type="button" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></button>  
-                  <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></button>     
-                </td>
-              </tr>        
+              </tr>      
             </tbody>
   </table>
 
 </div>
+-->
+<!--
+<div class="panel panel-default animated fadeInRight">
+  <table   id="data" class="table table-hover display responsive nowrap" style="width:100%">
+            <thead class="thead-dark">
+              <tr>
+      
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Teléfono</th>
+  
+              </tr>
+            </thead>
+ 
+  </table>
 
+</div>
+-->
+
+<!--
+<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+            </tr>
+        </tfoot>
+    </table>
+-->
+
+
+
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+<thead>
+  <tr>
+    <th>ID</th>
+    <th>First name</th>
+    <th>Last name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let person of deportistas">
+    <td>{{ person.id }}</td>
+    <td>{{ person.nombre }}</td>
+    <td>{{ person.apellido }}</td>
+  </tr>
+</tbody>
+</table>
 
 <!-- FORMULARIO MODAL -->
 <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

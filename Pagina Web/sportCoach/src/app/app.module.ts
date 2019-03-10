@@ -1,9 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule,NO_ERRORS_SCHEMA  } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule }                from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+import { DataTablesModule } from 'angular-datatables';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 //Restfull
 import {HttpClientModule} from '@angular/common/http';
@@ -70,6 +75,9 @@ import { SingleComponent } from './pages/single/single.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     HttpClientModule,
+    NgxDatatableModule,
+    DataTablesModule,
+    
     /*AngularFullpageModule*/
   ],
   providers: [AngularFireAuth, AuthService, DeportistaService],
