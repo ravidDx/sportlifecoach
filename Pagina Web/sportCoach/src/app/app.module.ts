@@ -47,6 +47,7 @@ import { EjerciciosComponent } from './admin/ejercicios/ejercicios.component';
 import { PromocionesComponent } from './admin/promociones/promociones.component';
 import { DietaComponent } from './admin/dieta/dieta.component';
 import { SingleComponent } from './pages/single/single.component';
+import { PerfilDeportistaComponent } from './admin/perfil-deportista/perfil-deportista.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { SingleComponent } from './pages/single/single.component';
     PromocionesComponent,
     DietaComponent,
     SingleComponent,
+    PerfilDeportistaComponent,
   ],
   imports: [
     BrowserModule,

@@ -21,6 +21,7 @@ import { DeportistasComponent }       from './admin/deportistas/deportistas.comp
 import { EjerciciosComponent }        from './admin/ejercicios/ejercicios.component';
 import { DietaComponent }       	  from './admin/dieta/dieta.component';
 import { PromocionesComponent }       from './admin/promociones/promociones.component';
+import { PerfilDeportistaComponent }       from './admin/perfil-deportista/perfil-deportista.component';
 
 
 
@@ -30,10 +31,11 @@ const app_routes:Routes = [
 	{path: 'signin',           		component: SigninComponent},
 	{ path: 'dashboard',        	component: DashboardComponent, canActivate:[AuthGuard], children: [
         { path: 'home',       		component: HomeComponent},
-        { path: 'deportistas',      component: DeportistasComponent},
-        { path: 'ejercicios',      component: EjerciciosComponent},
+		{ path: 'deportistas',      component: DeportistasComponent},
+        { path: 'ejercicios',       component: EjerciciosComponent},
         { path: 'dieta',      		component: DietaComponent},
-        { path: 'promociones',      component: PromocionesComponent},
+		{ path: 'promociones',      component: PromocionesComponent},
+		{ path: 'perfil/:id',       component: PerfilDeportistaComponent},
         { path: '**',           redirectTo: 'home'},
     ]},
 	{path:"**", pathMatch:"full", redirectTo:""},
