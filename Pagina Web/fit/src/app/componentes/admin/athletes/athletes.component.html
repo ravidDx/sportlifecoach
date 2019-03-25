@@ -10,6 +10,7 @@
 
     <div id="content-athletes">
 
+
       <table  #dataTable id="data" class="table table-hover display responsive nowrap" style="width:100%">
             <thead class="thead-dark">
               <tr>
@@ -22,33 +23,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo@mdo.com</td>
-                <td>0998088058</td>
+              <tr *ngFor="let deportista of deportistas; let i=index ">
+                <th scope="row">{{i+1}}</th>
+                <td>{{deportista.nombre}}</td>
+                <td>{{deportista.apellido}}</td>
+                <td>{{deportista.email}}</td>
+                <td>{{deportista.telefono}}</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-user"></i></button>  
                   <button type="button" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></button>  
                   <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></button>     
                 </td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>0998088058</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-user"></i></button>  
-                  <button type="button" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></button>  
-                  <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></button>     
-                </td>
-              </tr>
-           
-
-
+     
             </tbody>
       </table>
   

@@ -1,0 +1,21 @@
+.welcome-first, .welcome-title{
+	color: white
+}
+
+.section-1, .section-2 , .section-3, .section-4, .section-5,.section-6{
+	color: white
+}
+
+
+#about-01{
+ padding-top: 38px;
+
+}
+
+#btn-submit{
+	border-radius: 10px;
+}
+
+.btn {
+  color: #222;
+}
