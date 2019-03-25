@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <!--<a><ion-icon routerLink="/tabs/home" slot ="start" name="arrow-back"></ion-icon></a>-->
+    <ion-buttons slot="start">
+        <ion-back-button text=""></ion-back-button>
+      </ion-buttons>
+    <ion-title>Editar perfil</ion-title>
+    <ion-text slot="end">Guardar</ion-text>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col >
+        <ion-avatar>
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>    
+    </ion-col>
+  </ion-row>
+  <br>
+  <ion-item-group> 
+      <ion-item >
+        <ion-row>
+          <ion-col size="4" class="subt">Nombre</ion-col>
+          <ion-col><ion-input no-padding type="text" value="Tatiana Maybeth" maxlenght="20" required></ion-input></ion-col>
+        </ion-row>          
+      </ion-item>
+      <ion-item>
+          <ion-row>
+              <ion-col size="4" class="subt">Usuario</ion-col>
+              <ion-col><ion-input no-padding type="text" value="May Beth" maxlenght="15" required></ion-input></ion-col>
+            </ion-row>  
+      </ion-item>
+    </ion-item-group>
+    
+</ion-content>

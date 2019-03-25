@@ -1,0 +1,52 @@
+ion-icon{
+    font-size: 25px;
+    color: beige;
+}
+
+h1{
+    font-weight: bold;
+    color: beige;
+}
+
+ion-content{
+    --ion-background-color:  linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    /*background: url("../../assets/video/slide2.jpg");
+	background-size:cover;*/
+}
+/*.imagen{
+    --background: url('../../assets/video/slide2.jpg') no-repeat center center fixed cover;
+	--background-size:cover;
+}*/
+
+.login-box {
+    padding: 10px ;
+    margin-top: 15px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 17px 17px 17px 17px;
+    //opacity: 0.3;
+    //filter: alpha(opacity=60);
+}
+
+.font{
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.log-in{
+    font-weight: bold;
+}
+
+.log-in-social{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+<ion-app>
+  <ion-split-pane contentId="menu-content">
+    <ion-menu contentId="menu-content" type="overlay">
+      <ion-header padding>
+        
+        <ion-row >
+          <ion-col size="4" >
+                <a routerLink="/perfil">
+                  <ion-menu-toggle auto-hide="false">
+                      <ion-avatar >
+                          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" >
+                      </ion-avatar>
+                  </ion-menu-toggle>
+                </a>  
+          </ion-col>
+          <ion-col padding routerLink="/perfil">
+            <ion-menu-toggle auto-hide="false">
+              <div class="nick">Maybeth</div>
+              <div class="user">Taty Maybeth</div>
+            </ion-menu-toggle>
+          </ion-col>
+        </ion-row>
+      
+        
+      </ion-header>
+      <ion-content>
+        <ion-list>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/login">
+                  <ion-icon color="danger" name="log-out" ></ion-icon>  Log out
+              </ion-item>
+            </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="menu-content" main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
