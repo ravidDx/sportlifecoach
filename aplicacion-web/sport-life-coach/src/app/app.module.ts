@@ -69,7 +69,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     HeaderComponent,
     SocialComponent,
     ModalComponent,
-    SigninComponent,
+    SigninComponent
 
   ],
   providers: [AngularFireAuth, AuthService,DeportistaService],

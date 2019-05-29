@@ -10,6 +10,9 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 import { DeportistasComponent } from '../../admin/deportistas/deportistas.component';
+import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
+
+
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -55,14 +58,15 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'deportista-list',component: DeportistasComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
+    { path: 'dashboard',                component: DashboardComponent },
+    { path: 'deportista-list',          component: DeportistasComponent },
+    { path: 'deportista-profile/:_id',   component: DeportistaComponent },
+    { path: 'user-profile',             component: UserProfileComponent },
+    { path: 'table-list',               component: TableListComponent },
+    { path: 'typography',               component: TypographyComponent },
+    { path: 'icons',                    component: IconsComponent },
+    { path: 'maps',                     component: MapsComponent },
+    { path: 'notifications',            component: NotificationsComponent },
+    { path: 'upgrade',                  component: UpgradeComponent },
     { path: '**',           redirectTo: 'dashboard'},
 ];

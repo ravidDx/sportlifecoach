@@ -26,7 +26,7 @@ export class DeportistasComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('myTable') myTable: MatTable<any>;
 
-  displayedColumns: string[] = ['nombre', 'apellido', 'email', 'telefono', 'acciones'];
+  displayedColumns: string[] = ['position','nombre', 'apellido', 'email', 'telefono', 'acciones'];
   dataSource = new MatTableDataSource<Deportista>();
   
   habilitar:boolean=true;

@@ -12,6 +12,8 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { DeportistasComponent } from '../../admin/deportistas/deportistas.component';
+import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
+
 
 import {
   MatButtonModule,
@@ -48,6 +50,7 @@ import {
   declarations: [
     DashboardComponent,
     DeportistasComponent,
+    DeportistaComponent,
     UserProfileComponent,
     TableListComponent,
     TypographyComponent,
