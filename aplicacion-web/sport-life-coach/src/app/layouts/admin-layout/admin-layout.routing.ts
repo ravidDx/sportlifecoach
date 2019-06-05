@@ -11,6 +11,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 import { DeportistasComponent } from '../../admin/deportistas/deportistas.component';
 import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
+import { EjerciciosComponent } from '../..//admin/ejercicios/ejercicios.component';
+
 
 
 
@@ -60,7 +62,8 @@ export const AdminLayoutRoutes: Routes = [
     // }
     { path: 'dashboard',                component: DashboardComponent },
     { path: 'deportista-list',          component: DeportistasComponent },
-    { path: 'deportista-profile/:_id',   component: DeportistaComponent },
+    { path: 'deportista-profile/:_id',  component: DeportistaComponent },
+    { path: 'ejercicios',               component: EjerciciosComponent },
     { path: 'user-profile',             component: UserProfileComponent },
     { path: 'table-list',               component: TableListComponent },
     { path: 'typography',               component: TypographyComponent },

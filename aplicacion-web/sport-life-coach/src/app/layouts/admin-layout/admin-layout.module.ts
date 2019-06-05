@@ -13,6 +13,9 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { DeportistasComponent } from '../../admin/deportistas/deportistas.component';
 import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
+import { EjerciciosComponent } from '../../admin/ejercicios/ejercicios.component';
+
+import { HttpClientModule } from '@angular/common/http';
 
 
 import {
@@ -26,7 +29,10 @@ import {
   MatPaginatorModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatDialogModule  
+  MatDialogModule ,
+  MatIconModule,
+  MatProgressBarModule,
+  MatChipsModule
 } from '@angular/material';
 
 
@@ -45,12 +51,17 @@ import {
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule 
+    MatDialogModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatChipsModule,
+    HttpClientModule
   ],
   declarations: [
     DashboardComponent,
     DeportistasComponent,
     DeportistaComponent,
+    EjerciciosComponent,
     UserProfileComponent,
     TableListComponent,
     TypographyComponent,

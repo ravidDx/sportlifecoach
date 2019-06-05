@@ -10,6 +10,8 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+
 
 /*Data Tables*/
 import { DataTablesModule } from 'angular-datatables';
@@ -48,6 +50,7 @@ import { ModalComponent } from './modal/modal.component';
 import { SigninComponent } from './auth/signin/signin.component';
 
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -59,7 +62,8 @@ import { SigninComponent } from './auth/signin/signin.component';
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   declarations: [
     AppComponent,

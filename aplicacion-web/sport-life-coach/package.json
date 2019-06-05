@@ -35,6 +35,7 @@
     "@syncfusion/ej2-angular-calendars": "^17.1.41",
     "ajv": "6.4.0",
     "angular-datatables": "^7.0.0",
+    "angular-material-fileupload": "^2.0.0",
     "arrive": "2.4.1",
     "bootstrap": "4.1.0",
     "bootstrap-material-design": "4.1.1",
