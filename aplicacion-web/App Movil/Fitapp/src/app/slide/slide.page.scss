@@ -1,0 +1,31 @@
+
+ion-slide {
+    height: 100vh;
+    flex-direction: column;
+}
+
+ion-img {
+    max-width: 50vw;
+    max-height: 50vh;
+    overflow: hidden;
+}
+
+.step-one {
+	background: url("../../assets/video/slides.jpg");
+	background-size:cover;
+    color: var(--ion-color-primary-contrast);
+}
+
+.step-two {
+	background: url("../../assets/video/slide2.jpg");
+	background-size:cover;
+    /*background: var(--ion-color-danger);*/
+    color: var(--ion-color-danger-contrast);
+}
+
+.step-three {
+	background: url("../../assets/video/slide3.jpg");
+	background-size:cover;
+	color: var(--ion-color-dark-contrast);
+	color:black;
+}

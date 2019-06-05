@@ -3,4 +3,4 @@ elaboracion tesis
 
 credenciales admin
 email:  raulbastidas@outlook.com
-clave:  ecuador2019
+clave:  admin123
