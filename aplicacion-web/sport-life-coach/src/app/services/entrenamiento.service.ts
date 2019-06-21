@@ -52,12 +52,13 @@ export class EntrenamientoService {
     const filePath = `uploads/entrenamiento_${id}`;
     const ref = this.storage.ref(filePath);
     const task = this.storage.upload(filePath,file);
-    
+        
   }
 
   downloadUrl(id:any){
     const filePath = `uploads/entrenamiento_${id}`;
     const imgRef = this.storage.ref(filePath);
+
     return imgRef.getDownloadURL();
   }
 

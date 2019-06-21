@@ -1,0 +1,38 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Entrenamiento: {{entrenamiento.tipo}}</h4>
+                    </div>
+                    <div class="card-body">
+                      
+                        <div class="row row-1 animated fadeInRight">
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{entrenamiento.titulo | uppercase}} </h5>
+                                <p class="card-text">{{entrenamiento.objetivo}}</p>
+   
+                            </div>
+                      
+                        </div>
+
+                        <hr>
+
+                        <div class="row row-1 animated fadeInRight">
+
+                            <div class="col-sm-6 col-md-4"  *ngFor="let item of entrenamiento.imagenes; let i = index" >
+                                <div class="card"  >
+                                    <img class="card-img-top text-center" [src]="item" alt="Card image cap" >                           
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+     
+        </div>
+    </div>
+</div>

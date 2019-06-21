@@ -73,24 +73,19 @@ export class EjerciciosComponent implements OnInit {
   guardar(){
     
     var _this = this;
-
     //cargar y guardar imagenes en firebase
-    console.log(this.entrenamiento.imagenes);
     this.files.forEach( function(item, indice, array) {
       const id = Math.random().toString(36).substring(2);
       _this.entrenamiento.imagenes.push(id);
-      _this._entrenamientoService.onUpload(item.data,id);
+      _this._entrenamientoService.onUpload(item.data,id);      
       if(indice==0){
         _this.entrenamiento.portada = id;
       }
     });
 
-    console.log(this.entrenamiento);
-    console.log('listo');
-
     this._entrenamientoService.nuevoEntrenamiento(this.entrenamiento).subscribe(
       data=>{
-  
+        console.log(data);
         this.clearForm();
         this.closeModal();
         this.listar();
@@ -114,16 +109,20 @@ export class EjerciciosComponent implements OnInit {
       .subscribe(
         data=>{
           data["entrenamientos"].forEach( function(item, indice, array) {
-            console.log(item.portada)
+              _this._entrenamientoService.downloadUrl(item.portada).subscribe(
+                data=>{
+                  item.portada=data;         
+                },
+                error=>{
+                  console.log('ERROR');
+                  console.log(error);
+                }
+              );
 
-             item.portada = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-            console.log(item.portada)
+              item.portada = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+           
           });
           this.entrenamientos = data["entrenamientos"];
-         
-
-          //this.dataSource.data = this.deportistas;
-          //this.dataSource.paginator = this.paginator;
 
         },
         error=>{
@@ -135,30 +134,8 @@ export class EjerciciosComponent implements OnInit {
   }
 
 
-    getDownload(url:any){
-
-    var res;
-
-    this._entrenamientoService.downloadUrl(url).subscribe(
-      data=>{
-        
-        res= data;
-      },
-      error=>{
-        console.log('ERROR');
-        console.log(error);
-        res= 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-      }
-
-    );
-
-    console.log(res);
-
-    return res;
 
 
-   
-  }
 
 
   clearForm(){
@@ -168,8 +145,9 @@ export class EjerciciosComponent implements OnInit {
     this.entrenamiento.imagenes=[];
   }
 
+  
   closeModal(){
-    $('#dataModal').modal('hide');
+    //$('#dataModal').modal('hide');
   }
 
 
@@ -277,6 +255,34 @@ export class EjerciciosComponent implements OnInit {
     //this._entrenamientoService.onUpload(file.data);
   }
 
+  getDownload(url:any, indice:any){
+
+    let res;
+  
+    this._entrenamientoService.downloadUrl(url).subscribe(
+      data=>{
+        this.entrenamientos
+        res= data;
+        console.log('-----------------------------');
+        console.log(res);
+
+       
+        //return res;
+      },
+      error=>{
+        console.log('ERROR');
+        console.log(error);
+        res= 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+        //return res;
+      }
+  
+    );
+
+    return 'asd ';
+  
+   
+  }
+
 
   
 
@@ -292,5 +298,8 @@ export class FileUploadModel {
   canCancel: boolean;
   sub?: Subscription;
 }
+
+
+
 
 

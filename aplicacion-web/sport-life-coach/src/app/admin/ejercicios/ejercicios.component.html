@@ -28,26 +28,26 @@
                             <mat-chip color="accent" >Perder peso</mat-chip>
                             <mat-chip color="accent" >Rehabilitacion</mat-chip>
                         </mat-chip-list>
-                        
+
                         <hr>
 
                         <div class="row">
-                            <div class="col-sm-6 col-md-4"  *ngFor="let item of entrenamientos; let i = index">
-                                <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top text-center" [src]="item.portada" alt="Card image cap">
+                            <div class="col-sm-6 col-md-4"  *ngFor="let item of entrenamientos; let i = index" >
+                              <a  [routerLink]="['/ejercicio',item._id ]" >
+                                  <div class="card" class="img-contenedor" >
+                                    <img class="card-img-top text-center" [src]="item.portada" alt="Card image cap" >
                                     <div class="card-body">
-                                        <h5 class="card-title text-center"  >{{item.titulo}}</h5>
+                                        <h5 class="card-title text-center"  > {{item.titulo}}</h5>
                                     </div>
-                                </div>
+                                  </div>
+
+                              </a>
+                
                             </div>
                     
                         </div>
 
-                      
-
-
-                      
-                        
+                                        
                     </div>
                 </div>
             </div>

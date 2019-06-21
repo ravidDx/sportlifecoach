@@ -14,6 +14,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { DeportistasComponent } from '../../admin/deportistas/deportistas.component';
 import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
 import { EjerciciosComponent } from '../../admin/ejercicios/ejercicios.component';
+import { EjercicioComponent } from '../..//admin/ejercicio/ejercicio.component';
+
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -62,6 +64,7 @@ import {
     DeportistasComponent,
     DeportistaComponent,
     EjerciciosComponent,
+    EjercicioComponent,
     UserProfileComponent,
     TableListComponent,
     TypographyComponent,
