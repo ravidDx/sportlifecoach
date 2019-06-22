@@ -1,0 +1,111 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Listado de Dietas</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row animated fadeInRight btn-add">
+                            <button mat-raised-button class="btn btn-info ml-auto" (click)="newModal()" data-toggle="modal" data-target="#dataModal">
+                                <i class="fas fa-plus-circle"></i> Añadir
+                            </button>
+                            <!--
+                            <button mat-raised-button class="btn btn-info ml-auto" (click)="getDownload()" data-toggle="modal" data-target="#dataModal">
+                                <i class="fas fa-plus-circle"></i> get
+                            </button>
+                            -->
+                        </div>
+
+                        <br>
+                        <!-- DATA -->
+
+                        <mat-chip-list aria-label="Fish selection">
+                            <mat-chip color="accent" selected>Bajo en calorias</mat-chip>
+                            <mat-chip color="accent" >Bajo en proteinas</mat-chip>
+                        </mat-chip-list>
+
+                        <hr>
+
+                        <div class="row">
+                           
+                    
+                        </div>
+
+                                        
+                    </div>
+                </div>
+            </div>
+     
+        </div>
+    </div>
+</div>
+
+
+<!-- FORMULARIO MODAL -->
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> 
+              <span><i class="fas fa-running"></i> Nueva Dieta</span>
+          </h5> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="form-entrenamiento" (ngSubmit)="guardar()" #form="ngForm">
+          <div class="modal-body">
+
+
+              <div class="example-container">
+
+                  <div class="row">
+                    <div class="col-md-12">
+                          <mat-form-field>
+                            <mat-label>Tipo de dieta</mat-label>
+                            <mat-select disableRipple (selectionChange)="select($event.value)">
+                              <mat-option *ngFor="let tipo of tiposEntrenamiento" [value]="tipo.name">{{tipo.name}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <mat-form-field class="example-full-width" >
+                      
+                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="dieta.titulo">
+                          </mat-form-field>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <mat-form-field>
+                              <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="dieta.objetivo"></textarea>
+                            </mat-form-field>
+                      </div>
+                  </div>
+
+                            
+                  
+              </div>
+
+             
+          
+    
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" >Guardar</button>
+            
+              
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

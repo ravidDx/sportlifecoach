@@ -15,6 +15,8 @@ import { DeportistasComponent } from '../../admin/deportistas/deportistas.compon
 import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
 import { EjerciciosComponent } from '../../admin/ejercicios/ejercicios.component';
 import { EjercicioComponent } from '../..//admin/ejercicio/ejercicio.component';
+import { DietaComponent } from '../..//admin/dieta/dieta.component';
+import { DietasComponent } from '../..//admin/dietas/dietas.component';
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -65,6 +67,8 @@ import {
     DeportistaComponent,
     EjerciciosComponent,
     EjercicioComponent,
+    DietaComponent,
+    DietasComponent,
     UserProfileComponent,
     TableListComponent,
     TypographyComponent,

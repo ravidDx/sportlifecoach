@@ -13,6 +13,8 @@ import { DeportistasComponent } from '../../admin/deportistas/deportistas.compon
 import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
 import { EjerciciosComponent } from '../..//admin/ejercicios/ejercicios.component';
 import { EjercicioComponent } from '../..//admin/ejercicio/ejercicio.component';
+import { DietaComponent } from '../..//admin/dieta/dieta.component';
+import { DietasComponent } from '../..//admin/dietas/dietas.component';
 
 
 
@@ -68,6 +70,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'deportista-profile/:_id',  component: DeportistaComponent },
     { path: 'ejercicios',               component: EjerciciosComponent },
     { path: 'ejercicio/:_id',           component: EjercicioComponent },
+    { path: 'dietas',                   component: DietasComponent },
+    { path: 'dieta/:_id',               component: DietaComponent },
     { path: 'user-profile',             component: UserProfileComponent },
     { path: 'table-list',               component: TableListComponent },
     { path: 'typography',               component: TypographyComponent },

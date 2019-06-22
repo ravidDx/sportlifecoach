@@ -30,7 +30,7 @@ export class EjercicioComponent implements OnInit {
         console.log(params['_id']);
         this._entrenamientoService.verEntrenamiento(params['_id']).subscribe(
           data=>{
-            console.log(data);
+            //console.log(data);
             //this.imagenes=data['entrenamiento']['imagenes'];
             //data['entrenamiento']['imagenes'] = [];
             this.entrenamiento=data['entrenamiento'];
@@ -61,12 +61,12 @@ export class EjercicioComponent implements OnInit {
       _this._entrenamientoService.downloadUrl(item).subscribe(
         data=>{
           _this.imagenes.push(data);
-          console.log(indice);
-          console.log(data);
+          //console.log(indice);
+          //console.log(data);
         },
         error=>{
-          console.log('ERROR');
-          console.log(error);
+          //console.log('ERROR');
+          //console.log(error);
         }
       );
 
