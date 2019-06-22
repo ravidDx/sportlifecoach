@@ -4,7 +4,6 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Subscription ,  of } from 'rxjs';
 import { catchError, last, map, tap } from 'rxjs/operators';
-
 import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
 import {EntrenamientoService} from '../../services/entrenamiento.service';
 
@@ -21,8 +20,8 @@ import {EntrenamientoService} from '../../services/entrenamiento.service';
     ])
   ]
 })
-export class EjerciciosComponent implements OnInit {
 
+export class EjerciciosComponent implements OnInit {
   new:boolean;
   /** Link text */
   @Input() text = 'Cargar imagen';

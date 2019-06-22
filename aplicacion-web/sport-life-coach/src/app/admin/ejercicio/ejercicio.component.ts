@@ -11,7 +11,8 @@ import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
 })
 export class EjercicioComponent implements OnInit {
 
-  imagenes:[];
+  imagenes:any = [];
+  cargar:boolean=false;
 
   entrenamiento:Entrenamiento = {
     tipo:"",
@@ -30,11 +31,11 @@ export class EjercicioComponent implements OnInit {
         this._entrenamientoService.verEntrenamiento(params['_id']).subscribe(
           data=>{
             console.log(data);
-            this.imagenes=data['entrenamiento']['imagenes'];
-            data['entrenamiento']['imagenes'] = [];
+            //this.imagenes=data['entrenamiento']['imagenes'];
+            //data['entrenamiento']['imagenes'] = [];
             this.entrenamiento=data['entrenamiento'];
 
-            this.cargarImagenes();
+            this.cargarImagenes(this.entrenamiento.imagenes);
 
 
             //console.log(this.deportista);
@@ -52,14 +53,14 @@ export class EjercicioComponent implements OnInit {
   ngOnInit() {
   }
 
-  cargarImagenes(){
+  cargarImagenes(imagenes:any){
 
     let _this = this;
 
-    this.imagenes.forEach( function(item, indice, array) {
+    imagenes.forEach( function(item, indice, array) {
       _this._entrenamientoService.downloadUrl(item).subscribe(
         data=>{
-          _this.entrenamiento.imagenes[indice]=data;
+          _this.imagenes.push(data);
           console.log(indice);
           console.log(data);
         },
@@ -69,7 +70,7 @@ export class EjercicioComponent implements OnInit {
         }
       );
 
-      console.log(_this.entrenamiento);
+      //console.log(_this.entrenamiento);
 
         
   });
