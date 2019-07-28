@@ -13,9 +13,9 @@ import {AngularFireStorage} from '@angular/fire/storage';
   providedIn: 'root'
 })
 export class EntrenamientoService {
-
-  entrenamientosUrl="https://api-tesis-ravid87.c9users.io:8080/api/entrenamientos";
-  entrenamientoUrl="https://api-tesis-ravid87.c9users.io:8080/api/entrenamiento";
+  
+  entrenamientosUrl="http://3.17.55.6:8080/api/entrenamientos";
+  entrenamientoUrl="http://3.17.55.6:8080/api/entrenamiento";
 
   constructor(private _http:HttpClient, 
               private storage:AngularFireStorage) 
@@ -61,6 +61,7 @@ export class EntrenamientoService {
 
     return imgRef.getDownloadURL();
   }
+
 
 
 }

@@ -4,6 +4,6 @@ export interface Dieta{
 	objetivo:string;
     ingredientes:any;
 	preparacion:any;
-	portada:any;
+	imagen:any;
 }
 

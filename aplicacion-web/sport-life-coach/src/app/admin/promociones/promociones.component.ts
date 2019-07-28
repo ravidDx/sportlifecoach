@@ -1,17 +1,17 @@
-
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Subscription ,  of } from 'rxjs';
 import { catchError, last, map, tap } from 'rxjs/operators';
-import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
-import {EntrenamientoService} from '../../services/entrenamiento.service';
 
+
+import {Promocion} from '../../interfaces/promocion.interface';
+import {PromocionService} from '../../services/promocion.service';
 
 @Component({
-  selector: 'app-ejercicios',
-  templateUrl: './ejercicios.component.html',
-  styleUrls: ['./ejercicios.component.scss'],
+  selector: 'app-promociones',
+  templateUrl: './promociones.component.html',
+  styleUrls: ['./promociones.component.scss'],
   animations: [
     trigger('fadeInOut', [
       state('in', style({ opacity: 100 })),
@@ -21,8 +21,7 @@ import {EntrenamientoService} from '../../services/entrenamiento.service';
     ])
   ]
 })
-
-export class EjerciciosComponent implements OnInit {
+export class PromocionesComponent implements OnInit {
   new:boolean;
   /** Link text */
   @Input() text = 'Cargar imagen';
@@ -37,53 +36,45 @@ export class EjerciciosComponent implements OnInit {
 
   files: Array<FileUploadModel> = [];
 
-  tiposEntrenamiento= [
-    {id:1, name:'perder peso'},
-    {id:2, name:'rehabilitacion'},
-    {id:3, name:'musculacion y fuerza'},
-    {id:4, name:'otros'}
+  tiposPromocion= [
+    {id:1, name:'promocion de precio'},
+    {id:2, name:'promocion de regalos'}
   ]
 
-
-  entrenamiento:Entrenamiento = {
+  promocion:Promocion = {
     tipo:"",
     titulo:"",
     objetivo:"",
-    imagenes:[],
-    portada:'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg'
+    imagen:""
   }
 
-  entrenamientos:Entrenamiento[]=[];
+  promociones:Promocion[]=[];
 
 
   url:any;
 
 
+
   constructor(private _http: HttpClient,
-              private _entrenamientoService:EntrenamientoService) 
-  { 
-    this.listar();
+              private _promocionService:PromocionService) { 
+
+      this.listar();
   }
 
   ngOnInit() {
   }
 
 
-
   guardar(){
-    
-    var _this = this;
-    //cargar y guardar imagenes en firebase
-    this.files.forEach( function(item, indice, array) {
-      const id = Math.random().toString(36).substring(2);
-      _this.entrenamiento.imagenes.push(id);
-      _this._entrenamientoService.onUpload(item.data,id);      
-      if(indice==0){
-        _this.entrenamiento.portada = id;
-      }
-    });
 
-    this._entrenamientoService.nuevoEntrenamiento(this.entrenamiento).subscribe(
+    var _this = this;
+    const id = Math.random().toString(36).substring(2);
+
+    _this._promocionService.onUpload(this.files[0].data,id);
+    _this.promocion.imagen = id;
+    console.log(this.promocion);
+
+    this._promocionService.nuevaPromocion(this.promocion).subscribe(
       data=>{
         console.log(data);
         this.clearForm();
@@ -100,18 +91,22 @@ export class EjerciciosComponent implements OnInit {
 
     );
 
+    
+   
+
   }
 
-
+    
   listar(){
+    console.log('listar');
     let _this = this;
-    this._entrenamientoService.consultarEntrenamientos()
+    this._promocionService.consultarPromociones()
       .subscribe(
         data=>{
-          data["entrenamientos"].forEach( function(item, indice, array) {
-              _this._entrenamientoService.downloadUrl(item.portada).subscribe(
+          data["promociones"].forEach( function(item, indice, array) {
+              _this._promocionService.downloadUrl(item.imagen).subscribe(
                 data=>{
-                  item.portada=data;         
+                  item.imagen=data;         
                 },
                 error=>{
                   console.log('ERROR');
@@ -119,10 +114,12 @@ export class EjerciciosComponent implements OnInit {
                 }
               );
 
-              item.portada = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+              item.imagen = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
            
           });
-          this.entrenamientos = data["entrenamientos"];
+
+          this.promociones = data["promociones"];
+          console.log(this.promociones)
 
         },
         error=>{
@@ -130,22 +127,16 @@ export class EjerciciosComponent implements OnInit {
         }
 
       );
-
-  }
-
+    }
 
 
+    clearForm(){
+      this.promocion.tipo="";
+      this.promocion.titulo="";
+      this.promocion.objetivo="";
+      this.promocion.imagen = "";
+    }
 
-
-
-  clearForm(){
-    this.entrenamiento.tipo="";
-    this.entrenamiento.titulo="";
-    this.entrenamiento.objetivo="";
-    this.entrenamiento.imagenes=[];
-  }
-
-  
   closeModal(){
     //$('#dataModal').modal('hide');
   }
@@ -154,8 +145,9 @@ export class EjerciciosComponent implements OnInit {
   newModal(){
   }
 
+
   select(event:any){
-    this.entrenamiento.tipo=event;
+    this.promocion.tipo=event;
     console.log(event);
   }
 
@@ -259,9 +251,9 @@ export class EjerciciosComponent implements OnInit {
 
     let res;
   
-    this._entrenamientoService.downloadUrl(url).subscribe(
+    this._promocionService.downloadUrl(url).subscribe(
       data=>{
-        this.entrenamientos
+        this.promociones
         res= data;
         console.log('-----------------------------');
         console.log(res);
@@ -284,8 +276,6 @@ export class EjerciciosComponent implements OnInit {
   }
 
 
-  
-
 }
 
 
@@ -298,8 +288,4 @@ export class FileUploadModel {
   canCancel: boolean;
   sub?: Subscription;
 }
-
-
-
-
 

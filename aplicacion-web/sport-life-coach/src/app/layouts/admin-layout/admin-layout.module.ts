@@ -17,6 +17,10 @@ import { EjerciciosComponent } from '../../admin/ejercicios/ejercicios.component
 import { EjercicioComponent } from '../..//admin/ejercicio/ejercicio.component';
 import { DietaComponent } from '../..//admin/dieta/dieta.component';
 import { DietasComponent } from '../..//admin/dietas/dietas.component';
+import { PromocionesComponent } from '../..//admin/promociones/promociones.component';
+import { PromocionComponent } from '../..//admin/promocion/promocion.component';
+
+
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -69,6 +73,8 @@ import {
     EjercicioComponent,
     DietaComponent,
     DietasComponent,
+    PromocionesComponent,
+    PromocionComponent,
     UserProfileComponent,
     TableListComponent,
     TypographyComponent,

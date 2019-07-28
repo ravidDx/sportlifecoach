@@ -15,10 +15,8 @@ import { EjerciciosComponent } from '../..//admin/ejercicios/ejercicios.componen
 import { EjercicioComponent } from '../..//admin/ejercicio/ejercicio.component';
 import { DietaComponent } from '../..//admin/dieta/dieta.component';
 import { DietasComponent } from '../..//admin/dietas/dietas.component';
-
-
-
-
+import { PromocionesComponent } from 'app/admin/promociones/promociones.component';
+import { PromocionComponent } from 'app/admin/promocion/promocion.component';
 
 
 
@@ -72,6 +70,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'ejercicio/:_id',           component: EjercicioComponent },
     { path: 'dietas',                   component: DietasComponent },
     { path: 'dieta/:_id',               component: DietaComponent },
+    { path: 'promociones',              component: PromocionesComponent },
+    { path: 'promocion/:_id',           component: PromocionComponent },
     { path: 'user-profile',             component: UserProfileComponent },
     { path: 'table-list',               component: TableListComponent },
     { path: 'typography',               component: TypographyComponent },
