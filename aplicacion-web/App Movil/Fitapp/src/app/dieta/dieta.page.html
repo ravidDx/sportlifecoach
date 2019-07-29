@@ -1,17 +1,50 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-title>nombre dieta</ion-title>
-      <ion-buttons slot="start">
-          <ion-back-button text=""></ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
+<ion-header class="fondo">
+  <ion-toolbar>
+    <ion-title text-center class="title">Nombre Receta</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
-  
-<ion-content padding>
-  <ion-title>AQUI UNA IMAGEN</ion-title>
-  <ion-text>INGREDIENTES</ion-text>
-  <br>
-  <ion-text>PREPARACION</ion-text>
-  <br>
-  <ion-text>PORCIONES</ion-text>
+
+<ion-content class="fondo">
+  <div class="ion-no-padding ion-no-margin">
+    <img class="imgc" src="../../assets/video/collage.jpg" />
+  </div>
+
+  <div class="contenedor ion-margin ion-padding ">
+    <ion-row class="ion-nopadding ion-no-margin">
+      <ion-col size="6">
+        <ion-icon color=light ios="ios-alarm" md="md-alarm"></ion-icon>
+        <ion-text class="ion-padding-start" color=light>1h 34min</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-icon color=light ios="ios-nutrition" md="md-nutrition"></ion-icon>
+        <ion-text class="ion-padding-start" color=light>Media</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-icon color=light ios="ios-person" md="md-person"></ion-icon>
+        <ion-text class="ion-padding-start" color=light>6</ion-text>
+      </ion-col>
+      <ion-col size="6">
+      </ion-col>
+    </ion-row>
+  </div>
+  <div>
+    <ion-list>    
+      <ion-item-divider class="ion-no-padding">
+        <ion-label class="titulo" color="light ion-padding-start">
+          Ingredientes
+        </ion-label>
+      </ion-item-divider>
+      <ion-item-divider class="ion-no-padding">
+        <ion-label class="titulo" color="light ion-padding-start">
+          Prepración
+        </ion-label>
+      </ion-item-divider>
+    </ion-list>
+
+  </div>
 </ion-content>

@@ -1,32 +1,32 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
+            <ion-menu-button color="light" autoHide="false"></ion-menu-button>
         </ion-buttons>
         <ion-row align-items-center>
             <ion-col size="4"></ion-col>
-            <ion-col size="5">
+            <ion-col size="5" class="title">
                 Ejercicios
             </ion-col>
             <ion-col size="3" text-end>
                 <a routerLink="/news">
-                    <ion-icon name="notifications-outline"></ion-icon>
+                    <ion-icon color="light" name="notifications-outline"></ion-icon>
                 </a>
             </ion-col>
         </ion-row>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-card routerLink="/dietas/dieta">
-        <img class="imgc" src="../../assets/video/slide2.jpg" />
-        <div class="card-title">CALCULADORA </div>
-        <div class="card-subtitle">Algo extra</div>
+<ion-content >
+    <ion-card routerLink="/calculadora" class="ion-no-padding ion-margin-top">
+        <img class="imgc" src="../../assets/video/app_centr.jpg" />
+        <div class="card-title ion-padding-start">CALCULADORA </div>
+        <div class="card-subtitle ion-padding-start">Algo extra</div>
     </ion-card>
-    <ion-card routerLink="/dietas/dieta">
-        <img class="imgc" src="../../assets/video/slide2.jpg" />
-        <div class="card-title">EJERCICIOS</div>
-        <div class="card-subtitle">Algo extra</div>
+    <ion-card routerLink="/ejertipos" class="ion-no-padding ion-margin-top">
+        <img class="imgc" src="../../assets/video/unnamed.png" />
+        <div class="card-title ion-padding-start">EJERCICIOS</div>
+        <div class="card-subtitle ion-padding-start">Algo extra</div>
     </ion-card>
 
 </ion-content>

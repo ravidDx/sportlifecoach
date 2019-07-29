@@ -10,6 +10,11 @@ const routes: Routes = [
   { path: 'dietas/dieta', loadChildren: './dieta/dieta.module#DietaPageModule' },
   { path: 'calculadora', loadChildren: './calculadora/calculadora.module#CalculadoraPageModule' },
   { path: 'ejertipos', loadChildren: './ejertipos/ejertipos.module#EjertiposPageModule' },
+  { path: 'registro/personal', loadChildren: './registro/personal/personal.module#PersonalPageModule' },
+  { path: 'registro/gender', loadChildren: './registro/gender/gender.module#GenderPageModule' },
+  { path: 'registro/datos', loadChildren: './registro/datos/datos.module#DatosPageModule' },
+
+
   /*{ path: 'dietas', loadChildren: './dietas/dietas.module#DietasPageModule' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'ejercicios', loadChildren: './ejercicios/ejercicios.module#EjerciciosPageModule' },

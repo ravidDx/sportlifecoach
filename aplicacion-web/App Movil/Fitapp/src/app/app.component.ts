@@ -4,8 +4,9 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { HomePage } from './home/home.page';
+import { SlidePage } from './slide/slide.page';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  rootPage: any = HomePage;
+  rootPage: any = SlidePage;
+  showSplash = true; // <-- show animation
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -26,6 +28,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      timer(3000).subscribe(() => this.showSplash = false);
     });
   }
 }

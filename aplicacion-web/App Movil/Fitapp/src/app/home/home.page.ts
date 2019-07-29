@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
 
+  sliderConfig = {
+    spaceBetween: 5,
+    centeredSlide: true,
+    slidesPerView: 1.6
+  };
+
   constructor(private route: Router) { }
 
   notif() {

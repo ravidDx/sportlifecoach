@@ -1,7 +1,10 @@
+<div *ngIf="showSplash" class="splash">
+  <div class="spinner"></div>
+</div>
 <ion-app>
   <ion-split-pane contentId="menu-content">
     <ion-menu contentId="menu-content" type="overlay">
-      <ion-header padding>
+      <ion-header padding class="menuleft">
         
         <ion-row >
           <ion-col size="4" >
@@ -26,8 +29,8 @@
       <ion-content>
         <ion-list>
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/login">
-                  <ion-icon color="danger" name="log-out" ></ion-icon>  Log out
+              <ion-item routerLink="/login" color="danger">
+                  Cerrar Sesión
               </ion-item>
             </ion-menu-toggle>
         </ion-list>

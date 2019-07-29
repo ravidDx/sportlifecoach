@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EjertiposPage implements OnInit {
 
+  sliderConfig = {
+    spaceBetween: 5,
+    centeredSlide: true,
+    slidesPerView: 1.6
+  };
+  
   constructor() { }
 
   ngOnInit() {

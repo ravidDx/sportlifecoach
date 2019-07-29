@@ -1,16 +1,16 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-row align-items-center>
+    <ion-row align-items-center >
       <ion-col size="4"></ion-col>
-      <ion-col size="4">
+      <ion-col size="4" class="title">
         Dietas
       </ion-col>
       <ion-col size="4" text-end>
         <a routerLink="/news">
-          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-icon color="light" name="notifications-outline"></ion-icon>
         </a>
       </ion-col>
     </ion-row>
@@ -19,22 +19,22 @@
 
 <ion-content padding class="card-background-page">
   <ion-list>
-    <ion-item-divider>
-      <ion-label>
+    <ion-item-divider class="ion-no-padding">
+      <ion-label color="light" class="title">
         DIETA DEL DÍA
       </ion-label>
     </ion-item-divider>
     <ion-row>
-      <ion-col>
-        <ion-card routerLink="/dietas/dieta">
-          <img class="imgc" src="../../assets/video/slide2.jpg" />
+      <ion-col class="ion-no-padding">
+        <ion-card routerLink="/dietas/dieta" class="ion-no-padding ion-no-margin">
+          <img class="imgc" src="../../assets/video/collage.jpg" />
           <div class="card-title">Nombre Receta</div>
           <div class="card-subtitle">Algo extra</div>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-item-divider>
-      <ion-label>
+      <ion-label color="light">
         DESAYUNO
       </ion-label>
     </ion-item-divider>
@@ -42,7 +42,7 @@
       <ion-slide *ngFor="let num of list">
         <ion-card>
           <ion-card-header>
-              <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+              <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
               <ion-card-content no-padding>
                   <img class="imgs" src="../../assets/video/slides.jpg" />
               </ion-card-content>
@@ -51,7 +51,7 @@
       </ion-slide>
     </ion-slides>
     <ion-item-divider>
-      <ion-label>
+      <ion-label color="light">
         ALMUERZO
       </ion-label>
     </ion-item-divider>
@@ -59,7 +59,7 @@
         <ion-slide *ngFor="let num of list">
           <ion-card>
             <ion-card-header>
-                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
                 <ion-card-content no-padding>
                     <img class="imgs" src="../../assets/video/slides.jpg" />
                 </ion-card-content>
@@ -68,7 +68,7 @@
         </ion-slide>
       </ion-slides>
     <ion-item-divider>
-      <ion-label>
+      <ion-label color="light">
         CENA
       </ion-label>
     </ion-item-divider>
@@ -76,7 +76,7 @@
         <ion-slide *ngFor="let num of list">
           <ion-card>
             <ion-card-header>
-                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
                 <ion-card-content no-padding>
                     <img class="imgs" src="../../assets/video/slides.jpg" />
                 </ion-card-content>

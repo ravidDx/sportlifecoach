@@ -1,9 +1,19 @@
-<ion-header>
+<ion-header class="fondo">
   <ion-toolbar>
-    <ion-title>ejertipos</ion-title>
+    <ion-title text-center class="title">ejertipos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" text=""></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content class="fondo">
+  <ion-slides [options]="sliderConfig" paginationType="progress">
+    <ion-slide>Tonificar</ion-slide>
+    <ion-slide>Perder Peso</ion-slide>
+    <ion-slide>Ponerse en Forma</ion-slide>
+    <ion-slide>Ejercicios Individuales</ion-slide>
+    <ion-slide>Abdomen</ion-slide>
+    <ion-slide>Elongación</ion-slide>
+  </ion-slides>
 </ion-content>

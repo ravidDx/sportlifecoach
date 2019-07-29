@@ -1,23 +1,90 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button autoHide="false" ></ion-menu-button>
-      </ion-buttons>
-      <ion-row align-items-center>
-          <ion-col size="4" ></ion-col>
-          <ion-col size="4" >
-              Home
-          </ion-col>
-          <ion-col size="4" text-end>
-              <a routerLink="/news">
-              <ion-icon name="notifications-outline" ></ion-icon></a><!--</ion-icon>(click)="notif()"-->
-          </ion-col>
-      </ion-row>
+    <ion-buttons slot="start">
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-row align-items-center>
+      <ion-col size="4"></ion-col>
+      <ion-col size="4" class="title">
+        Home
+      </ion-col>
+      <ion-col size="4" text-end>
+        <a routerLink="/news">
+          <ion-icon color="light" name="notifications-outline"></ion-icon>
+        </a>
+        <!--</ion-icon>(click)="notif()"-->
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  
+<ion-content>
+  <div class="bkg">
+    <ion-label color="light">
+      <h1>LO MAS NUEVO DE HOY!</h1>
+    </ion-label>
+    <ion-note color="light">Lo más reciente en dieta y ejercicio</ion-note>
+    <ion-slides [options]="sliderConfig">
+      <ion-slide>
+        <ion-card color="light" class="ion-text-justify">
+          <ion-card-header >
+            <ion-card-subtitle >Tipo de dieta </ion-card-subtitle>
+            <ion-card-subtitle  >NOMBRE NUEVA 
+              DIETA</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-item color="light" class="ion-no-padding">
+                <ion-note slot="start">PORCIONES</ion-note>
+                <ion-note slot="end">6</ion-note>
+              </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card color="light" class="ion-text-justify">
+          <ion-card-header>
+            <ion-card-subtitle>Tipo de ejercicio </ion-card-subtitle>
+            <ion-card-subtitle>NOMBRE NUEVO EJER</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-item color="light" class="ion-no-padding">
+                <ion-note slot="start">REPETICIONES</ion-note>
+                <ion-note slot="end">6</ion-note>
+              </ion-item>
 
+          
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card color="light" class="ion-text-justify">
+          <ion-card-header>
+            <ion-card-subtitle>Tipo de aLgo </ion-card-subtitle>
+            <ion-card-subtitle>NOMBRE NUEVO ALGO</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+             <ion-item color="light" class="ion-no-padding">
+                <ion-note slot="start">ALGO</ion-note>
+                <ion-note slot="end">6</ion-note>
+              </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="contenedor">
+    <img src="../assets/video/images.jfif">
+    <div class="texto-encima">Tipo de ejercicio </div>
+    <div class="text2">NOMBRE NUEVO EJERCICIO</div>
+  </div><br>
+  <div class="contenedor">
+    <img src="../assets/video/unnamed.png">
+    <div class="texto-encima">Tipo de ejercicio </div>
+    <div class="text2">NOMBRE NUEVO EJERCICIO</div>
+  </div><br>
+  <div class="contenedor">
+    <img src="../assets/video/app_centr.jpg">
+    <div class="texto-encima">Tipo de ejercicio </div>
+    <div class="text2">NOMBRE NUEVO EJERCICIO</div>
+  </div>
 </ion-content>
-

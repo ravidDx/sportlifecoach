@@ -1,0 +1,28 @@
+<ion-content padding>
+    <ion-icon padding-top name="arrow-back" routerLink="/registro/gender"></ion-icon>
+    <ion-label><h4>Brindanos tu información personal</h4></ion-label>
+
+    <div class="login-box">
+            <ion-item color="login" class="font">
+                <ion-label position="floating">NOMBRE</ion-label>
+                <ion-input type="text"  required></ion-input>
+            </ion-item>
+            <ion-item color="login" class="font">
+                <ion-label position="floating">APELLIDO</ion-label>
+                <ion-input type="text"  required></ion-input>
+            </ion-item>
+            <ion-item color="login" class="font">
+                <ion-label position="floating">EMAIL</ion-label>
+                <ion-input type="email"  required></ion-input>
+            </ion-item>
+            <ion-item color="login" class="font">
+                <ion-label position="floating">PASSWORD</ion-label>
+                <ion-input type="password"  maxlenght="8" required></ion-input>
+            </ion-item>
+    </div>
+    
+
+</ion-content>
+<ion-footer>
+    <ion-button size="large" color="success" expand="block" routerLink="/registro/datos">Siguiente</ion-button>
+</ion-footer>

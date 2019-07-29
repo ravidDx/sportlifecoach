@@ -1,31 +1,59 @@
-
+.bg{
+    height: auto;
+    max-width: 100%;
+    background: rgb(36,43,36);
+    background: linear-gradient(184deg, rgba(36,43,36,0.5830991937873069) 0%, rgba(0,0,0,0.9173688567086552) 100%),url("../../assets/video/training-828741_1280.jpg") center center no-repeat;
+    background-size: auto;
+}
 ion-slide {
     height: 100vh;
     flex-direction: column;
+    margin: 0%;
+    padding: 0%;
+}
+.bullets{
+    --bullet-background: white;
+    --bullet-background-active: #ffa600;//#07083f;
 }
 
-ion-img {
-    max-width: 50vw;
-    max-height: 50vh;
+img {
+    height:40vh;
+    width: 70vw;
     overflow: hidden;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    //size: 60px;
+}
+ion-label {
+    color:white;
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.step-one {
-	background: url("../../assets/video/slides.jpg");
-	background-size:cover;
-    color: var(--ion-color-primary-contrast);
+ion-button{
+    margin-bottom: 35px;
+    margin-top: 15px;
+    --padding-end:45px;
+    --padding-start:45px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 50px;
+}
+.btn{
+    border: 3px solid rgb(52, 58, 56);
 }
 
-.step-two {
-	background: url("../../assets/video/slide2.jpg");
-	background-size:cover;
-    /*background: var(--ion-color-danger);*/
-    color: var(--ion-color-danger-contrast);
+ion-note {
+    color:white;
+    font-weight: bold;
 }
 
-.step-three {
-	background: url("../../assets/video/slide3.jpg");
-	background-size:cover;
-	color: var(--ion-color-dark-contrast);
-	color:black;
+.text{
+    text-decoration: underline;
+}
+ion-text{
+    margin-left:40px;
+    margin-right: 40px;
 }

@@ -28,7 +28,7 @@
   --ion-color-tertiary-tint: #7e57ff;
 
   /** success **/
-  --ion-color-success: #10dc60;
+  --ion-color-success: #4ad83d;
   --ion-color-success-rgb: 16, 220, 96;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
@@ -84,6 +84,7 @@
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  login: rgba(255, 255, 255, 0.3),  
+  login:      rgba(7, 7, 7, 0.3),
+  btns:       #1fbd27
   );
 }
