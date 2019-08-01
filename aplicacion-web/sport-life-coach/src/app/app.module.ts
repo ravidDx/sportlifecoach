@@ -25,6 +25,7 @@ import { AppRoutingModule } from './app.routing';
 //Services
 import {DeportistaService} from './services/deportista.service';
 import {AuthService} from './services/auth.service';
+import {ToasterService} from './services/toaster.service';
 
 /*Componenentes*/
 import { AppComponent } from './app.component';
@@ -76,7 +77,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     SigninComponent
 
   ],
-  providers: [AngularFireAuth, AuthService,DeportistaService],
+  providers: [AngularFireAuth, AuthService,DeportistaService,ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
