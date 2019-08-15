@@ -1,0 +1,43 @@
+<ion-content>
+    <div class="bg">
+        <!--<div ><ion-note slot="end">Skip</ion-note></div>  Skip  -->
+        <ion-slides pager="true" mode="ios" [options]="slideOpts" class="bullets" effect="coverflow">
+            <ion-slide >
+                <ion-label>WELCOME TO FIT APP</ion-label>
+                <ion-text class="ion-text-center" color="light">
+                    <h5>Establezca sus datos de condición física y siga su progreso</h5>
+                </ion-text>
+                <img src="../../../assets/video/crossfit-534615_1280.jpg" class="responsive">
+                <ion-button  size="large" color="success" shape="round" expand="block" fill="solid"
+                    routerLink="/registro/gender">¡Unete Ahora!</ion-button>
+                <ion-note>¿YA ERES MIEMBRO?</ion-note>
+                <ion-note class="text" routerLink="/login">INGRESAR</ion-note>
+            </ion-slide>
+
+            <ion-slide >
+                <ion-label>CUERPO SALUDABLE</ion-label>
+                <ion-text class="ion-text-center" color="light">
+                    <h5>Rutinas de ejercicio y dietas personalizadas</h5>
+                </ion-text>
+                <img src="../../../assets/video/collage.jpg">
+                <ion-button  size="large" color="success" shape="round" expand="block" fill="solid"
+                    routerLink="/registro/gender">¡Unete Ahora!</ion-button>
+                <ion-note>¿YA ERES MIEMBRO?</ion-note>
+                <ion-note class="text" routerLink="/login">INGRESAR</ion-note>
+            </ion-slide>
+
+            <ion-slide >
+                <ion-label>ESTADISTICAS</ion-label>
+                <ion-text class="ion-text-center" color="light">
+                    <h5>Vea los logros, las tendencias y los resúmenes de su actividad</h5>
+                </ion-text>
+                <img src="../../../assets/video/sport.jpg">
+                <ion-button  size="large" color="success" shape="round" expand="block" fill="solid"
+                    routerLink="/registro/gender">¡Unete Ahora!</ion-button>
+                <ion-note>¿YA ERES MIEMBRO?</ion-note>
+                <ion-note class="text" routerLink="/login">INGRESAR</ion-note>
+            </ion-slide>
+        </ion-slides>
+
+    </div>
+</ion-content>

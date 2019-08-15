@@ -4,18 +4,19 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { SlidePage } from './slide/slide.page';
-import { Router } from '@angular/router';
+import { SlidePage } from './componentes/slide/slide.page';
 import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.scss'],
 })
 export class AppComponent {
 
   rootPage: any = SlidePage;
   showSplash = true; // <-- show animation
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
