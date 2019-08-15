@@ -2,17 +2,18 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'slide', loadChildren: './slide/slide.module#SlidePageModule'},
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'news', loadChildren: './news/news.module#NewsPageModule' },
-  { path: 'perfil', loadChildren: './perfil/perfil.module#PerfilPageModule' },
-  { path: 'dietas/dieta', loadChildren: './dieta/dieta.module#DietaPageModule' },
-  { path: 'calculadora', loadChildren: './calculadora/calculadora.module#CalculadoraPageModule' },
-  { path: 'ejertipos', loadChildren: './ejertipos/ejertipos.module#EjertiposPageModule' },
-  { path: 'registro/personal', loadChildren: './registro/personal/personal.module#PersonalPageModule' },
-  { path: 'registro/gender', loadChildren: './registro/gender/gender.module#GenderPageModule' },
-  { path: 'registro/datos', loadChildren: './registro/datos/datos.module#DatosPageModule' },
+  { path: '', loadChildren: './componentes/tabs/tabs.module#TabsPageModule' },
+  { path: 'slide', loadChildren: './componentes/slide/slide.module#SlidePageModule'},
+  { path: 'login', loadChildren: './componentes/login/login.module#LoginPageModule' },
+  { path: 'news', loadChildren: './componentes/news/news.module#NewsPageModule' },
+  { path: 'perfil', loadChildren: './componentes/perfil/perfil.module#PerfilPageModule' },
+  { path: 'dietas/dieta', loadChildren: './componentes/dieta/dieta.module#DietaPageModule' },
+  { path: 'calculadora', loadChildren: './componentes/calculadora/calculadora.module#CalculadoraPageModule' },
+  { path: 'ejertipos', loadChildren: './componentes/ejertipos/ejertipos.module#EjertiposPageModule' },
+  { path: 'registro/personal', loadChildren: './componentes/registro/personal/personal.module#PersonalPageModule' },
+  { path: 'registro/gender', loadChildren: './componentes/registro/gender/gender.module#GenderPageModule' },
+  { path: 'registro/datos', loadChildren: './componentes/registro/datos/datos.module#DatosPageModule' },
+
 
 
   /*{ path: 'dietas', loadChildren: './dietas/dietas.module#DietasPageModule' },
