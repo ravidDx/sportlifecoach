@@ -8,6 +8,7 @@ import {NgForm} from '@angular/forms';
 
 import {Deportista} from '../../interfaces/deportista.interface';
 import {DeportistaService} from '../../services/deportista.service';
+import {ToasterService} from '../../services/toaster.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ModalComponent } from '../../modal/modal.component';
@@ -56,7 +57,7 @@ export class DeportistasComponent implements OnInit {
     apellido:"",
     email:"",
     telefono:"",
-    fechaN:"",
+    fechaN:[],
     peso:"",
     altura:""
   }
@@ -66,7 +67,8 @@ export class DeportistasComponent implements OnInit {
   constructor(private _deportistaService:DeportistaService,
               private _router:Router, 
               public dialog: MatDialog,
-              private changeDetectorRefs:ChangeDetectorRef) 
+              private changeDetectorRefs:ChangeDetectorRef,
+              private toasterService:ToasterService) 
   { 
     this.listar();
   }
@@ -87,6 +89,7 @@ export class DeportistasComponent implements OnInit {
           this.dataSource.data = this.dataSource.data.concat(data['deportista']);
           this.clearForm();
           this.closeModal();
+          this.Success("Deportista guardado OK !!");
           //this.viewAlert("Deportista guardado OK !!")
           this.disabledButton(false);
 
@@ -103,10 +106,12 @@ export class DeportistasComponent implements OnInit {
 
     }else if(this.new==false){
       this.disabledButton(true);
+      
       this._deportistaService.editarDeportista(this.deportistaEdit,this.deportistaEdit["_id"]).subscribe(
         data=>{
           console.log(data);
           this.closeModal();
+          this.Info("Deportista editado OK !!");
          // this.viewAlert("Deportista editado OK !!")
           this.disabledButton(false);
         },
@@ -145,16 +150,15 @@ export class DeportistasComponent implements OnInit {
   }
 
   eliminar(){
-    //console.log('eliminar'); 
-    //console.log(this.indiceData);
+
     this.loadingTrash();
        
     this._deportistaService.eliminarDeportista(this.indiceData).
   		subscribe(
   			data=>{
-       // console.log("Se elimino");
-       // console.log(data);
+       
         this.refresh();
+        this.Error("Deportista eliminado OK !!");
         //this.viewAlert("Deportista eliminado OK !!")
         this.loadTrash.hide();
         this.trash.show();       
@@ -179,13 +183,7 @@ export class DeportistasComponent implements OnInit {
     
     this.new=false;
     this.deportistaEdit=deportista;
-    this.deportistaEdit.fechaN=new Date( (this.deportistaEdit.fechaN)[0] );
     
-    console.log(this.deportistaEdit);
-   
-    //console.log(this.deportistaEdit);
-    /*this.deportistaEdit.fechaN = deportista.fechaN['0'];
-    */
   }
 
   newModal(){
@@ -266,6 +264,19 @@ export class DeportistasComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  Success(title:any){
+    this.toasterService.Success(title);
+  }
+  Info(title:any){
+    this.toasterService.Info(title);
+  }
+  Warning(title:any){
+    this.toasterService.Warning(title);
+  }
+  Error(title:any){
+    this.toasterService.Error(title);
   }
 
 

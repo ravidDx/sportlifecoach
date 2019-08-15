@@ -13,8 +13,10 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class DietaService {
 
-  dietasUrl="http://3.17.55.6:8080/api/dietas";
-  dietaUrl="http://3.17.55.6:8080/api/dieta";
+  url = 'http://18.218.74.254';
+
+  dietasUrl=this.url+":8080/api/dietas";
+  dietaUrl=this.url+":8080/api/dieta";
 
   constructor(private _http:HttpClient, 
               private storage:AngularFireStorage) { }

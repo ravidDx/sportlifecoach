@@ -22,8 +22,9 @@ export class DeportistaService {
   //deportistasUrl="https://ca07c33860904ca2acd454193de1766a.vfs.cloud9.us-east-2.amazonaws.com/api/deportistas";
   //deportistaUrl="https://ca07c33860904ca2acd454193de1766a.vfs.cloud9.us-east-2.amazonaws.com/api/deportista";
 
- deportistasUrl="http://3.17.55.6:8080/api/deportistas";
- deportistaUrl="http://3.17.55.6:8080/api/deportista";
+ url = 'http://18.218.74.254';
+ deportistasUrl=this.url+":8080/api/deportistas";
+ deportistaUrl=this.url+":8080/api/deportista";
 
   
   constructor(private _http:HttpClient) { }
