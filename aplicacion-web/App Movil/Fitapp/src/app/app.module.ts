@@ -9,6 +9,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+// importando variable de firebase
+import {firebaseConfig} from '../environments/environment';
+
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+
+// importando facebook
+import { Facebook } from '@ionic-native/facebook/ngx';
+
+// importando googleplus
+import {GooglePlus} from '@ionic-native/google-plus/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,10 +28,14 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule],
+    AppRoutingModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule],
   providers: [
     StatusBar,
     SplashScreen,
+    Facebook,
+    GooglePlus,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
