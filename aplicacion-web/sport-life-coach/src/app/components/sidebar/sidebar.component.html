@@ -1,9 +1,9 @@
 <div class="logo">
     <a href="https://www.creative-tim.com" class="simple-text">
         <div class="logo-img">
-            <img src="/assets/images/logo-black.png"/>
+            <img [src]='about.imagen'/>
         </div>
-        Admin Fit
+       {{name}}
     </a>
 </div>
 <div class="sidebar-wrapper">
@@ -55,11 +55,13 @@
     </ul>
   </div>
     <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a class="nav-link" [routerLink]="[menuItem.path]">
-                <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title}}</p>
-            </a>
-        </li>
+        <div *ngFor="let menuItem of menuItems" >
+            <li *ngIf="menuItem.rol === rol" routerLinkActive="active" class="{{menuItem.class}} nav-item">
+                <a class="nav-link" [routerLink]="[menuItem.path]" >
+                    <i class="material-icons">{{menuItem.icon}}</i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+        </div>
     </ul>
 </div>

@@ -17,9 +17,14 @@ const routes: Routes =[
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },*/  
+  /*
   {
     path: '',
     component: SingleComponent
+  },*/
+  {
+    path: '',
+    component: SigninComponent
   },
   {
     path: 'signin',

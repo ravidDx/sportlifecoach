@@ -1,0 +1,84 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Seccion - Servicios -</h4>
+                    </div>
+                    <div class="card-body">
+
+                            <div class="card text-center" *ngFor="let element of servicesList; let i=index">
+                                    <div class="card-header">
+                                      Servicio {{i+1}}
+                                    </div>
+                                    <div class="card-body">
+                                      <h5 class="card-title"> <i class="material-icons">{{serviciosIcon[i]}}</i></h5>       
+                                      <h5 class="card-title"> {{element.titulo}}</h5>
+                                      <p class="card-text">{{element.detalle}}</p>
+                                     <p class="card-text"><a href="#" class="btn btn-primary" (click)="editModal(element)" data-toggle="modal" data-target="#dataModal">Editar</a></p>
+   
+                                  </div>
+              
+                            </div>
+                      
+
+              
+                         
+                    </div>
+                </div>
+            </div>
+     
+        </div>
+    </div>
+</div>
+
+<!-- FORMULARIO MODAL -->
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> 
+              <span><i class="fas fa-home"></i> Actualizar Servicio</span>
+          </h5> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="form-entrenamiento" (ngSubmit)="updateService()" #form="ngForm">
+            <div class="modal-body">
+
+                <div class="example-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field>      
+                                <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="service.titulo">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field>
+                                <textarea matInput placeholder="Detalle" rows="5" name="detalle" [(ngModel)]="service.detalle"></textarea>
+                              </mat-form-field>
+                        </div>
+                    </div>
+
+                            
+                </div>
+
+            </div>
+            
+            <div class="modal-footer">
+                
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary" >Actualizar</button>
+              
+                
+            </div>
+        </form>
+      </div>
+    </div>
+</div> 
+  

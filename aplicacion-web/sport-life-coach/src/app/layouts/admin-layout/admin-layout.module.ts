@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
+
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { TableListComponent } from '../../table-list/table-list.component';
@@ -11,6 +12,9 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+
+
+/*COMPONENTES ROL ADMIN*/
 import { DeportistasComponent } from '../../admin/deportistas/deportistas.component';
 import { DeportistaComponent } from '../..//admin/deportista/deportista.component';
 import { EjerciciosComponent } from '../../admin/ejercicios/ejercicios.component';
@@ -20,7 +24,12 @@ import { DietasComponent } from '../..//admin/dietas/dietas.component';
 import { PromocionesComponent } from '../..//admin/promociones/promociones.component';
 import { PromocionComponent } from '../..//admin/promocion/promocion.component';
 
-
+/*COMPONENTES ROL SUPER ADMIN*/
+import { SlidersComponent } from '../../super/sliders/sliders.component';
+import { AboutComponent } from '../../super/about/about.component';
+import { ServicesComponent } from '../../super/services/services.component';
+import { PortafolioComponent } from '../../super/portafolio/portafolio.component';
+import { PostsComponent } from '../../super/posts/posts.component';
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -40,7 +49,8 @@ import {
   MatDialogModule ,
   MatIconModule,
   MatProgressBarModule,
-  MatChipsModule
+  MatChipsModule,
+  MatCardModule
 } from '@angular/material';
 
 
@@ -63,6 +73,7 @@ import {
     MatIconModule,
     MatProgressBarModule,
     MatChipsModule,
+    MatCardModule,
     HttpClientModule
   ],
   declarations: [
@@ -82,6 +93,11 @@ import {
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    SlidersComponent,
+    AboutComponent,
+    ServicesComponent,
+    PortafolioComponent,
+    PostsComponent
   ]
 })
 

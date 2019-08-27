@@ -13,7 +13,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class PromocionService {
 
-  url = 'http://18.218.74.254';
+  url = 'http://18.191.206.194';
 
   promocionesUrl=this.url+":8080/api/promociones";
   promocionUrl=this.url+":8080/api/promocion";

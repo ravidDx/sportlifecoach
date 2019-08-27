@@ -160,6 +160,7 @@ export class DashboardComponent implements OnInit {
 
   
   getCurrentUser(){
+     
     this._authService.isAuth().subscribe(auth =>{
       if(auth){
         console.log("user logged");
@@ -172,6 +173,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onLogout(){
+    //localStorage.removeItem('rol');
     this._authService.logoutUser();
     this.router.navigate(['/signin'])
    

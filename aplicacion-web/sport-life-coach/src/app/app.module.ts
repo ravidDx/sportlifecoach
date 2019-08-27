@@ -50,8 +50,6 @@ import { SocialComponent } from './shared/social/social.component';
 import { ModalComponent } from './modal/modal.component';
 import { SigninComponent } from './auth/signin/signin.component';
 
-
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -75,7 +73,6 @@ import { SigninComponent } from './auth/signin/signin.component';
     SocialComponent,
     ModalComponent,
     SigninComponent
-
   ],
   providers: [AngularFireAuth, AuthService,DeportistaService,ToasterService],
   bootstrap: [AppComponent]

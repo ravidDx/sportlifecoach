@@ -1,17 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { Subscription ,  of } from 'rxjs';
-import { catchError, last, map, tap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+/*INTERFACES */
+import {About} from '../../interfaces/about.interface';
+/*sERVICIOS */
+import {OnepageService} from '../../services/onepage.service';
+import {ToasterService} from '../../services/toaster.service';
 
+/*SERVICIOS FILE UPLOAD -------------------------------------------------------*/
+import {Input, Output, EventEmitter} from '@angular/core';
+import {trigger, state, style, animate, transition} from '@angular/animations';
+import {HttpClient,HttpRequest, HttpEventType, HttpErrorResponse} from '@angular/common/http';
+import {of} from 'rxjs';
+import {catchError, last, map, tap} from 'rxjs/operators';
+import {FileUploadModel} from '../../class/fileuploadmodel'
+/*----------------------------------------------------------------------- */
 
-import {Promocion} from '../../interfaces/promocion.interface';
-import {PromocionService} from '../../services/promocion.service';
+declare var  $: any;
 
 @Component({
-  selector: 'app-promociones',
-  templateUrl: './promociones.component.html',
-  styleUrls: ['./promociones.component.scss'],
+  selector: 'app-about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.scss'],
   animations: [
     trigger('fadeInOut', [
       state('in', style({ opacity: 100 })),
@@ -21,10 +29,12 @@ import {PromocionService} from '../../services/promocion.service';
     ])
   ]
 })
-export class PromocionesComponent implements OnInit {
-  new:boolean;
+
+export class AboutComponent implements OnInit {
+
+  /* ...................... VARIABLES FILE UPLOAD ........................*/
   /** Link text */
-  @Input() text = 'Cargar imagen';
+  @Input() text = 'Actualizar imagen';
   /** Name used in form which will be sent in HTTP request. */
   @Input() param = 'file';
   /** Target URL for file uploading. */
@@ -36,118 +46,136 @@ export class PromocionesComponent implements OnInit {
 
   files: Array<FileUploadModel> = [];
 
-  tiposPromocion= [
-    {id:1, name:'promocion de precio'},
-    {id:2, name:'promocion de regalos'}
-  ]
+  /*................................................................*/
 
-  promocion:Promocion = {
-    tipo:"",
+  aboutList: About[]=[];
+
+  about:About={
     titulo:"",
-    objetivo:"",
-    imagen:""
+    nombre:"",
+    experiencia:"",
+    servicios:"",
+	  imagen:"",
   }
 
-  promociones:Promocion[]=[];
-
-  url:any;
-
-  constructor(private _http: HttpClient,
-              private _promocionService:PromocionService) { 
-
-      this.listar();
-  }
+  constructor(private _onepageService:OnepageService, 
+              private _http: HttpClient,
+              private toasterService:ToasterService) {
+    this.getAbouts();
+   }
 
   ngOnInit() {
   }
 
-
-  guardar(){
-
-    var _this = this;
-    const id = Math.random().toString(36).substring(2);
-
-    _this._promocionService.onUpload(this.files[0].data,id);
-    _this.promocion.imagen = id;
-    console.log(this.promocion);
-
-    this._promocionService.nuevaPromocion(this.promocion).subscribe(
+  /*Obtener data de about*/
+  getAbouts(){
+    this._onepageService.getAbouts()
+    .subscribe(
       data=>{
         console.log(data);
-        this.clearForm();
-        this.closeModal();
-        this.listar();
-        this.files = [];
-
+        for(let key$ in data){
+          let aboutNew = data[key$];
+          this.about = aboutNew;       
+          aboutNew['id']=key$;
+          this.aboutList.push(aboutNew);
+              
+        }
+        
       },
       error=>{
-        console.log('ERROR');
         console.log(error);
-      
       }
 
     );
-
-    
-   
-
+      
   }
 
+
+/*Actualizar data de about*/
+  updateAbout(){
+    var idAbout = this.about['id'];
+    delete this.about['id'];
     
-  listar(){
-    console.log('listar');
-    let _this = this;
-    this._promocionService.consultarPromociones()
-      .subscribe(
-        data=>{
-          data["promociones"].forEach( function(item, indice, array) {
-              _this._promocionService.downloadUrl(item.imagen).subscribe(
+    if(this.files.length!=0){
+
+      const idImg = Math.random().toString(36).substring(2);
+        this._onepageService.onUploadAbout(this.files[0].data,idImg)      
+        .subscribe(
+          data=>{
+            if(data.metadata!=null){
+              this._onepageService.downloadAboutUrl(idImg).subscribe(
                 data=>{
-                  item.imagen=data;         
+                   this.about.imagen=data;
+                   this._onepageService.updateAbout(this.about,idAbout)
+                   .subscribe(
+                     data=>{
+                       console.log(data);
+                       this.closeModal();
+                       this.clearForm();
+                       this.Info("Perfil editado OK !!");
+                     },
+                     error=>{
+                       console.log(error);
+                     }
+           
+                   );
+                       
                 },
                 error=>{
-                  console.log('ERROR');
                   console.log(error);
                 }
               );
+            
+            }
+            
+          },
+          error=>{
+  
+            console.log(error);
+          }
 
-              item.imagen = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-           
-          });
+        );
 
-          this.promociones = data["promociones"];
-          console.log(this.promociones)
+     
+    }else{
+      this._onepageService.updateAbout(this.about,idAbout)
+        .subscribe(
+          data=>{
+            console.log(data);
+            this.closeModal();
+            this.Info("Perfil editado OK !!");
+          },
+          error=>{
+            console.log(error);
+          }
 
-        },
-        error=>{
-          console.log(error);
-        }
-
-      );
+        );
     }
+  }
 
-
-    clearForm(){
-      this.promocion.tipo="";
-      this.promocion.titulo="";
-      this.promocion.objetivo="";
-      this.promocion.imagen = "";
-    }
 
   closeModal(){
-    //$('#dataModal').modal('hide');
+    $('#dataModal').modal('hide');
+  }
+
+  clearForm(){
+    this.files = [];
   }
 
 
-  newModal(){
+  /*MENSAJES ALERTS*/
+  Info(title:any){
+    this.toasterService.Info(title);
   }
 
 
-  select(event:any){
-    this.promocion.tipo=event;
-    console.log(event);
-  }
 
+
+
+
+
+
+  /* ----------------- METODOS UPLOAD -------------------*/
   onClick() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = () => {
@@ -244,45 +272,6 @@ export class PromocionesComponent implements OnInit {
     //this._entrenamientoService.onUpload(file.data);
   }
 
-  getDownload(url:any, indice:any){
-
-    let res;
-  
-    this._promocionService.downloadUrl(url).subscribe(
-      data=>{
-        this.promociones
-        res= data;
-        console.log('-----------------------------');
-        console.log(res);
-
-       
-        //return res;
-      },
-      error=>{
-        console.log('ERROR');
-        console.log(error);
-        res= 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-        //return res;
-      }
-  
-    );
-
-    return 'asd ';
-  
-   
-  }
 
 
 }
-
-
-export class FileUploadModel {
-  data: File;
-  state: string;
-  inProgress: boolean;
-  progress: number;
-  canRetry: boolean;
-  canCancel: boolean;
-  sub?: Subscription;
-}
-
