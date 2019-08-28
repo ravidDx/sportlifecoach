@@ -13,7 +13,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../../componentes/dietas/dietas.module#DietasPageModule'
+            loadChildren: () => import('../../componentes/dietas/dietas.module').then(m => m.DietasPageModule)
           }
         ]
       },
@@ -22,7 +22,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../../componentes/home/home.module#HomePageModule'
+            loadChildren: () => import('../../componentes/home/home.module').then(m => m.HomePageModule)
           }
         ]
       },
@@ -31,7 +31,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../../componentes/ejercicios/ejercicios.module#EjerciciosPageModule'
+            loadChildren: () => import('../../componentes/ejercicios/ejercicios.module').then(m => m.EjerciciosPageModule)
           }
         ]
       },
@@ -40,7 +40,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../../componentes/estadisticas/estadisticas.module#EstadisticasPageModule'
+            loadChildren: () => import('../../componentes/estadisticas/estadisticas.module').then(m => m.EstadisticasPageModule)
           }
         ]
       }

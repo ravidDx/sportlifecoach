@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', loadChildren: './componentes/tabs/tabs.module#TabsPageModule' },
-  { path: 'slide', loadChildren: './componentes/slide/slide.module#SlidePageModule'},
-  { path: 'login', loadChildren: './componentes/login/login.module#LoginPageModule' },
-  { path: 'news', loadChildren: './componentes/news/news.module#NewsPageModule' },
-  { path: 'perfil', loadChildren: './componentes/perfil/perfil.module#PerfilPageModule' },
-  { path: 'dietas/dieta', loadChildren: './componentes/dieta/dieta.module#DietaPageModule' },
-  { path: 'calculadora', loadChildren: './componentes/calculadora/calculadora.module#CalculadoraPageModule' },
-  { path: 'ejertipos', loadChildren: './componentes/ejertipos/ejertipos.module#EjertiposPageModule' },
-  { path: 'registro/personal', loadChildren: './componentes/registro/personal/personal.module#PersonalPageModule' },
-  { path: 'registro/gender', loadChildren: './componentes/registro/gender/gender.module#GenderPageModule' },
-  { path: 'registro/datos', loadChildren: './componentes/registro/datos/datos.module#DatosPageModule' },
+  { path: '', loadChildren: () => import('./componentes/tabs/tabs.module').then(m => m.TabsPageModule) },
+  { path: 'slide', loadChildren: () => import('./componentes/slide/slide.module').then(m => m.SlidePageModule)},
+  { path: 'login', loadChildren: () => import('./componentes/login/login.module').then(m => m.LoginPageModule) },
+  { path: 'news', loadChildren: () => import('./componentes/news/news.module').then(m => m.NewsPageModule) },
+  { path: 'perfil', loadChildren: () => import('./componentes/perfil/perfil.module').then(m => m.PerfilPageModule) },
+  { path: 'dietas/dieta', loadChildren: () => import('./componentes/dieta/dieta.module').then(m => m.DietaPageModule) },
+  { path: 'calculadora', loadChildren: () => import('./componentes/calculadora/calculadora.module').then(m => m.CalculadoraPageModule) },
+  { path: 'ejertipos', loadChildren: () => import('./componentes/ejertipos/ejertipos.module').then(m => m.EjertiposPageModule) },
+{ path: 'registro/personal', loadChildren: () => import('./componentes/registro/personal/personal.module').then(m => m.PersonalPageModule) },
+  { path: 'registro/gender', loadChildren: () => import('./componentes/registro/gender/gender.module').then(m => m.GenderPageModule) },
+  { path: 'registro/datos', loadChildren: () => import('./componentes/registro/datos/datos.module').then(m => m.DatosPageModule) },
+  { path: 'registro/objetivo', loadChildren: './componentes/registro/objetivo/objetivo.module#ObjetivoPageModule' },
+
 
 
 

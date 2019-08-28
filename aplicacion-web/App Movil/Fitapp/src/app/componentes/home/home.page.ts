@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -8,13 +10,14 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
 
+  public usuario: any = {};
   sliderConfig = {
     spaceBetween: 5,
     centeredSlide: true,
     slidesPerView: 1.6
   };
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, public router: Router) { }
 
   notif() {
     this.route.navigate(['news']);

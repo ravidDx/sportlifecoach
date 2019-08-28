@@ -1,0 +1,79 @@
+.fondo {
+    --ion-background-color: #0f0f0f;
+}
+
+.title{
+    font-size:17px;
+    color:white;
+    font-weight: bolder;
+}
+
+ion-icon {
+    font-size:15px;
+}
+
+.card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 1.5em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+}
+
+.imgc {
+    height: 170px;
+}
+
+ion-label {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+ion-icon {
+    font-size:40px;
+    color:white;
+}
+
+ion-input {
+    color:white;
+    font-size:30px;
+    // --background:#0f0f0f;
+}
+
+.gender {
+    margin-right: 16px;
+    margin-left: 16px;
+}
+
+.age {
+    font-size:20px;
+}
+
+.centrar {
+    margin-left:60px;
+}
+
+.pasos {
+    padding: 10px ;
+    margin: 15px;
+    background-color: rgba(22, 22, 22, 0.877);
+    border-radius: 17px 17px 17px 17px;
+}
+
+ion-item{
+    color:white;
+    font-size:17px;
+    font-weight: bold;
+}
+
+ion-button{
+    margin-bottom: 35px;
+    margin-top: 15px;
+    --padding-end:45px;
+    --padding-start:45px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 50px;
+}

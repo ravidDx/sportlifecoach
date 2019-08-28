@@ -18,8 +18,8 @@
           </ion-col>
           <ion-col padding routerLink="/perfil">
             <ion-menu-toggle auto-hide="false">
-              <div class="nick">Maybeth</div>
-              <div class="user">Taty Maybeth</div>
+              <div class="nick">Nickname</div>
+              <div class="user">{{usuario.nombre}}</div>
             </ion-menu-toggle>
           </ion-col>
         </ion-row>
@@ -27,13 +27,34 @@
         
       </ion-header>
       <ion-content>
-        <ion-list>
-            <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/login" color="danger">
+          <!--<ion-list routerLink='/login'>
+              <ion-menu-toggle auto-hide="false">
+                <ion-item  color="danger">
+                    Cerrar Sesión L
+                </ion-item>
+              </ion-menu-toggle>
+          </ion-list>-->
+        <ion-list *ngIf="provFb">
+            <ion-menu-toggle auto-hide="false"  (click)="logoutFB()">
+              <ion-item  color="danger">
                   Cerrar Sesión
               </ion-item>
             </ion-menu-toggle>
         </ion-list>
+        <ion-list *ngIf="provGp">
+          <ion-menu-toggle auto-hide="false"  (click)="logoutGP()">
+            <ion-item  color="danger">
+                Cerrar Sesión
+            </ion-item>
+          </ion-menu-toggle>
+      </ion-list>
+      <ion-list *ngIf="provFi">
+        <ion-menu-toggle auto-hide="false"  (click)="logout()">
+          <ion-item  color="danger">
+              Cerrar Sesión
+          </ion-item>
+        </ion-menu-toggle>
+    </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="menu-content" main></ion-router-outlet>

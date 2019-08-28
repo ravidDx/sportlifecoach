@@ -1,6 +1,6 @@
 <ion-header class="fondo">
   <ion-toolbar>
-    <ion-title text-center class="title">ejertipos</ion-title>
+    <ion-title text-center class="title">Entrenamientos</ion-title>
     <ion-buttons slot="start">
       <ion-back-button color="light" text=""></ion-back-button>
     </ion-buttons>
@@ -8,12 +8,24 @@
 </ion-header>
 
 <ion-content class="fondo">
-  <ion-slides [options]="sliderConfig" paginationType="progress">
-    <ion-slide class="ion-padding-bottom ">Tonificar</ion-slide>
-    <ion-slide class="ion-padding-bottom ">Perder Peso</ion-slide>
-    <ion-slide class="ion-padding-bottom ">Ponerse en Forma</ion-slide>
-    <ion-slide class="ion-padding-bottom ">Ejercicios Individuales</ion-slide>
-    <ion-slide class="ion-padding-bottom ">Abdomen</ion-slide>
-    <ion-slide class="ion-padding-bottom ">Elongación</ion-slide>
-  </ion-slides>
+  <ion-segment scrollable color="warning">
+    <ion-segment-button checked>
+      <ion-label>Tonificar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Perder Peso</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Ponerse en Forma</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Individuales</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Abdomen</ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label>Elongacion</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-content>
