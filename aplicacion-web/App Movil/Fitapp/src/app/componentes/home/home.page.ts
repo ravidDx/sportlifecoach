@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
+// para comprobar usuario logeado
+// import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
 
-  public usuario: any = {};
+  public usuario: any = {}; // para saber existe usuario logeado
   sliderConfig = {
     spaceBetween: 5,
     centeredSlide: true,

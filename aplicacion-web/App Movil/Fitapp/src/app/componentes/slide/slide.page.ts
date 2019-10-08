@@ -14,4 +14,6 @@ export class SlidePage implements OnInit {
 
   ngOnInit() {
   }
+
+
 }

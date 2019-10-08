@@ -3,17 +3,21 @@ import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./componentes/tabs/tabs.module').then(m => m.TabsPageModule) },
-  { path: 'slide', loadChildren: () => import('./componentes/slide/slide.module').then(m => m.SlidePageModule)},
+  { path: 'slide', loadChildren: () => import('./componentes/slide/slide.module').then(m => m.SlidePageModule) },
   { path: 'login', loadChildren: () => import('./componentes/login/login.module').then(m => m.LoginPageModule) },
   { path: 'news', loadChildren: () => import('./componentes/news/news.module').then(m => m.NewsPageModule) },
   { path: 'perfil', loadChildren: () => import('./componentes/perfil/perfil.module').then(m => m.PerfilPageModule) },
   { path: 'dietas/dieta', loadChildren: () => import('./componentes/dieta/dieta.module').then(m => m.DietaPageModule) },
   { path: 'calculadora', loadChildren: () => import('./componentes/calculadora/calculadora.module').then(m => m.CalculadoraPageModule) },
   { path: 'ejertipos', loadChildren: () => import('./componentes/ejertipos/ejertipos.module').then(m => m.EjertiposPageModule) },
-{ path: 'registro/personal', loadChildren: () => import('./componentes/registro/personal/personal.module').then(m => m.PersonalPageModule) },
+  {
+    path: 'registro/personal', loadChildren: () => import('./componentes/registro/personal/personal.module')
+      .then(m => m.PersonalPageModule)
+  },
   { path: 'registro/gender', loadChildren: () => import('./componentes/registro/gender/gender.module').then(m => m.GenderPageModule) },
   { path: 'registro/datos', loadChildren: () => import('./componentes/registro/datos/datos.module').then(m => m.DatosPageModule) },
-  { path: 'registro/objetivo', loadChildren: './componentes/registro/objetivo/objetivo.module#ObjetivoPageModule' },
+  { path: 'reset-password', loadChildren: './componentes/reset-password/reset-password.module#ResetPasswordPageModule' },
+
 
 
 
@@ -25,7 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,  { preloadingStrategy: PreloadAllModules })],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators'
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database'
 
 
-import decode from 'jwt-decode';
+// import decode from 'jwt-decode';
 
 
 @Injectable({

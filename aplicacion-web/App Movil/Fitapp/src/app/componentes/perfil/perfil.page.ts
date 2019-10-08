@@ -1,4 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+// Importando servicios para gestionar autenticacion y usuarios
+import { UsuariosService } from '../../servicios/usuarios.service';
+import { AuthService } from '../../servicios/auth.service';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+// import { User } from '../../share/user.class';
+import { AngularFireDatabase } from '@angular/fire/database';
+// PARA IMAGEN DE PERFIL
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+import { ToastController } from '@ionic/angular';
+// Para validar el formulario
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
@@ -7,9 +20,121 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilPage implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  prof_Frm: FormGroup;
+  usuario: any = {};
+  photo = false;
+  image: string; // 'assets/video/barras.png';
+  // storageRef = firebase.storage().ref();
+  // mountainImagesRef = this.storageRef.child('imagenes/perfil.jpg');
+  validation_messages = {
+    'nombre': [
+      { type: 'required', message: 'Nombre es requerido' }
+    ],
+    'apellido': [
+      { type: 'required', message: 'Apellido es requerido' }
+    ],
+    'date': [
+      { type: 'required', message: 'Fecha es requerida' }
+    ],
+    'peso': [
+      { type: 'required', message: 'Peso es requerido' },
+      { type: 'pattern', message: 'Peso solo contiene valores numericos' }
+    ],
+    'altura': [
+      { type: 'required', message: 'Altura es requerido' },
+      { type: 'pattern', message: 'Altura solo contiene valores numericos' }
+    ],
+    'objetivo': [
+      { type: 'required', message: 'Objetivo es requerida' }
+    ],
+  };
+  constructor(private userService: UsuariosService, private authService: AuthService, private AFauth: AngularFireAuth,
+    private DBFire: AngularFireDatabase, private imagePicker: ImagePicker,
+    public toastController: ToastController,
+    private formBuilder: FormBuilder, public router: Router) {
+    // this.image = 'assets/video/barras.png';
+    try {
+      // EXTRAER USUARIO DE LA BASE
+      this.AFauth.authState.subscribe(user => {
+        this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe(
+          suc => {
+            this.usuario = suc;
+          });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  ngOnInit() {
+    this.prof_Frm = this.createFormGroup();
+  }
+
+  update() {
+    if (this.photo) {
+      // this.usuario.foto = this.image;
+      this.prof_Frm.value.foto = this.image;
+    }
+    alert('cambió: ' + this.prof_Frm.value.foto);
+    this.userService.updateUser(this.prof_Frm.value);
+  }
+
+  AccessGallery() {
+    this.imagePicker.hasReadPermission().then((result) => {
+      if (result === false) {
+        // no callbacks required as this opens a popup which returns async
+        this.imagePicker.requestReadPermission();
+      } else if (result === true) {
+        const options: ImagePickerOptions = {
+          maximumImagesCount: 1,
+          width: 200,
+          quality: 25,
+          outputType: 1,
+        };
+        this.imagePicker.getPictures(options).then((results) => {
+          alert('inicio :' + results);
+          for (let i = 0; i < results.length; i++) {
+            this.image = 'data:image/jpeg;base64,' + results[i];
+            alert('con datos :' + this.image);
+            this.photo = true;
+            // this.uploadImageToFirebase(this.image);
+            // const img = `data:image/jpeg;base64,${results}`;
+            /*const pictures = storage().ref('imagenes');
+            pictures.putString(this.image, 'data_url').then(function(snapshot) {
+              alert('Uploaded a data_url string!');
+            });*/
+          }
+        }, (err) => alert(err));
+      }
+    }, (err) => {
+      alert('err');
+      alert(err);
+    });
+  }
+
+  createFormGroup() {
+    return this.formBuilder.group({
+      genero: new FormControl('', Validators.required),
+      nombre: new FormControl('', Validators.required),
+      apellido: new FormControl('', Validators.required),
+      objetivo: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.required),
+      peso: new FormControl('', Validators.compose([
+        Validators.required, Validators.pattern('[0-9]{2,3}') // *[0-9]{2,3}[.][0-9]
+      ])),
+      altura: new FormControl('', Validators.compose([
+        Validators.required, Validators.pattern('[0-9]{3}')
+      ])),
+    });
+  }
+
+  /*delete_user() {
+    this.AFauth.authState.subscribe( user => {
+      this.DBFire.object('usuarios/' + user.uid).remove().then( usuario => {
+        user.delete();
+        console.log(usuario);
+        this.router.navigate(['slide']);
+      });
+    });
+  }*/
 }

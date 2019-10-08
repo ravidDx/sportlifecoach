@@ -1,26 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+// formularios reactivos
+import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ObjetivoPage } from './objetivo.page';
+import { ResetPasswordPage } from './reset-password.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ObjetivoPage
+    component: ResetPasswordPage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ObjetivoPage]
+  declarations: [ResetPasswordPage]
 })
-export class ObjetivoPageModule {}
+export class ResetPasswordPageModule {}

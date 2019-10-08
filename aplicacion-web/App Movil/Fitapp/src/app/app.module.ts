@@ -14,12 +14,17 @@ import {firebaseConfig} from '../environments/environment';
 
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireDatabase, AngularFireDatabaseModule} from '@angular/fire/database';
 
 // importando facebook
 import { Facebook } from '@ionic-native/facebook/ngx';
 
 // importando googleplus
 import {GooglePlus} from '@ionic-native/google-plus/ngx';
+
+// plugin para escoger imagen en perfil de usuario
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
 
 
 @NgModule({
@@ -30,12 +35,17 @@ import {GooglePlus} from '@ionic-native/google-plus/ngx';
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule],
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    // ReactiveFormsModule, FormsModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     Facebook,
     GooglePlus,
+    AngularFireDatabase,
+    ImagePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
