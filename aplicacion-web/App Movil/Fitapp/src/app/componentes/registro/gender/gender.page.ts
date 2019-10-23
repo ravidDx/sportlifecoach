@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 // mensaje visible al cargar la página al home
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class GenderPage implements OnInit {
     ],
     'password': [
       { type: 'required', message: 'Password es requerido' },
-      { type: 'minlength', message: 'Password dede tener la menos 5 caracteres' },
+      { type: 'minlength', message: 'Password dede tener la menos 6 caracteres' },
       { type: 'pattern', message: 'Password debe contener una mayuscula, minuscula y un numero' }
     ],
     'confirm_password': [
@@ -48,16 +49,19 @@ export class GenderPage implements OnInit {
     ],
     'peso': [
       { type: 'required', message: 'Peso es requerido' },
-      { type: 'pattern', message: 'Peso solo contiene valores numericos' }
+      { type: 'min', message: 'Altura solo contiene valores 30 y 200 kg' },
+      { type: 'max', message: 'Altura solo contiene valores 30 y 200 kg' }
     ],
     'altura': [
       { type: 'required', message: 'Altura es requerido' },
-      { type: 'pattern', message: 'Altura solo contiene valores numericos' }
+      { type: 'min', message: 'Altura solo contiene valores 130 y 220 cm' },
+      { type: 'max', message: 'Altura solo contiene valores 130 y 220 cm' }
     ],
   };
   constructor(private userService: UsuariosService, public router: Router, private formBuilder: FormBuilder,
     private valService: ValidacionesService, private authService: AuthService,
-    public toastController: ToastController, public loadingController: LoadingController) {
+    public toastController: ToastController, public loadingController: LoadingController,
+    private AFauth: AngularFireAuth) {
   }
 
   ngOnInit() {
@@ -76,12 +80,12 @@ export class GenderPage implements OnInit {
       ])),
       matching_passwords: this.matching_passwords_group,
       objetivo: new FormControl('perder peso', Validators.required),
-      date: new FormControl('2019-09-21', Validators.required),
+      date: new FormControl('1994-09-21', Validators.required),
       peso: new FormControl('', Validators.compose([
-        Validators.required, Validators.pattern('[0-9]{2,3}') // *[0-9]{2,3}[.][0-9]
+        Validators.required, Validators.min(30), Validators.max(200)
       ])),
       altura: new FormControl('', Validators.compose([
-        Validators.required, Validators.pattern('[0-9]{3}')
+        Validators.required, Validators.min(130), Validators.max(220)
       ])),
     }, (formGroup: FormGroup) => {
       return this.valService.areEqual(formGroup);
@@ -91,7 +95,7 @@ export class GenderPage implements OnInit {
   pass_validation() {
     return new FormGroup({
       password: new FormControl('', Validators.compose([
-        Validators.minLength(5),
+        Validators.minLength(6),
         Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])),
@@ -101,45 +105,25 @@ export class GenderPage implements OnInit {
     });
   }
 
-  async registrar() {
+  registrar() {
     this.user = this.regForm.value;
-    this.presentLoadingWithOptions();
-    this.userService.registrar(this.user).then(
-      suc => {
-        this.presentToast();
-        // this.presentLoadingWithOptions();
-        this.authService.loginFire(this.user.email, this.user.matching_passwords.password).then(
-          exi => {
-            this.router.navigate(['/tabs/home']);
-          });
-      });
+    this.presentLoadingWithOptions().then(() => {
+      this.userService.registrar(this.user);
+    });
+
   }
 
-  /* MENSAJES TOAST y LOADER*/
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'El usuario se ha creado y logeado exitosamente',
-      duration: 1500,
-      color: 'dark',
-      position: 'middle',
-      animated: true
-    });
-    toast.present();
-  }
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
       spinner: 'bubbles',
-      duration: 1500,
-      message: 'Please wait...',
+      duration: 2560,
+      message: 'Registrando ...',
       translucent: true,
       // cssClass: 'custom-class custom-loading'
     });
     return await loading.present();
   }
 
-  onResetForm() {
-    this.regForm.reset();
-  }
 
 
 }

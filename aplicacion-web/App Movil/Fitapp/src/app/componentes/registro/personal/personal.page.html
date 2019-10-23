@@ -3,7 +3,7 @@
     <ion-icon name="arrow-back" routerLink="/slide"></ion-icon>
     <!--<div ><ion-note slot="end">Skip</ion-note></div>  Skip  -->
     <ion-text class="text">
-      REGISTRO NUEVA CUENTA
+      NOS FALTA ALGO 
     </ion-text>
 
     <form [formGroup]="regForm" (ngSubmit)="registrar()">
@@ -106,7 +106,7 @@
             <div class="login-box ">
               <ion-item color="login" class="font">
                 <ion-label>FECHA DE NACIMIENTO</ion-label>
-                <ion-datetime displayFormat="D MMMM YYYY" formControlName="date" placeholder="Elige"></ion-datetime>
+                <ion-datetime displayFormat="D MMMM YYYY" min="1920" max="2001" formControlName="date" placeholder="Elige"></ion-datetime>
               </ion-item>
               <div class="validation-errors">
                 <div *ngFor="let validation of validation_messages.date">

@@ -1,13 +1,20 @@
 <ion-content>
   <div class="bg text">
-    <ion-icon name="arrow-back" routerLink="/slide"></ion-icon>
     <!--<div ><ion-note slot="end">Skip</ion-note></div>  Skip  -->
-    <ion-text class="text">
-      REGISTRO NUEVA CUENTA
-    </ion-text>
+    <ion-row>
+      <ion-col size="2" class="ion-margin-top">
+          <ion-icon name="arrow-back" routerLink="/slide"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-padding-top ion-margin-top">
+        <ion-text  text-center class="text">
+          REGISTRO NUEVA CUENTA
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
 
     <form [formGroup]="regForm" (ngSubmit)="registrar()">
-      <ion-slides mode="ios" pager="true" [options]="slideOpts" #slides>
+      <ion-slides  mode="ios" pager="true" [options]="slideOpts" #slides>
         <ion-slide>
           <ion-label>
             ¿Eres hombre o mujer?
@@ -66,7 +73,7 @@
           </ion-footer>
         </ion-slide>
 
-        <ion-slide>
+        <ion-slide class="scroll">
           <ion-label class="ion-margin-bottom">
             Brindanos tu información personal
           </ion-label>
@@ -79,7 +86,7 @@
             <div class="validation-errors">
               <div *ngFor="let validation of validation_messages.nombre">
                 <span class="error-message" *ngIf="regForm.get('nombre').hasError(validation.type)
-                   && (regForm.get('nombre').dirty || regForm.get('nombre').touched)">
+                         && (regForm.get('nombre').dirty || regForm.get('nombre').touched)">
                   <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
                   {{ validation.message }}
                 </span>
@@ -92,7 +99,7 @@
             <div class="validation-errors">
               <div *ngFor="let validation of validation_messages.apellido">
                 <span class="error-message" *ngIf="regForm.get('apellido').hasError(validation.type)
-                     && (regForm.get('apellido').dirty || regForm.get('apellido').touched)">
+                           && (regForm.get('apellido').dirty || regForm.get('apellido').touched)">
                   <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
                   {{ validation.message }}
                 </span>
@@ -105,7 +112,7 @@
             <div class="validation-errors">
               <div *ngFor="let validation of validation_messages.email">
                 <span class="error-message" *ngIf="regForm.get('email').hasError(validation.type)
-                     && (regForm.get('email').dirty || regForm.get('email').touched)">
+                           && (regForm.get('email').dirty || regForm.get('email').touched)">
                   <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
                   {{ validation.message }}
                 </span>
@@ -119,9 +126,10 @@
               </ion-item>
               <div class="validation-errors" *ngFor="let validation of validation_messages.password">
                 <span class="error-message" *ngIf="regForm.get('matching_passwords').get('password').hasError(validation.type) 
-                    && (regForm.get('matching_passwords').get('password').dirty || 
-                    regForm.get('matching_passwords').get('password').touched)">
-                  <ion-icon class="error-message" name="information-circle-outline"></ion-icon> {{ validation.message }}
+                          && (regForm.get('matching_passwords').get('password').dirty || 
+                          regForm.get('matching_passwords').get('password').touched)">
+                  <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
+                  {{ validation.message }}
                 </span>
               </div>
 
@@ -132,8 +140,8 @@
               <div class="validation-errors">
                 <div *ngFor="let validation of validation_messages.confirm_password">
                   <span class="error-message" *ngIf="regForm.get('matching_passwords').get('confirm_password').hasError(validation.type)
-                     && (regForm.get('matching_passwords').get('confirm_password').dirty 
-                     || regForm.get('matching_passwords').get('confirm_password').touched)">
+                           && (regForm.get('matching_passwords').get('confirm_password').dirty 
+                           || regForm.get('matching_passwords').get('confirm_password').touched)">
                     <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </span>
@@ -144,13 +152,17 @@
             <div class="validation-errors">
               <div *ngFor="let validation of validation_messages.matching_passwords">
                 <span class="error-message" *ngIf="regForm.get('matching_passwords').hasError(validation.type) 
-                  && (regForm.get('matching_passwords').get('confirm_password').dirty 
-                  || regForm.get('matching_passwords').get('confirm_password').touched)">
-                  <ion-icon class="error-message" name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        && (regForm.get('matching_passwords').get('confirm_password').dirty 
+                        || regForm.get('matching_passwords').get('confirm_password').touched)">
+                  <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
+                  {{ validation.message }}
                 </span>
               </div>
             </div>
           </div>
+
+
+
           <ion-footer>
             <!--<ion-row>
               <ion-col>
@@ -173,7 +185,8 @@
           <div class="login-box ">
             <ion-item color="login" class="font">
               <ion-label>FECHA DE NACIMIENTO</ion-label>
-              <ion-datetime displayFormat="D MMMM YYYY" formControlName="date" placeholder="Elige"></ion-datetime>
+              <ion-datetime displayFormat="D MMMM YYYY" formControlName="date" placeholder="Elige" min="1920"
+                max="2001"></ion-datetime>
             </ion-item>
             <div class="validation-errors">
               <div *ngFor="let validation of validation_messages.date">
@@ -188,7 +201,7 @@
               <ion-col>
                 <ion-item color="login" class="font">
                   <ion-label class="ion-padding-end ion-margin-end dato1">PESO</ion-label>
-                  <ion-input text-end type="text" formControlName="peso" placeholder="60"></ion-input>
+                  <ion-input text-end type="number" formControlName="peso" placeholder="60"></ion-input>
                   <ion-note class="mag">KG</ion-note>
                 </ion-item>
                 <div class="validation-errors">
@@ -206,7 +219,7 @@
               <ion-col>
                 <ion-item color="login" class="font">
                   <ion-label class="ion-margin-end dato">ALTURA</ion-label>
-                  <ion-input text-end type="text" formControlName="altura" placeholder="160"></ion-input>
+                  <ion-input text-end type="number" formControlName="altura" placeholder="160"></ion-input>
                   <ion-note class="mag">cm</ion-note>
                 </ion-item>
                 <div class="validation-errors">

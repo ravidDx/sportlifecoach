@@ -1,19 +1,13 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="shade">
+    <ion-menu-button slot="start" color="light" autoHide="false"></ion-menu-button>
+    <ion-title text-center class="title">Dietas</ion-title>
     <ion-buttons slot="start">
-      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+      <ion-back-button color="light" text=""></ion-back-button>
     </ion-buttons>
-    <ion-row align-items-center >
-      <ion-col size="4"></ion-col>
-      <ion-col size="4" class="title">
-        Dietas
-      </ion-col>
-      <ion-col size="4" text-end>
-        <a routerLink="/news">
-          <ion-icon color="light" name="notifications-outline"></ion-icon>
-        </a>
-      </ion-col>
-    </ion-row>
+    <a slot="end" routerLink="/news">
+      <ion-icon color="light" name="notifications-outline"></ion-icon>
+    </a>
   </ion-toolbar>
 </ion-header>
 
@@ -42,10 +36,10 @@
       <ion-slide *ngFor="let num of list">
         <ion-card>
           <ion-card-header>
-              <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
-              <ion-card-content no-padding>
-                  <img class="imgs" src="../../../assets/video/slides.jpg" />
-              </ion-card-content>
+            <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
+            <ion-card-content no-padding>
+              <img class="imgs" src="../../../assets/video/slides.jpg" />
+            </ion-card-content>
           </ion-card-header>
         </ion-card>
       </ion-slide>
@@ -56,34 +50,34 @@
       </ion-label>
     </ion-item-divider>
     <ion-slides [options]="sliderConfig">
-        <ion-slide *ngFor="let num of list">
-          <ion-card>
-            <ion-card-header>
-                <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
-                <ion-card-content no-padding>
-                    <img class="imgs" src="../../../assets/video/slides.jpg" />
-                </ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
+      <ion-slide *ngFor="let num of list">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
+            <ion-card-content no-padding>
+              <img class="imgs" src="../../../assets/video/slides.jpg" />
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
     <ion-item-divider>
       <ion-label color="light">
         CENA
       </ion-label>
     </ion-item-divider>
     <ion-slides [options]="sliderConfig">
-        <ion-slide *ngFor="let num of list">
-          <ion-card>
-            <ion-card-header>
-                <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
-                <ion-card-content no-padding>
-                    <img class="imgs" src="../../../assets/video/slides.jpg" />
-                </ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
+      <ion-slide *ngFor="let num of list">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
+            <ion-card-content no-padding>
+              <img class="imgs" src="../../../assets/video/slides.jpg" />
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
   </ion-list>
 
 </ion-content>

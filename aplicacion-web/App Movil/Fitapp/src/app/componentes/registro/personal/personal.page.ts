@@ -6,6 +6,9 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'src/app/share/user.class';
+// para visualizar carga o mensajes
+import { LoadingController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-personal',
@@ -36,15 +39,18 @@ export class PersonalPage implements OnInit {
     ],
     'peso': [
       { type: 'required', message: 'Peso es requerido' },
-      { type: 'pattern', message: 'Peso solo contiene valores numericos' }
+      { type: 'min', message: 'Altura solo contiene valores 30 y 200 kg' },
+      { type: 'max', message: 'Altura solo contiene valores 30 y 200 kg' }
     ],
     'altura': [
       { type: 'required', message: 'Altura es requerido' },
-      { type: 'pattern', message: 'Altura solo contiene valores numericos' }
+      { type: 'min', message: 'Altura solo contiene valores 130 y 220 cm' },
+      { type: 'max', message: 'Altura solo contiene valores 130 y 220 cm' }
     ],
   };
   constructor(private userService: UsuariosService, private AFauth: AngularFireAuth,
-    public router: Router, private formBuilder: FormBuilder) {
+    public router: Router, private formBuilder: FormBuilder, public toastController: ToastController,
+    public loadingController: LoadingController) {
     this.AFauth.authState.subscribe(usuario => {
       if (usuario.displayName) {
         const name = usuario.displayName.split(' ');
@@ -72,24 +78,36 @@ export class PersonalPage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       objetivo: new FormControl('perder peso', Validators.required),
-      date: new FormControl('2019-09-21', Validators.required),
+      date: new FormControl('1994-09-21', Validators.required),
       peso: new FormControl('', Validators.compose([
-        Validators.required, Validators.pattern('[0-9]{2,3}') // *[0-9]{2,3}[.][0-9]
+        Validators.required, Validators.min(30) , Validators.max(200)
       ])),
       altura: new FormControl('', Validators.compose([
-        Validators.required, Validators.pattern('[0-9]{3}')
+        Validators.required, Validators.min(130) , Validators.max(220)
       ])),
     });
   }
 
-  async registrar() {
+  registrar() {
     this.user = this.regForm.value;
-    console.log(this.user);
+    // console.log(this.user);
     this.AFauth.authState.subscribe(auth => {
-      this.userService.generic_register(auth, this.user);
-      alert('se realizó');
-      this.router.navigate(['/tabs/home']);
+      this.userService.generic_register(auth, this.user).then(() => {
+        this.OKToast();
+        this.router.navigate(['/tabs/home']);
+      });
     });
   }
 
+  /* MENSAJES TOAST y LOADER*/
+  async OKToast() {
+    const toast = await this.toastController.create({
+      message: 'Bienvenido: Usuario logeado con exito',
+      duration: 2000,
+      color: 'dark',
+      position: 'middle',
+      animated: true
+    });
+    toast.present();
+  }
 }

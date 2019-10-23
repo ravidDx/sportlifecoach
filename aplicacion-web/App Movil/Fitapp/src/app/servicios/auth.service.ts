@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 // para google
-import { Observable } from 'rxjs';
+
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 // import firebase from 'firebase';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 // Para registro
 import { User } from '../share/user.class'; // interface
 import { AngularFireDatabase } from '@angular/fire/database';
-import { UsuariosService } from './usuarios.service';
 
 // mensaje visible para cargar la página home
 import { LoadingController } from '@ionic/angular';
@@ -31,7 +30,6 @@ export class AuthService {
     private platform: Platform, public router: Router,
     private gplus: GooglePlus,
     private DBFire: AngularFireDatabase,
-    private userService: UsuariosService,
     public loadingController: LoadingController,
     public toastController: ToastController) {
   }
@@ -44,7 +42,6 @@ export class AuthService {
   }
 
   loginFire(email: any, password: any) {
-
     return new Promise((resolve, rejected) => {
       this.AFauth.auth.signInWithEmailAndPassword(email, password).then(user => {
         resolve(user);
@@ -55,34 +52,25 @@ export class AuthService {
 
   loginwithFacebook() {
     if (this.platform.is('cordova')) {
-      alert('dentro del if');
       this.fb.login(['email']).then(res => {
-        alert('estado' + res.status);
         firebase.auth().signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
           .then(suc => {
-            alert ('sfb :' + JSON.stringify(suc));
             // devuelve los datos de cierto usuario de acuerdo a su uid
             this.DBFire.object('usuarios/' + suc.user.uid).valueChanges().subscribe(
               s => {
-                if (s !== null) { // si lo que devuelve es null entonces lo crea en la bd realtime de firebase y lo dirige al home
-                  alert('existe');
+                if (s !== null) { // si existe lo lleva al home sino lo lleva al registro
                   this.router.navigate(['/tabs/home']);
                 } else {
-                  alert('no existe');
                   this.router.navigate(['/registro/personal']);
-                  // this.userService.generic_register(suc);
                 }
               });
-              this.presentToast();
           }).catch(ns => {
-            alert('correo o contraseña incorrectos');
-            alert(ns);
+            this.RS_Toast();
           });
       }).catch((error) => {
-        console.log(error);
-        alert('error:' + JSON.stringify(error));
+        this.RS1_Toast();
       });
-    } else {
+    } /*else {
       console.log('dentro del else');
       this.AFauth.auth
         .signInWithPopup(new firebase.auth.FacebookAuthProvider())
@@ -92,10 +80,10 @@ export class AuthService {
           this.DBFire.object('usuarios/' + res.user.uid).valueChanges().subscribe(
             s => {
               if (s !== null) { // si lo que devuelve es null entonces lo crea en la bd realtime de firebase y lo dirige al home
-                alert('existe');
+                // alert('existe');
                 this.router.navigate(['/tabs/home']);
               } else {
-                alert('no existe');
+                // alert('no existe');
                 this.router.navigate(['/registro/personal']);
                 // this.userService.generic_register(res);
               }
@@ -106,36 +94,55 @@ export class AuthService {
           alert('correo o contraseña incorrectos'); // cuando no se conecta con firebase - eror de firebase
           alert(ns);
         });
-    }
+    }*/
+  }
+  /* MENSAJES DE FACEBOOK  Y GOOGLE LOGIN */
+  async RS_Toast() {
+    const toast = await this.toastController.create({
+      message: 'Error de conexion con servidor o email ya asociado con otra cuenta',
+      duration: 2000,
+      color: 'dark',
+      position: 'middle',
+      animated: true
+    });
+    toast.present();
+  }
+  async RS1_Toast() {
+    const toast = await this.toastController.create({
+      message: 'Verificar la conexión con internet',
+      duration: 2000,
+      color: 'dark',
+      position: 'middle',
+      animated: true
+    });
+    toast.present();
   }
 
   loginGoogle() {
     if (this.platform.is('cordova')) {
-      // this.nativeGoogleLogin();
       this.gplus.login({
+        scopes: '',
         webClientId: '67946954997-jekd82u5gbsuqpaf595qnv6unqg2srn7.apps.googleusercontent.com',
         offline: true
       }).then(res => {
-        alert('antes cred');
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(suc => {
             // devuelve los datos de cierto usuario de acuerdo a su uid
             this.DBFire.object('usuarios/' + suc.user.uid).valueChanges().subscribe(
               s => {
-                if (s !== null) { // si lo que devuelve es null entonces lo crea en la bd realtime de firebase y lo dirige al home
-                  alert('existe');
+                if (s !== null) { // si existe lo lleva al home sino lo lleva al registro
+                  this.router.navigate(['/tabs/home']);
                 } else {
-                  alert('no existe');
-                  // this.userService.generic_register(suc);
+                  this.router.navigate(['/registro/personal']);
                 }
               });
-            this.router.navigate(['/tabs/home']);
-            alert('ya ingreso');
           }).catch(ns => {
-            alert('Usuario o contraseña incorrectos - erro de firebase');
+            this.RS_Toast();
           });
+      }).catch((error) => {
+        this.RS1_Toast();
       });
-    } /* else {
+    } /*else {
       // this.webGoogleLogin();
       console.log('dentro del else');
       this.AFauth.auth
@@ -149,13 +156,13 @@ export class AuthService {
                 alert('existe');
               } else {
                 alert('no existe');
-                this.userService.generic_register(res);
+                // this.userService.generic_register(res);
               }
             });
           this.router.navigate(['/tabs/home']);
         }).catch(ns => {
+          alert(JSON.stringify(ns));
           alert('correo o contraseña incorrectos -error de firebase');
-          console.log(ns);
         });
     }*/
   }
@@ -163,44 +170,62 @@ export class AuthService {
   logOutOfFacebook() {
     this.AFauth.auth.signOut();
     if (this.platform.is('cordova')) {
-      this.fb.logout();
+      this.fb.logout().then( suc => {
+        this.router.navigate(['/login']);
+      });
     }
-    this.router.navigate(['/login']);
   }
 
   logOutGooglePlus() {
     this.AFauth.auth.signOut();
     if (this.platform.is('cordova')) {
-      this.gplus.logout();
+      this.gplus.logout().then( suc => {
+        this.router.navigate(['/login']);
+      });
     }
-    this.router.navigate(['/login']);
   }
 
   reset_password(email: string) {
     this.AFauth.auth.sendPasswordResetEmail(email)
-      .then(res => {
-        alert('te hemos enviado el link de reset password a tu correo');
-      }).catch(err => {
-        alert('el correo no existe en nuestra bdd, verifica el email ingresado');
+      .then(() => {
+        this.okToast();
+      }).catch((err) => {
+        if (err.code === 'auth/user-not-found') {
+          this.badToast();
+        } else {
+          this.badToast1();
+        }
       });
   }
 
-  /* MENSAJES TOAST PARA LOGEO*/
-  /*async presentLoadingWithOptions() {
-    const loading = await this.loadingController.create({
-      // spinner: null,
-      duration: 1500,
-      message: 'Please wait...',
-      translucent: true,
-      // cssClass: 'custom-class custom-loading'
-    });
-    return await loading.present();
-  }*/
-  async presentToast() {
+  /* MENSAJES TOAST PARA RESETEO DE PASSWORD*/
+  async okToast() {
     const toast = await this.toastController.create({
-      message: 'El usuario se ha logeado exitosamente',
+      message: 'Te hemos enviado un link de reset password a tu correo',
       duration: 2000,
-      color: 'dark',
+      color: 'light',
+      position: 'middle',
+      animated: true
+    });
+    toast.present();
+  }
+
+  async badToast() {
+    const toast = await this.toastController.create({
+      message: 'Link no eviando, no se ha encontrado ningun usuario con el correo ingresado',
+      duration: 2000,
+      color: 'light',
+      position: 'middle',
+      animated: true
+    });
+    toast.present();
+  }
+
+  async badToast1() {
+    const toast = await this.toastController.create({
+      message: 'Link no eviando : verfique su conexion a internet',
+      duration: 2000,
+      color: 'light',
       position: 'middle',
       animated: true
     });

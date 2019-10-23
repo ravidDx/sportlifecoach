@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 // Importando servicios para gestionar autenticacion y usuarios
 import { UsuariosService } from '../../servicios/usuarios.service';
-import { AuthService } from '../../servicios/auth.service';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-// import { User } from '../../share/user.class';
+// para traer usuario de la base realtime
 import { AngularFireDatabase } from '@angular/fire/database';
 // PARA IMAGEN DE PERFIL
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
-import { ToastController } from '@ionic/angular';
 // Para validar el formulario
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+// mensaje
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -48,9 +48,8 @@ export class PerfilPage implements OnInit {
       { type: 'required', message: 'Objetivo es requerida' }
     ],
   };
-  constructor(private userService: UsuariosService, private authService: AuthService, private AFauth: AngularFireAuth,
+  constructor(private userService: UsuariosService, private AFauth: AngularFireAuth, public alertController: AlertController,
     private DBFire: AngularFireDatabase, private imagePicker: ImagePicker,
-    public toastController: ToastController,
     private formBuilder: FormBuilder, public router: Router) {
     // this.image = 'assets/video/barras.png';
     try {
@@ -75,7 +74,7 @@ export class PerfilPage implements OnInit {
       // this.usuario.foto = this.image;
       this.prof_Frm.value.foto = this.image;
     }
-    alert('cambió: ' + this.prof_Frm.value.foto);
+    // alert('cambió: ' + this.prof_Frm.value.foto);
     this.userService.updateUser(this.prof_Frm.value);
   }
 
@@ -97,12 +96,6 @@ export class PerfilPage implements OnInit {
             this.image = 'data:image/jpeg;base64,' + results[i];
             alert('con datos :' + this.image);
             this.photo = true;
-            // this.uploadImageToFirebase(this.image);
-            // const img = `data:image/jpeg;base64,${results}`;
-            /*const pictures = storage().ref('imagenes');
-            pictures.putString(this.image, 'data_url').then(function(snapshot) {
-              alert('Uploaded a data_url string!');
-            });*/
           }
         }, (err) => alert(err));
       }
@@ -128,13 +121,28 @@ export class PerfilPage implements OnInit {
     });
   }
 
-  /*delete_user() {
-    this.AFauth.authState.subscribe( user => {
-      this.DBFire.object('usuarios/' + user.uid).remove().then( usuario => {
+  delete_user() {
+    this.AFauth.authState.subscribe(user => {
+      this.DBFire.object('usuarios/' + user.uid).remove().then(usuario => {
         user.delete();
         console.log(usuario);
         this.router.navigate(['slide']);
       });
     });
-  }*/
+  }
+
+  async msj_delete() {
+    const alert = await this.alertController.create({
+      header: 'Eliminar Usuario',
+      message: 'Estas seguro que deseas eliminar tu usuario en FitApp',
+      buttons: ['Cancel', {
+        text: 'OK',
+        handler: () => {
+          this.delete_user();
+        }
+      }
+      ]
+    });
+    await alert.present();
+  }
 }

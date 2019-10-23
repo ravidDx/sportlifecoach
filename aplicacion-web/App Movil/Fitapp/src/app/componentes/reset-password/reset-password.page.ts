@@ -37,7 +37,6 @@ export class ResetPasswordPage implements OnInit {
 
   // restablecer contraseña
   resetPass() {
-    console.log(this.reset_form.value.email);
     this.authService.reset_password(this.reset_form.value.email);
   }
 }

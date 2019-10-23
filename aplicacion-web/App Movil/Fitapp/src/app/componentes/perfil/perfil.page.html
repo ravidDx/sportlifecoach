@@ -1,7 +1,6 @@
-<ion-header class="fondo">
-  <ion-toolbar>
-    <!--<a><ion-icon routerLink="/tabs/home" slot ="start" name="arrow-back"></ion-icon></a>-->
-    <ion-title text-center class="title">Calculadora</ion-title>
+<ion-header>
+  <ion-toolbar color="shade">
+    <ion-title class="title">Perfil</ion-title>
     <ion-buttons slot="start">
       <ion-back-button color="light" text=""></ion-back-button>
     </ion-buttons>
@@ -80,14 +79,14 @@
       </ion-select>
     </ion-item>
     <div class="validation-errors">
-        <div *ngFor="let validation of validation_messages.objetivo">
-          <span class="error-message" *ngIf="prof_Frm.get('objetivo').hasError(validation.type)
+      <div *ngFor="let validation of validation_messages.objetivo">
+        <span class="error-message" *ngIf="prof_Frm.get('objetivo').hasError(validation.type)
                        && (prof_Frm.get('objetivo').dirty || prof_Frm.get('objetivo').touched)">
-            <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
-            {{ validation.message }}
-          </span>
-        </div>
+          <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
+          {{ validation.message }}
+        </span>
       </div>
+    </div>
     <ion-item>
       <ion-label class="ion-padding-end ion-margin-end font">PESO</ion-label>
       <ion-input text-end type="text" formControlName="peso" value={{usuario.peso}}>
@@ -110,14 +109,14 @@
       <ion-note slot="end" class="mg">cm</ion-note>
     </ion-item>
     <div class="validation-errors">
-        <div *ngFor="let validation of validation_messages.altura">
-          <span class="error-message" *ngIf="prof_Frm.get('altura').hasError(validation.type)
+      <div *ngFor="let validation of validation_messages.altura">
+        <span class="error-message" *ngIf="prof_Frm.get('altura').hasError(validation.type)
                        && (prof_Frm.get('altura').dirty || prof_Frm.get('altura').touched)">
-            <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
-            {{ validation.message }}
-          </span>
-        </div>
+          <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
+          {{ validation.message }}
+        </span>
       </div>
+    </div>
     <ion-item>
       <ion-label class="ion-padding-end ion-margin-end font">FECHA</ion-label>
       <ion-datetime text-end displayFormat="D MMMM YYYY" formControlName="date" value={{usuario.date}}
@@ -125,25 +124,24 @@
       </ion-datetime>
     </ion-item>
     <div class="validation-errors">
-        <div *ngFor="let validation of validation_messages.date">
-          <span class="error-message" *ngIf="prof_Frm.get('date').hasError(validation.type)
+      <div *ngFor="let validation of validation_messages.date">
+        <span class="error-message" *ngIf="prof_Frm.get('date').hasError(validation.type)
                        && (prof_Frm.get('date').dirty || prof_Frm.get('date').touched)">
-            <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
-            {{ validation.message }}
-          </span>
-        </div>
+          <ion-icon class="error-message" name="information-circle-outline"></ion-icon>
+          {{ validation.message }}
+        </span>
       </div>
+    </div>
     <ion-row padding-bottom>
-      <ion-col size=12 class="ion-margin-top ion-text-center ">
-        <ion-button type="submit" color="success" shape="round" expand="full" fill="solid" >GUARDAR
+      <ion-col class="ion-margin-top ion-text-center ">
+        <ion-button type="submit" color="success" shape="round" expand="full" fill="solid">GUARDAR
         </ion-button>
       </ion-col>
+      <!--<ion-col class="ion-margin-top ion-text-center ">
+        <ion-button (click)="msj_delete()" color="danger" shape="round" expand="full" fill="solid">ELIMINAR CUENTA
+        </ion-button>
+      </ion-col>-->
     </ion-row>
+
   </form>
-  <ion-row padding-bottom>
-      <ion-col size=12 class="ion-margin-top ion-text-center ">
-        <ion-button (click)="delete_user()" color="warning" shape="round" expand="full" fill="solid" >ELIMINAR CUENTA
-        </ion-button>
-      </ion-col>
-    </ion-row>
-</ion-content> 
+</ion-content>

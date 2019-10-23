@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 
+// para traer usuario de la base realtime
+import { AngularFireDatabase } from '@angular/fire/database';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -32,7 +35,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    public router: Router, private AFauth: AngularFireAuth
+    public router: Router, private AFauth: AngularFireAuth, private DBFire: AngularFireDatabase
   ) {
     this.initializeApp();
     // para saber si existe un usuario logeado
@@ -49,8 +52,9 @@ export class AppComponent {
         // this.router.navigate(['/login']);
       } else {
         // console.log('dentro else app');
-        this.usuario.nombre = user.displayName;
-        // console.log (this.usuario.nombre);
+        this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
+          this.usuario = us;
+        });
 
         if (user.providerData[0].providerId === 'facebook.com') {
           console.log('facebook');
@@ -64,15 +68,11 @@ export class AppComponent {
           this.provFi = false;
         } else if (user.providerData[0].providerId === 'password') {
           console.log('firebase');
-          this.usuario.nombre = 'Nuevo Usuario';
           this.provFi = true;
           this.provGp = false;
           this.provFb = false;
         }
       }
-      /*if (this.usuario.nombre === null) {
-        this.usuario.nombre = 'Nuevo Usuario';
-      }*/
     });
   }
 
