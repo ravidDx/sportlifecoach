@@ -4,21 +4,30 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Dieta: {{dieta.tipo}}</h4>
+                        <h4 class="card-title ">Dieta</h4>
                     </div>
                     <div class="card-body">
                       
                         <div class="row row-1 animated fadeInRight">
 
                             <div class="card-body">
-                                <h5 class="card-title">{{dieta.titulo | uppercase}} </h5>
+                                <h5 class="card-title" style="margin-bottom: 0px;"> <strong>{{dieta.titulo | uppercase}}</strong>  </h5>
+                                <p class="card-text">{{dieta.tipo}}</p>
+
+                                <p style="margin-bottom: 0px;"><strong>Objetivo:</strong></p>
                                 <p class="card-text">{{dieta.objetivo}}</p>
+                                
+                                <p> <strong>Dificultad: </strong> {{dieta.dificultad}}&nbsp;&nbsp; 
+                                    <strong>Duracion: </strong> {{dieta.tiempo}}&nbsp;&nbsp;  
+                                    <strong>Porciones: </strong> {{dieta.porciones}}
+                                </p>
+                                
    
                             </div>
                       
                         </div>
 
-                        <hr>
+                        <hr style="margin-top: 0px; margin-bottom: 0px;">
 
                         <div class="row row-1 animated fadeInRight">
                             <div class="col-sm-6 col-md-5" >
@@ -29,14 +38,14 @@
 
                               <div class="col-sm-6 col-md-7">
                                     <br>
-                                    <h4>Ingredientes</h4>
+                                    <h4><strong>Ingredientes</strong></h4>
                                     <p *ngFor="let item of dieta.ingredientes; let i = index"  ><span class="">*</span> {{item.value}}</p>
                               </div>
                         </div>
 
                         <div class="row row-1 animated fadeInRight">
                               <div class="col-sm-12">
-                                    <h4>Preparacion</h4>
+                                    <h4><strong>Preparacion</strong></h4>
                                     <p *ngFor="let item of dieta.preparacion; let i = index"  ><span class="">{{item.id}}. </span> {{item.value}}</p>
                               </div>
                         </div>

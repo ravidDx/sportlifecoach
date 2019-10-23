@@ -13,7 +13,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class PromocionService {
 
-  url = 'http://18.191.206.194';
+  url = window['urlApi'];
 
   promocionesUrl=this.url+":8080/api/promociones";
   promocionUrl=this.url+":8080/api/promocion";
@@ -35,7 +35,8 @@ export class PromocionService {
   }
 
   eliminarPromocion(indice:string){
-  	let url =`${this.promocionUrl}/${indice}`;
+    let url =`${this.promocionUrl}/${indice}`;
+    console.log(url)
   	return this._http.delete(url);
   }
 

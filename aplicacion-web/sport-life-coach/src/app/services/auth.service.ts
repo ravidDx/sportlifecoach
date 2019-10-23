@@ -6,7 +6,12 @@ import {map} from 'rxjs/operators'
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database'
 
 
+
+import decode from 'jwt-decode';
+import { EmailValidator } from '@angular/forms';
+
 // import decode from 'jwt-decode';
+
 
 
 @Injectable({
@@ -25,7 +30,6 @@ export class AuthService {
   		this.afAuth.auth.signInWithEmailAndPassword(email,pass)
   		  .then(userData =>resolve(userData),
   		  err => reject(err))
-
   	});
 
   }
@@ -96,6 +100,15 @@ export class AuthService {
   decode() {
     return decode(localStorage.getItem('token'));
   }
+
+
+  /*
+  *Registro con email
+  */
+ signUpWithEmail(email:any, pass:any):Promise<firebase.auth.UserCredential>{
+    return this.afAuth.auth.createUserWithEmailAndPassword(email,pass)
+ }
+
 
 
 

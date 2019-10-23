@@ -1,0 +1,166 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Contacto</h4>
+                    </div>
+                    <div class="card-body">
+  
+                        <form>
+                            <div class="row">
+                                <div class="col-md-8">
+                                  <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Direccion" [value]="contacto.direccion" disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Ciudad" [value]="contacto.ciudad" disabled>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                          
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Telefono" type="text" [value]="contacto.telefono" disabled>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Email" type="email" [value]="contacto.email" disabled>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+
+                            <br>
+                            <h4>Redes sociales - <i class="fab fa-facebook-square"></i> - <i class="fab fa-instagram"></i> - <i class="fab fa-twitter"></i></h4> 
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Facebook" type="text" [value]="contacto.facebook" disabled>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Instagram" type="text" [value]="contacto.instagram" disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Twiter" type="text" [value]="contacto.twitter" disabled>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <br>
+
+                            <p class="card-text"><a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#dataModal"><i class="fas fa-edit"></i>  Editar</a></p>
+                             
+                   
+                              <div class="clearfix"></div>
+                        </form>
+
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- FORMULARIO MODAL -->
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> 
+              <span><i class="fas fa-edit"></i> Actualizar Contacto</span>
+          </h5> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="form-entrenamiento" (ngSubmit)="updateContacto()" #form="ngForm">
+            <div class="modal-body">
+
+                <div class="example-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field>      
+                                <input matInput placeholder="Ciudad" type="text" name="ciudad" [(ngModel)]="contacto.ciudad">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field>      
+                                <input matInput placeholder="Direccion" type="text" name="direccion" [(ngModel)]="contacto.direccion">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field>      
+                                <input matInput placeholder="Email" type="email" name="email" [(ngModel)]="contacto.email">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field>      
+                                <input matInput placeholder="Telefono" type="text" name="telefono" [(ngModel)]="contacto.telefono">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field>      
+                                <input matInput placeholder="Facenook" type="text" name="facebook" [(ngModel)]="contacto.facebook">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>      
+                                <input matInput placeholder="Instagram" type="text" name="instagram" [(ngModel)]="contacto.instagram">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>      
+                                <input matInput placeholder="Twitter" type="text" name="twitter" [(ngModel)]="contacto.twitter">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                        
+
+                        
+                    
+                </div>
+
+            </div>
+            
+            <div class="modal-footer">
+                
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary" >Actualizar</button>
+              
+                
+            </div>
+        </form>
+      </div>
+    </div>
+</div> 
+  
+  

@@ -27,57 +27,30 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-item-divider>
-      <ion-label color="light">
-        DESAYUNO
-      </ion-label>
-    </ion-item-divider>
-    <ion-slides [options]="sliderConfig">
-      <ion-slide *ngFor="let num of list">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
-            <ion-card-content no-padding>
-              <img class="imgs" src="../../../assets/video/slides.jpg" />
-            </ion-card-content>
-          </ion-card-header>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-    <ion-item-divider>
-      <ion-label color="light">
-        ALMUERZO
-      </ion-label>
-    </ion-item-divider>
-    <ion-slides [options]="sliderConfig">
-      <ion-slide *ngFor="let num of list">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
-            <ion-card-content no-padding>
-              <img class="imgs" src="../../../assets/video/slides.jpg" />
-            </ion-card-content>
-          </ion-card-header>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-    <ion-item-divider>
-      <ion-label color="light">
-        CENA
-      </ion-label>
-    </ion-item-divider>
-    <ion-slides [options]="sliderConfig">
-      <ion-slide *ngFor="let num of list">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle color="dark">Card Subtitle</ion-card-subtitle>
-            <ion-card-content no-padding>
-              <img class="imgs" src="../../../assets/video/slides.jpg" />
-            </ion-card-content>
-          </ion-card-header>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
+
+    <ion-list *ngFor="let item of tiposDieta">
+        <ion-item-divider>
+            <ion-label color="light" text-uppercase>
+              {{item.nombre}}
+            </ion-label>
+        </ion-item-divider>
+        <ion-slides [options]="sliderConfig">
+            <ion-slide *ngFor="let dieta of item.dietas" (click)="viewItem(dieta)" >
+              <ion-card>
+                <ion-card-header>
+                    <ion-card-subtitle color="dark">{{dieta.titulo}}</ion-card-subtitle>
+                    <ion-card-content no-padding>
+                        <img class="imgs" [src]="dieta.imagen" />
+                    </ion-card-content>
+                </ion-card-header>
+              </ion-card>
+            </ion-slide>
+        </ion-slides>
+
+    </ion-list>
+ 
+
+
   </ion-list>
 
 </ion-content>

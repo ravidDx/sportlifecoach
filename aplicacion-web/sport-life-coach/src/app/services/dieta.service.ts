@@ -13,7 +13,8 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class DietaService {
 
-  url = 'http://18.191.206.194';
+
+  url = window['urlApi'];
 
   dietasUrl=this.url+":8080/api/dietas";
   dietaUrl=this.url+":8080/api/dieta";

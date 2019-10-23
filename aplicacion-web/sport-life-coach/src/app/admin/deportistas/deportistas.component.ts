@@ -8,6 +8,7 @@ import {NgForm} from '@angular/forms';
 
 import {Deportista} from '../../interfaces/deportista.interface';
 import {DeportistaService} from '../../services/deportista.service';
+import {AuthService} from '../../services/auth.service';
 import {ToasterService} from '../../services/toaster.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -42,6 +43,8 @@ export class DeportistasComponent implements OnInit {
   indiceData:any;
   eventData:any; 
 
+  tiposObjetivo:string[] = ['Perder peso y quemar grasa','Ganar masa muscular y fuerza', 'Vivir de forma saludable y mantener mi peso'];
+
   deportista:Deportista = {
     nombre:"",
     apellido:"",
@@ -49,7 +52,12 @@ export class DeportistasComponent implements OnInit {
     telefono:"",
     fechaN:"",
     peso:"",
-    altura:""
+    altura:"",
+    foto:"https://www.nicepng.com/png/full/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
+    genero:"",
+    objetivo:"",
+    observaciones:"",
+    rol:"user"
   }
 
   deportistaEdit:Deportista = {
@@ -59,17 +67,24 @@ export class DeportistasComponent implements OnInit {
     telefono:"",
     fechaN:[],
     peso:"",
-    altura:""
+    altura:"",
+    foto:"",
+    genero:"",
+    objetivo:"",
+    observaciones:"",
+    rol:""
   }
 
   deportistas:Deportista[] =[];
+
+  favoriteSeason: string; 
  
   constructor(private _deportistaService:DeportistaService,
               private _router:Router, 
               public dialog: MatDialog,
               private changeDetectorRefs:ChangeDetectorRef,
-              private toasterService:ToasterService) 
-  { 
+              private toasterService:ToasterService,
+              private _authService:AuthService) { 
     this.listar();
   }
 
@@ -79,13 +94,17 @@ export class DeportistasComponent implements OnInit {
 
   
   guardar(){
-    
+    console.log(this.deportista)
+
     if(this.new==true){
       this.disabledButton(true);
 
       this._deportistaService.nuevoDeportista(this.deportista).subscribe(
         data=>{
           console.log(data['deportista'])
+          //Guardar credenciales email y pass en firebase
+          this.guardarAuthUser(this.deportista.email,this.deportista.email);       
+          
           this.dataSource.data = this.dataSource.data.concat(data['deportista']);
           this.clearForm();
           this.closeModal();
@@ -124,6 +143,16 @@ export class DeportistasComponent implements OnInit {
       
     }
     
+  }
+
+  guardarAuthUser(email:any, pass:any){
+    this._authService.signUpWithEmail(email,pass)
+    .then(data=>{
+      console.log('succes: '+data.user)
+    })
+    .catch(err=>{
+      console.log('error: '+err)
+    })
   }
 
   listar(){
@@ -199,6 +228,15 @@ export class DeportistasComponent implements OnInit {
     this.deportista.fechaN="";
     this.deportista.peso="";
     this.deportista.altura="";
+    this.deportista.genero="";
+    this.deportista.objetivo="";
+    this.deportista.observaciones="";
+  }
+
+  select(event:any){
+    console.log(event)
+    //this.deportista.objetivo=event;
+ 
   }
 
 

@@ -10,6 +10,9 @@ const routes: Routes = [
   { path: 'dietas/dieta', loadChildren: () => import('./componentes/dieta/dieta.module').then(m => m.DietaPageModule) },
   { path: 'calculadora', loadChildren: () => import('./componentes/calculadora/calculadora.module').then(m => m.CalculadoraPageModule) },
   { path: 'ejertipos', loadChildren: () => import('./componentes/ejertipos/ejertipos.module').then(m => m.EjertiposPageModule) },
+  { path: 'ejercicio/:id', loadChildren: './componentes/ejercicio/ejercicio.module#EjercicioPageModule' },
+  { path: 'dieta/:id', loadChildren: () => import('./componentes/dieta/dieta.module').then(m => m.DietaPageModule) },
+  
   {
     path: 'registro/personal', loadChildren: () => import('./componentes/registro/personal/personal.module')
       .then(m => m.PersonalPageModule)
@@ -17,6 +20,7 @@ const routes: Routes = [
   { path: 'registro/gender', loadChildren: () => import('./componentes/registro/gender/gender.module').then(m => m.GenderPageModule) },
   { path: 'registro/datos', loadChildren: () => import('./componentes/registro/datos/datos.module').then(m => m.DatosPageModule) },
   { path: 'reset-password', loadChildren: './componentes/reset-password/reset-password.module#ResetPasswordPageModule' },
+  
 
 
 

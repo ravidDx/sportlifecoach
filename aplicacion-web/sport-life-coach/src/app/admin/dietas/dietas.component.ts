@@ -5,8 +5,13 @@ import { Subscription ,  of } from 'rxjs';
 import { catchError, last, map, tap } from 'rxjs/operators';
 
 import {Dieta} from '../../interfaces/dieta.interface';
-import {DietaService} from '../../services/dieta.service';
 
+/*sERVICIOS */
+import {CategoriaService} from '../../services/categoria.service';
+import {DietaService} from '../../services/dieta.service';
+import {ToasterService} from '../../services/toaster.service';
+
+declare var  $: any;
 
 
 @Component({
@@ -38,6 +43,8 @@ export class DietasComponent implements OnInit {
     files: Array<FileUploadModel> = [];
 
 
+    btnSave:boolean = false;
+
   tiposDieta= [
     {id:1, name:'bajo en calorias'},
     {id:2, name:'bajo en proteinas'},
@@ -57,65 +64,162 @@ export class DietasComponent implements OnInit {
     tipo:"",
     titulo:"",
     objetivo:"",
+    tiempo:"",
+    dificultad:"",
+	  porciones:"",
+    ingredientes:[],
+    preparacion:[],
+    imagen:''
+  }
+
+  dietaEdit:Dieta = {
+    tipo:"",
+    titulo:"",
+    objetivo:"",
+    tiempo:"",
+    dificultad:"",
+	  porciones:"",
     ingredientes:[],
     preparacion:[],
     imagen:''
   }
 
   dietas:Dieta[]=[];
+  dietasCopy:Dieta[]=[];
+
+  tiposDietas:any = []
+  tiposTiempo=['15 min','30 min','45 min','60 min','1h 15min','1h 30min','1h 45min']
+  tiposDificultad=['baja','media','alta']
+
+  load=false;
+  indiceDelete:any;
+  eventData:any;
+  loadTrash:any;
+  trash:any;
+
+  new:boolean = true;
 
   constructor(private _http: HttpClient,
-              private _dietaService:DietaService) 
+              private _dietaService:DietaService,
+              private _categoriaService:CategoriaService,
+              private _toasterService:ToasterService) 
   { 
     this.listar();
+ 
   }
 
   ngOnInit() {
   }
 
+  
+
 
   guardar(){
-    var _this = this;
-    const id = Math.random().toString(36).substring(2);
-    this.dieta.ingredientes = this.itemsIngredientes;
-    this.dieta.preparacion = this.itemsPreparacion;
-    _this._dietaService.onUpload(this.files[0].data,id);
-    _this.dieta.imagen = id;
-    console.log(this.dieta);
+    this.btnSave=true;
+    if(this.new==true){
+      
+      const id = Math.random().toString(36).substring(2);
+      this.dieta.ingredientes = this.itemsIngredientes;
+      this.dieta.preparacion = this.itemsPreparacion;
+      this._dietaService.onUpload(this.files[0].data,id);
+      this.dieta.imagen = id;
+      
+      this.nuevaDieta();
 
+    }else{
+
+      this.dietaEdit.ingredientes = this.itemsIngredientes;
+      this.dietaEdit.preparacion = this.itemsPreparacion;
+      this.dietaEdit.imagen = this.dietaEdit['imagenId']
+
+
+      if(this.files.length ==0){
+    
+        this.editarDieta();
+        
+      }else{
+         
+           var _this = this;
+           const id = Math.random().toString(36).substring(2);
+       
+           _this._dietaService.onUpload(this.files[0].data,id);
+           _this.dietaEdit.imagen = id;
+           console.log(this.dieta);
+     
+          this.editarDieta();
+
+        
+      }
+
+      
+
+    }
+    
+
+  }
+
+  nuevaDieta(){
     this._dietaService.nuevaDieta(this.dieta).subscribe(
       data=>{
-        console.log(data);
+        this.btnSave=false;
         this.clearForm();
         this.closeModal();
+        this._toasterService.Success('Dieta guardado OK !!');
         this.listar();
         this.files = [];
 
       },
       error=>{
+        this.btnSave=false;
         console.log('ERROR');
+        this._toasterService.Error('Error al guardar el dato !!');
         console.log(error);
       
       }
 
     );
+  }
+
+
+  
+  editarDieta(){
+    delete this.dietaEdit['imagenId'];
+    this._dietaService.editarDieta(this.dietaEdit,this.dietaEdit["_id"]).subscribe(
+      data=>{
+        this.btnSave=false;
+        this._toasterService.Success("Dieta editado OK !!");
+        this.closeModal();
+        this.clearForm();
+        this.listar();
+
+      },
+      error=>{
+        this.btnSave=false;
+        console.log(error);
+        this._toasterService.Error('Error al actualizar el dato !!');
+      }
+      
+    );
 
   }
 
+
+
   
   listar(){
-    console.log('listar');
     let _this = this;
     this._dietaService.consultarDietas()
       .subscribe(
         data=>{
           data["dietas"].forEach( function(item, indice, array) {
+            item['imagenId']=item.imagen;
               _this._dietaService.downloadUrl(item.imagen).subscribe(
                 data=>{
                   item.imagen=data;         
                 },
                 error=>{
                   console.log('ERROR');
+                  
                   console.log(error);
                 }
               );
@@ -125,7 +229,9 @@ export class DietasComponent implements OnInit {
           });
 
           this.dietas = data["dietas"];
-          console.log(this.dietas)
+          this.dietasCopy = data["dietas"];
+
+          this.getCategoriasDietas();
 
         },
         error=>{
@@ -136,34 +242,99 @@ export class DietasComponent implements OnInit {
     }
 
 
+    getCategoriasDietas(){
+      this.tiposDietas=[];
+      this._categoriaService.getCategoriasDieta()
+      .subscribe(
+        data=>{
+
+          for(let key$ in data){
+            let catgNew = data[key$];
+            catgNew['id']=key$;
+            catgNew['longitud']=0;
+            
+              for(let pos in this.dietasCopy){
+                let obj = this.dietasCopy[pos];
+                if(obj['tipo'] == catgNew['nombre']  ){
+                  catgNew['longitud'] = catgNew['longitud'] + 1;
+                }      
+              }
+    
+              this.tiposDietas.push(catgNew); 
+          }
+
+        },
+        error=>{
+          console.log(error);
+        }
+  
+      );
+  
+      //console.log(this.tiposEntrenamiento)
+    }
+
+    selectTipo(tipo:any){
+     this.listar_por_tipo(tipo);
+    }
+
+    listar_por_tipo(tipo:any){
+    
+      if(tipo == 'todos'){
+
+        this.dietas=this.dietasCopy;
+        
+      }else{
+  
+          var _this = this;
+          this.dietas=[];
+          this.dietasCopy.forEach( function(item, indice, array) {
+            if(tipo == item.tipo){
+              item['posicion']=indice;
+            _this.dietas.push(item);
+            
+            }
+      
+          });
+  
+      }
+  
+     
+    }
+
     clearForm(){
       this.dieta.tipo="";
       this.dieta.titulo="";
       this.dieta.objetivo="";
       this.dieta.imagen = "";
+      this.dieta.dificultad = "";
+      this.dieta.tiempo = "";
+      this.dieta.porciones = "";
       this.dieta.ingredientes=[];
       this.dieta.preparacion=[];
-      this.itemsIngredientes=[];
-      this.itemsPreparacion=[];
+      this.itemsIngredientes=[{id:1, value:''}];
+      this.itemsPreparacion=[{id:1, value:''}];
     }
 
   closeModal(){
-    //$('#dataModal').modal('hide');
+    $('#dataModal').modal('hide');
   }
 
 
   newModal(){
+    this.new = true;
+    this.itemsIngredientes=[{id:1, value:''}];
+    this.itemsPreparacion=[{id:1, value:''}];
   }
 
+
   addIngrediente(){
-    console.log(this.itemsIngredientes);
+
     let key = (this.itemsIngredientes.length)+1;
     this.itemsIngredientes.push({id:key, value:''});
   }
   
   addPreparacion(){
-    console.log(this.itemsPreparacion);
-    console.log(this.itemsIngredientes);
+
     let key = (this.itemsPreparacion.length)+1;
     this.itemsPreparacion.push({id:key, value:''});
   }
@@ -171,16 +342,70 @@ export class DietasComponent implements OnInit {
   deletedIngrediente(){
     this.itemsIngredientes.pop();
     
-    console.log(this.itemsIngredientes);
+  
   }
 
   deletedPreparacion(){
     this.itemsPreparacion.pop();
-    console.log(this.itemsPreparacion);
+
   }
 
   select(event:any){
     this.dieta.tipo=event;
+  }
+
+
+  editModal(dieta:Dieta){
+    this.itemsIngredientes=[];
+    this.itemsIngredientes=[];
+  
+    this.new=false;
+    this.dietaEdit=dieta;
+    this.itemsIngredientes=dieta.ingredientes;
+    this.itemsPreparacion=dieta.preparacion;
+    //this.dieta.ingredientes = this.itemsIngredientes;
+  }
+
+  cargarId(item:any, event:any){
+    this.indiceDelete = item
+    this.eventData = event;
+    //this.posicion = posicion;
+  }
+
+
+  eliminar(){
+    this.loadingTrash();
+
+    
+    this._dietaService.eliminarDieta(this.indiceDelete).subscribe(
+      data=>{
+       
+        this._toasterService.Success("Ejercicio eliminado OK !!"); 
+        this.loadTrash.hide();
+        this.trash.show(); 
+        this.listar();
+      },
+      error=>{
+        console.log('ERROR');
+        console.log(error);
+        this.loadTrash.hide();
+        this.trash.show();
+      }
+    );
+
+   
+  }
+
+
+  loadingTrash(){
+   
+    //this.habilitar=false;
+ 
+    this.trash = $(this.eventData.target).parent().find(`#${this.indiceDelete}`).hide();
+    this.loadTrash = $(this.eventData.target).parent().find('img').show();
+    
+    this.trash.hide();
+    this.loadTrash.show();
   }
 
 
@@ -222,7 +447,7 @@ export class DietasComponent implements OnInit {
     file.inProgress = true;
     file.sub = this._http.request(req).pipe(
       map(event => {
-        console.log("map");
+      
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
@@ -244,9 +469,9 @@ export class DietasComponent implements OnInit {
       
       (event: any) => {
         
-        console.log(event);
+        
         if (typeof (event) === 'object') {
-          console.log(this.files)
+          
           
           //this.removeFileFromArray(file);
           //this.complete.emit(event.body);

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router }               from "@angular/router";
+import {Router} from "@angular/router";
+/*SERVICIOS*/
 import {AuthService} from '../../services/auth.service';
+import {ToasterService} from '../../services/toaster.service';
 
 
 @Component({
@@ -15,24 +17,45 @@ export class SigninComponent implements OnInit {
   public remember:boolean = false;
   public errorMessage: string;
   public requesting: boolean = false;
+  public isInvalid:boolean = false;
+ 
+  public isAccessInvalid:boolean = true;
 
 
   constructor(private _authService:AuthService,
-              private _router:Router) { 
-                this._authService.isAuth();
-  }
+              private toasterService:ToasterService,
+              private _router:Router) 
+  { 
+    /*
+        this._authService.isAuth().subscribe(
+          data=>{
+            //console.log(data.email);
+            this.onLoginRedirect();
+       
+          },
+          error=>{
+            console.log(error);
+          }
 
+        );
+        */
+  }
   ngOnInit() {
   }
 
   onLogin():void{
-
-  this._authService.loginEmailUser(this.email,this.password)
-      .then((res)=>{
-        console.log(res);
-        this.getTipoUser();
-       
-      }).catch(err=>console.log('err',err.message));
+    this.isInvalid=true;
+    this._authService.loginEmailUser(this.email,this.password)
+        .then((res)=>{
+          console.log(res);
+          this.getTipoUser();
+        
+        }).catch(err=>{
+          console.log('error:',err.message);
+          let msg='Email o Password que ingresaste no son validos'
+          this.toasterService.Error(msg);
+          this.isInvalid=false;
+        });
     
   }
 
@@ -41,34 +64,50 @@ export class SigninComponent implements OnInit {
   }
 
   onLoginRedirect(){
-    console.log('true');
-    this._router.navigate(['/dashboard']);
+    console.log('onLoginRedirect');
+    const rol = localStorage.getItem('rol');
+    if(rol==='super'){
+      this._router.navigate(['/sadmin/inicio']);
+    }else if(rol==='admin'){
+      this._router.navigate(['/admin/dashboard']);
+    }
+
+    //this.isInvalid=false;
   }
-
-
   
+
   getTipoUser(){
-    
+    let long=0;
     this._authService.getTipoUser()
       .snapshotChanges()
       .subscribe(item =>{
         item.forEach(element =>
         {
+          long++;
           let data = element.payload.toJSON();
           if(data['email'] == this.email){
             console.log(data['rol']);
+            this.isAccessInvalid=false;
             localStorage.setItem('rol',data['rol']);
             this.onLoginRedirect();
           }
-         
-          //console.log(data['email']);
-          //this.noticias[element.key]=data['detalle'];
 
+          
         });
+
+        if(item.length==long && this.isAccessInvalid==true){
+            let msg='No tiene Acceso al sistema';
+            this.toasterService.Error(msg);
+             this.isInvalid=false;
+                 
+        }
           
       })
 
+      
+
   }
+
 
   
 

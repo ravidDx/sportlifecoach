@@ -7,6 +7,10 @@ import { catchError, last, map, tap } from 'rxjs/operators';
 
 import {Promocion} from '../../interfaces/promocion.interface';
 import {PromocionService} from '../../services/promocion.service';
+import {ToasterService} from '../../services/toaster.service';
+
+
+declare var  $: any;
 
 @Component({
   selector: 'app-promociones',
@@ -22,7 +26,7 @@ import {PromocionService} from '../../services/promocion.service';
   ]
 })
 export class PromocionesComponent implements OnInit {
-  new:boolean;
+
   /** Link text */
   @Input() text = 'Cargar imagen';
   /** Name used in form which will be sent in HTTP request. */
@@ -48,12 +52,31 @@ export class PromocionesComponent implements OnInit {
     imagen:""
   }
 
+  promocionEdit:Promocion = {
+    tipo:"",
+    titulo:"",
+    objetivo:"",
+    imagen:""
+  }
+
   promociones:Promocion[]=[];
 
   url:any;
 
+  btnSave:boolean = false;
+
+  indiceDelete:any;
+  load=false;
+  eventData:any;
+  loadTrash:any;
+  trash:any;
+
+
+  new:boolean = true;
+
   constructor(private _http: HttpClient,
-              private _promocionService:PromocionService) { 
+              private _promocionService:PromocionService,
+              private _toasterService:ToasterService) { 
 
       this.listar();
   }
@@ -64,6 +87,41 @@ export class PromocionesComponent implements OnInit {
 
   guardar(){
 
+    this.btnSave=true;
+    if(this.new==true ){
+      
+      this.nuevaPromocion();
+
+    }else{
+      this.promocionEdit.imagen = this.promocionEdit['imagenId']
+
+      if(this.files.length ==0){
+    
+        this.editarPromocion();
+        
+      }else{
+
+        var _this = this;
+        const id = Math.random().toString(36).substring(2);
+       
+        _this._promocionService.onUpload(this.files[0].data,id);
+       _this.promocionEdit.imagen = id;
+     
+     
+          this.editarPromocion();
+
+      }
+
+    }
+
+    
+    
+   
+
+  }
+
+
+  nuevaPromocion(){
     var _this = this;
     const id = Math.random().toString(36).substring(2);
 
@@ -73,23 +131,46 @@ export class PromocionesComponent implements OnInit {
 
     this._promocionService.nuevaPromocion(this.promocion).subscribe(
       data=>{
-        console.log(data);
+        this._toasterService.Success("Promocion guardado OK !!");
+        this.btnSave=false;
+      
         this.clearForm();
         this.closeModal();
         this.listar();
-        this.files = [];
+       
 
       },
       error=>{
+        this.btnSave=false;
         console.log('ERROR');
         console.log(error);
+        this._toasterService.Error('Error al actualizar el dato !!');
       
       }
 
     );
 
-    
-   
+  }
+
+
+  editarPromocion(){
+    delete this.promocionEdit['imagenId'];
+    this._promocionService.editarPromocion(this.promocionEdit,this.promocionEdit["_id"]).subscribe(
+      data=>{
+        this.btnSave=false;
+        this._toasterService.Success("Promocion editado OK !!");
+        this.closeModal();
+        this.clearForm();
+        this.listar();
+
+      },
+      error=>{
+        this.btnSave=false;
+        console.log(error);
+        this._toasterService.Error('Error al actualizar el dato !!');
+      }
+      
+    );
 
   }
 
@@ -101,6 +182,7 @@ export class PromocionesComponent implements OnInit {
       .subscribe(
         data=>{
           data["promociones"].forEach( function(item, indice, array) {
+            item['imagenId']=item.imagen;
               _this._promocionService.downloadUrl(item.imagen).subscribe(
                 data=>{
                   item.imagen=data;         
@@ -127,26 +209,91 @@ export class PromocionesComponent implements OnInit {
     }
 
 
-    clearForm(){
+  clearForm(){
       this.promocion.tipo="";
       this.promocion.titulo="";
       this.promocion.objetivo="";
       this.promocion.imagen = "";
+      this.files =[]
     }
 
   closeModal(){
-    //$('#dataModal').modal('hide');
+    $('#dataModal').modal('hide');
   }
 
 
+  
   newModal(){
+    this.new = true;
+    this.text= 'Cargar imagen';
   }
+  
 
 
   select(event:any){
     this.promocion.tipo=event;
     console.log(event);
   }
+
+
+  editModal(promocion:Promocion){
+    this.new=false;
+    this.text= 'Actualizar imagen';
+    this.promocionEdit=promocion;
+    
+  }
+
+  cargarId(item:any, event:any, posicion:any){
+    this.indiceDelete = item
+    this.eventData = event;
+  }
+
+
+  eliminar(){
+    this.loadingTrash();
+    this.btnSave=true;
+    console.log(this.indiceDelete)
+    
+    this._promocionService.eliminarPromocion(this.indiceDelete).subscribe(
+      data=>{
+        console.log(data)
+        this.btnSave=false;
+        this._toasterService.Success("Promocion eliminado OK !!"); 
+        this.loadTrash.hide();
+        this.trash.show(); 
+        this.listar();
+        //this.clearForm();
+
+      },
+      error=>{
+        console.log('ERROR');
+        this.btnSave=false;
+        this._toasterService.Error("No se pudo eliminar correctamente !!");
+        console.log(error);
+        this.loadTrash.hide();
+        this.trash.show();
+
+      }
+    );
+
+   
+  }
+
+
+  loadingTrash(){
+    //this.habilitar=false;
+ 
+    this.trash = $(this.eventData.target).parent().find(`#${this.indiceDelete}`).hide();
+    this.loadTrash = $(this.eventData.target).parent().find('img').show();
+    
+    this.trash.hide();
+    this.loadTrash.show();
+  }
+
+
+
+
+
 
   onClick() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;

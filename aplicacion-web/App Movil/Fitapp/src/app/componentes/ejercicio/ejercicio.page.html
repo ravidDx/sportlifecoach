@@ -1,0 +1,56 @@
+
+  <ion-header class="fondo">
+    <ion-toolbar>
+      <ion-title text-center class="title" >{{ejercicio.tipo}}</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button color="light" text=""></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content fullscreen>
+    <ion-card>
+    
+      <ion-slides [options]="sliderConfig">
+          <ion-slide  *ngFor="let item of ejercicio.imagenes" >
+            <ion-card color="light" class="ion-text-justify">
+                <img [src]="item" />
+            </ion-card>
+          </ion-slide>
+      </ion-slides>
+
+    
+      <ion-grid class='iongrid'>
+          <ion-row>
+              <ion-col text-center size="4" size-xs>
+                  Duracion
+                </ion-col>
+                <ion-col text-center size="4" size-xs>
+                  Series
+                </ion-col>
+                <ion-col text-center size="4" size-xs>
+                    Repeciones
+                </ion-col>
+          </ion-row>
+          <ion-row >
+              <ion-col  text-center size="4" size-xs>
+                  {{ejercicio.duracion}} 
+                </ion-col>
+                <ion-col text-center size="4" size-xs>
+                  {{ejercicio.series}}
+                </ion-col>
+                <ion-col text-center size="4" size-xs>
+                    {{ejercicio.repeticiones}}
+                </ion-col>
+          </ion-row>
+      </ion-grid>
+                
+      <ion-card-header>
+        <ion-card-subtitle>{{ejercicio.tipo}}</ion-card-subtitle>
+        <ion-card-title>{{ejercicio.titulo}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ejercicio.objetivo}}
+      </ion-card-content>
+    </ion-card>
+  </ion-content>

@@ -12,9 +12,13 @@ import { AppRoutingModule } from './app-routing.module';
 // importando variable de firebase
 import {firebaseConfig} from '../environments/environment';
 
+// importar para servicio restful
+import { HttpClientModule } from '@angular/common/http'; 
+
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireDatabase, AngularFireDatabaseModule} from '@angular/fire/database';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 // importando facebook
 import { Facebook } from '@ionic-native/facebook/ngx';
@@ -24,6 +28,12 @@ import {GooglePlus} from '@ionic-native/google-plus/ngx';
 
 // plugin para escoger imagen en perfil de usuario
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
+/*services*/
+import {EjericicosService} from './servicios/ejericicos.service';
+import {StorageService} from './servicios/storage.service';
+
+
 
 
 
@@ -37,6 +47,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    HttpClientModule
     // ReactiveFormsModule, FormsModule
   ],
   providers: [
@@ -46,6 +58,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     GooglePlus,
     AngularFireDatabase,
     ImagePicker,
+    EjericicosService,
+    StorageService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

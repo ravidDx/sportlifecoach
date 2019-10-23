@@ -63,9 +63,9 @@
                             <ng-container matColumnDef="acciones">
                               <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
                               <td mat-cell *matCellDef="let element">
-                                <button mat-raised-button  matTooltip="ver"  type="button" [routerLink]="['/deportista-profile',element._id ]"  class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#dataModal"><i class="fas fa-eye" id="iconEdit"></i></button>     
-                                <button mat-raised-button  matTooltip="editar" type="button" (click)="editModal(element)" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i class="fas fa-edit" id="iconEdit"></i></button> 
-                                <button mat-raised-button  matTooltip="eliminar" type="button"  (click)="cargarId(element._id, $event)" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#exampleModal"><i  class="fas fa-trash-alt" [id]="element._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif" > </button>    
+                                <button mat-raised-button  title="ver"  type="button" [routerLink]="['/admin/deportista-profile',element._id ]"  class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#dataModal"><i class="fas fa-eye" id="iconEdit"></i></button>     
+                                <button mat-raised-button  title="editar" type="button" (click)="editModal(element)" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i class="fas fa-edit" id="iconEdit"></i></button> 
+                                <button mat-raised-button  title="eliminar" type="button"  (click)="cargarId(element._id, $event)" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#modalDeleted"><i  class="fas fa-trash-alt" [id]="element._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif" > </button>    
                               </td>
                             </ng-container>
                         
@@ -178,6 +178,56 @@
                       </mat-form-field>
                     </div>
                 </div>
+
+                <div class="row section-radio" >
+                  <div class="col-md-12"  >
+                      <label id="radio-group-label">Genero</label>
+
+                      <mat-radio-group *ngIf="new == true" [(ngModel)] = "deportista.genero" name="genero">
+                          <mat-radio-button class="radio-1" value="male" ><i class="fas fa-male"></i></mat-radio-button>
+                          <mat-radio-button value="female"><i class="fas fa-female"></i></mat-radio-button>
+                        </mat-radio-group>
+
+                        <mat-radio-group *ngIf="new == false" [(ngModel)] = "deportistaEdit.genero" name="genero">
+                            <mat-radio-button class="radio-1" value="male" ><i class="fas fa-male"></i></mat-radio-button>
+                            <mat-radio-button value="female"><i class="fas fa-female"></i></mat-radio-button>
+                        </mat-radio-group>
+                  </div>
+                </div>
+
+               
+                <div class="row">
+                    <div class="col-md-12" >
+                          <mat-form-field *ngIf="new == true">
+                            <mat-label>Objetivo</mat-label>
+                            <mat-select disableRipple [(ngModel)] = "deportista.objetivo" name="objetivo">
+                              <mat-option *ngFor="let tipo of tiposObjetivo" [value]="tipo" >{{tipo}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                          <mat-form-field *ngIf="new == false">
+                              <mat-label>Objetivo</mat-label>
+                              <mat-select disableRipple [(ngModel)] = "deportistaEdit.objetivo" name="objetivo">>
+                                <mat-option *ngFor="let tipo of tiposObjetivo" [value]="deportistaEdit.objetivo" >{{tipo}}</mat-option>
+                              </mat-select>
+                          </mat-form-field>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field *ngIf="new == true">
+                            <textarea matInput placeholder="Observaciones" rows="3" name="observaciones" [(ngModel)]="deportista.observaciones"></textarea>
+                          </mat-form-field>
+
+                          <mat-form-field *ngIf="new == false">
+                              <textarea matInput placeholder="Observaciones" rows="3" name="observaciones" [(ngModel)]="deportistaEdit.observaciones"></textarea>
+                          </mat-form-field>
+                    </div>
+                </div>
           
           
           </div>
@@ -196,7 +246,7 @@
   
 <!--Comfirm Modal-->
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDeleted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">

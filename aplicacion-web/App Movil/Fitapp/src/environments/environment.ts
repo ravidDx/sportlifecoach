@@ -7,6 +7,16 @@ export const environment = {
 };
 
 export const firebaseConfig = {
+  apiKey: "AIzaSyBjyWK7eorJaa7oIEwKAeW6rQ3WzLaq1Vo",
+  authDomain: "miapp-158221.firebaseapp.com",
+  databaseURL: "https://miapp-158221.firebaseio.com",
+  projectId: "miapp-158221",
+  storageBucket: "gs://miapp-158221.appspot.com/",
+  messagingSenderId: "231674641543"
+};
+
+/*
+export const firebaseConfig = {
   apiKey: 'AIzaSyBhL8lgiRFP9ulboiiX8FbS6baNOKhr5R8',
   authDomain: 'fblogin-75a75.firebaseapp.com',
   databaseURL: 'https://fblogin-75a75.firebaseio.com',
@@ -14,7 +24,7 @@ export const firebaseConfig = {
   storageBucket: 'fblogin-75a75.appspot.com',
   messagingSenderId: '67946954997',
   appId: '1:67946954997:web:8fb5cdc7117dd64f'
-};
+};*/
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

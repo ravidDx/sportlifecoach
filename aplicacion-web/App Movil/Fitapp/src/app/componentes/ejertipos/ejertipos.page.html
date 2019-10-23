@@ -7,25 +7,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="fondo">
-  <ion-segment scrollable color="warning">
-    <ion-segment-button checked>
-      <ion-label>Tonificar</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Perder Peso</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Ponerse en Forma</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Individuales</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Abdomen</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Elongacion</ion-label>
+<ion-content >
+
+  <ion-segment scrollable  class='background1'>
+
+    <!-- checked -->
+
+    <ion-segment-button  *ngFor="let item of tiposEntrenamiento" (click)="getEjercicios_x_tipo(item.nombre)" >
+      <ion-label>{{item.nombre}}</ion-label>
     </ion-segment-button>
   </ion-segment>
+
+  <ion-list>
+    <ion-list-header>
+      Recent Conversations
+    </ion-list-header>
+
+    <ion-item  *ngFor="let item of ejercicios" (click)="viewItem(item)" > 
+      <ion-avatar slot="start">
+        <img [src]="item.portada">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{item.titulo}}</h2>
+        <h3>{{item.duracion}}</h3>
+        <p>{{item.objetivo}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

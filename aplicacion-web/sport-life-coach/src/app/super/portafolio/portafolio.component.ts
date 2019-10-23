@@ -5,6 +5,7 @@ import {Portafolio} from '../../interfaces/portafolio.interface';
 import {OnepageService} from '../../services/onepage.service';
 import {ToasterService} from '../../services/toaster.service';
 
+
 /*SERVICIOS FILE UPLOAD -------------------------------------------------------*/
 import {Input, Output, EventEmitter} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
@@ -48,7 +49,7 @@ export class PortafolioComponent implements OnInit {
 
   /*................................................................*/
 
-
+  btnUpdate:boolean = false;
 
   portafolioList: Portafolio[]=[];
 
@@ -80,7 +81,6 @@ export class PortafolioComponent implements OnInit {
           portafolioNew['id']=key$;
           this.portafolioList.push(portafolioNew);            
         }
-        console.log(this.portafolioList);
         
       },
       error=>{
@@ -100,8 +100,10 @@ export class PortafolioComponent implements OnInit {
 
   updatePortafolio(){
     var idPortafolio = this.portafolio['id'];
-    delete this.portafolio['id'];
+    //delete this.portafolio['id'];
     var idImg = 'item.jpg';
+
+    this.btnUpdate = true;
 
     if(this.files.length!=0){
        //const idImg = Math.random().toString(36).substring(2);
@@ -122,14 +124,17 @@ export class PortafolioComponent implements OnInit {
                    this._onepageService.updatePortafolio(this.portafolio,idPortafolio)
                    .subscribe(
                      data=>{
-                       console.log('Portafolio Actualizado')
+                      
                        this.closeModal();
                        this.clearForm();
-                       this.Info("Portafolio editado OK !!");
+                       this.toasterService.Success("Portafolio editado OK !!");
                        console.log(data)
+                       this.btnUpdate = false;
                      },
                      error=>{
                        console.log(error);
+                       this.toasterService.Error("Error al actualizar !!");
+                       this.btnUpdate = false;
                      }
            
                    );
@@ -137,6 +142,8 @@ export class PortafolioComponent implements OnInit {
                 },
                 error=>{
                   console.log(error);
+                  this.toasterService.Error("Error al actualizar !!");
+                  this.btnUpdate = false;
                 }
               );
             
@@ -146,6 +153,8 @@ export class PortafolioComponent implements OnInit {
           error=>{
   
             console.log(error);
+            this.toasterService.Error("Error al actualizar !!");
+            this.btnUpdate = false;
           }
 
         );
@@ -154,13 +163,16 @@ export class PortafolioComponent implements OnInit {
       this._onepageService.updatePortafolio(this.portafolio,idPortafolio)
         .subscribe(
           data=>{
-            console.log('updatePortafolioservice')
+           
             this.closeModal();
-            this.Info("Portafolio editado OK !!");
+            this.toasterService.Success("Portafolio editado OK !!");
+            this.btnUpdate = false;
             console.log(data)
           },
           error=>{
             console.log(error);
+            this.toasterService.Error("Error al actualizar !!");
+            this.btnUpdate = false;
           }
 
         );
@@ -179,14 +191,6 @@ export class PortafolioComponent implements OnInit {
   clearForm(){
     this.files = [];
   }
-
-
-  /*MENSAJES ALERTS*/
-  Info(title:any){
-    this.toasterService.Info(title);
-  }
-
-  
 
 
 

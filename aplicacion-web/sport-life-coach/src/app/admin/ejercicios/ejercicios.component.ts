@@ -1,12 +1,26 @@
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { Subscription ,  of } from 'rxjs';
-import { catchError, last, map, tap } from 'rxjs/operators';
-import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
-import {EntrenamientoService} from '../../services/entrenamiento.service';
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
+/*Interfaces */
+import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
+
+/*sERVICIOS */
+import {CategoriaService} from '../../services/categoria.service';
+import {EntrenamientoService} from '../../services/entrenamiento.service';
+import {ToasterService} from '../../services/toaster.service';
+
+
+/*SERVICIOS FILE UPLOAD -------------------------------------------------------*/
+import {Input, Output, EventEmitter} from '@angular/core';
+import {trigger, state, style, animate, transition} from '@angular/animations';
+import {HttpClient,HttpRequest, HttpEventType, HttpErrorResponse} from '@angular/common/http';
+import {of} from 'rxjs';
+import {catchError, last, map, tap} from 'rxjs/operators';
+import {FileUploadModel} from '../../class/fileuploadmodel'
+/*----------------------------------------------------------------------- */
+
+declare var  $: any;
 
 @Component({
   selector: 'app-ejercicios',
@@ -23,9 +37,11 @@ import {EntrenamientoService} from '../../services/entrenamiento.service';
 })
 
 export class EjerciciosComponent implements OnInit {
-  new:boolean;
+ 
+  
+  /* ...................... VARIABLES FILE UPLOAD ........................*/
   /** Link text */
-  @Input() text = 'Cargar imagen';
+  @Input() text = 'Cargar imagenes';
   /** Name used in form which will be sent in HTTP request. */
   @Input() param = 'file';
   /** Target URL for file uploading. */
@@ -37,93 +53,176 @@ export class EjerciciosComponent implements OnInit {
 
   files: Array<FileUploadModel> = [];
 
-  tiposEntrenamiento= [
-    {id:1, name:'perder peso'},
-    {id:2, name:'rehabilitacion'},
-    {id:3, name:'musculacion y fuerza'},
-    {id:4, name:'otros'}
-  ]
+  /*................................................................*/
 
+  btnSave:boolean = false;
+  
+
+  tiposEntrenamiento= []
+
+  duracionList=['10 min','20 min','30 min','40 min','50 min','1 hora','1 h 15 min','1 h 30 min' ,'1 h 45 min']
 
   entrenamiento:Entrenamiento = {
     tipo:"",
     titulo:"",
     objetivo:"",
     imagenes:[],
-    portada:'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg'
+    portada:'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg',
+    series:'',
+    repeticiones:'',
+    duracion:''
+  }
+
+  entrenamientoEdit:Entrenamiento = {
+    tipo:"",
+    titulo:"",
+    objetivo:"",
+    imagenes:[],
+    portada:'',
+    series:'',
+    repeticiones:'',
+    duracion:''
   }
 
   entrenamientos:Entrenamiento[]=[];
-
+  entrenamientosTodo:Entrenamiento[]=[];
 
   url:any;
 
+  indiceDelete:any;
+  load=false;
+  eventData:any;
+  loadTrash:any;
+  trash:any;
+  msgAlert:string;
+
+  posicion:any;
+
+  new:boolean = true;
+
+
 
   constructor(private _http: HttpClient,
-              private _entrenamientoService:EntrenamientoService) 
+              private _entrenamientoService:EntrenamientoService,
+              private _categoriaService:CategoriaService,
+              private _toasterService:ToasterService,
+              private _router:Router) 
   { 
     this.listar();
+    
   }
 
   ngOnInit() {
   }
 
 
-
+  //Metodo para guardar y editar  datos
   guardar(){
     
-    var _this = this;
-    //cargar y guardar imagenes en firebase
-    this.files.forEach( function(item, indice, array) {
-      const id = Math.random().toString(36).substring(2);
-      _this.entrenamiento.imagenes.push(id);
-      _this._entrenamientoService.onUpload(item.data,id);      
-      if(indice==0){
-        _this.entrenamiento.portada = id;
-      }
-    });
+    if(this.new==true){
+      this.btnSave=true; 
+      var _this = this;
+      //cargar y guardar imagenes en firebase
+      this.files.forEach( function(item, indice, array) {
+        const id = Math.random().toString(36).substring(2);
+        _this.entrenamiento.imagenes.push(id);
+        _this._entrenamientoService.onUpload(item.data,id);      
+        if(indice==0){
+          _this.entrenamiento.portada = id;
+        }
+  
+      });
+  
+      this.nuevoEntrenamiento();
 
-    this._entrenamientoService.nuevoEntrenamiento(this.entrenamiento).subscribe(
-      data=>{
-        console.log(data);
-        this.clearForm();
-        this.closeModal();
-        this.listar();
-        this.files = [];
+    }else{
 
-      },
-      error=>{
-        console.log('ERROR');
-        console.log(error);
+      if(this.files.length ==0){
+
+        this.editarEntrenamiento();
+        
+      }else{
+
+            var _this = this;
+            this.entrenamientoEdit.imagenes = [];
+          //cargar y guardar imagenes en firebase
+          this.files.forEach( function(item, indice, array) {
+            const id = Math.random().toString(36).substring(2);
+            _this.entrenamientoEdit.imagenes.push(id);
+            _this._entrenamientoService.onUpload(item.data,id);      
+            if(indice==0){
+              _this.entrenamientoEdit.portada = id;
+            }
       
+          });
+
+          this.editarEntrenamiento();
+
+        
       }
 
-    );
+
+    }
 
   }
 
 
+  //Metodo guardar entrenamiento
+  nuevoEntrenamiento(){
+    this._entrenamientoService.nuevoEntrenamiento(this.entrenamiento).subscribe(
+      data=>{
+        
+        this._toasterService.Success('Entrenamiento guardado OK !!');
+        this.files = [];
+        this.btnSave=false;
+        this.clearForm();
+        this.closeModal();
+        this.listar();
+        
+
+      },
+      error=>{
+        console.log('ERROR');
+        this._toasterService.Error(' Error al guardar !!');
+        console.log(error);
+        this.btnSave=false;
+      
+      }
+
+    );
+  }
+
+
+  //Metodo listar entrenamientos
   listar(){
     let _this = this;
     this._entrenamientoService.consultarEntrenamientos()
       .subscribe(
         data=>{
+
           data["entrenamientos"].forEach( function(item, indice, array) {
+
               _this._entrenamientoService.downloadUrl(item.portada).subscribe(
                 data=>{
                   item.portada=data;         
                 },
                 error=>{
                   console.log('ERROR');
-                  console.log(error);
+                  
                 }
               );
 
               item.portada = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-           
-          });
-          this.entrenamientos = data["entrenamientos"];
 
+             
+          });
+
+          this.entrenamientos = data["entrenamientos"];
+          this.entrenamientosTodo = data["entrenamientos"];
+          console.log(this.entrenamientos)
+           
+          this.getCategoriasEntrenamiento();
+          
         },
         error=>{
           console.log(error);
@@ -133,9 +232,152 @@ export class EjerciciosComponent implements OnInit {
 
   }
 
+  listar_por_tipo(tipo:any){
+    
+    if(tipo == 'todos'){
+      this.entrenamientosTodo=this.entrenamientos;
+      
+    }else{
+
+        var _this = this;
+        this.entrenamientosTodo=[];
+        this.entrenamientos.forEach( function(item, indice, array) {
+          if(tipo == item.tipo){
+            item['posicion']=indice;
+          _this.entrenamientosTodo.push(item);
+          
+          }
+    
+        });
+
+    }
+
+   
+  }
 
 
+  getCategoriasEntrenamiento(){
+    this.tiposEntrenamiento=[];
+    this._categoriaService.getCategoriasEntrenamiento()
+    .subscribe(
+      data=>{
+        for(let key$ in data){
+          let catgNew = data[key$];
+          catgNew['id']=key$;
+          catgNew['longitud']=0;
+          
+          for(let pos in this.entrenamientosTodo){
+            let obj = this.entrenamientosTodo[pos];
+            if(obj['tipo'] == catgNew['nombre']  ){
+              catgNew['longitud'] = catgNew['longitud'] + 1;
+            }      
+          }
 
+        this.tiposEntrenamiento.push(catgNew); }
+        
+      },
+      error=>{
+        console.log(error);
+      }
+
+    );
+
+  }
+
+
+  selectTipo(tipo:any){
+    this.listar_por_tipo(tipo);
+  }
+
+  cargarId(item:any, event:any, posicion:any){
+    this.indiceDelete = item
+    this.eventData = event;
+    this.posicion = posicion;
+  }
+
+  eliminar(){
+    this.loadingTrash();
+    this._entrenamientoService.eliminarEntrenamiento(this.indiceDelete).subscribe(
+      data=>{
+       
+        this._toasterService.Success("Ejercicio eliminado OK !!"); 
+        this.loadTrash.hide();
+        this.trash.show(); 
+        this.listar();
+      },
+      error=>{
+        console.log('ERROR');
+        this._toasterService.Error("No se pudo eliminar correctamente !!");
+        console.log(error);
+        this.loadTrash.hide();
+        this.trash.show();
+      }
+    );
+
+   
+  }
+
+
+ 
+
+  editModal(entrenamiento:Entrenamiento){
+    this.new=false;
+    this.entrenamientoEdit=entrenamiento;
+    
+  }
+
+
+  editarEntrenamiento(){
+    
+    this._entrenamientoService.editarEntrenamiento(this.entrenamientoEdit,this.entrenamientoEdit["_id"]).subscribe(
+      data=>{
+        console.log(data);
+        this.closeModal();
+        this._toasterService.Success("Entrenamiento editado OK !!");
+        this.listar();
+       // this.viewAlert("Deportista editado OK !!")
+        //this.disabledButton(false);
+      },
+      error=>{
+        console.log(error);
+        this._toasterService.Error("No se pudo editar correctamente!!");
+        //this.disabledButton(false);
+      }
+      
+    );
+
+
+  }
+
+  newModal(){
+    this.new = true;
+  }
+  
+
+  calcularLongitud(){
+    this.entrenamientos.forEach( function(item, indice, array) {
+      
+      this.tiposEntrenamiento.forEach( function(item2, indice, array) {
+        if(item2.nombre == item.tipo){
+          item2.longitud = item2.longitud + 1;
+          return 0;
+        }
+      });
+
+
+    });
+  }
+
+
+  loadingTrash(){
+    //this.habilitar=false;
+ 
+    this.trash = $(this.eventData.target).parent().find(`#${this.indiceDelete}`).hide();
+    this.loadTrash = $(this.eventData.target).parent().find('img').show();
+    
+    this.trash.hide();
+    this.loadTrash.show();
+  }
 
 
   clearForm(){
@@ -143,16 +385,17 @@ export class EjerciciosComponent implements OnInit {
     this.entrenamiento.titulo="";
     this.entrenamiento.objetivo="";
     this.entrenamiento.imagenes=[];
+    this.entrenamiento.series="";
+    this.entrenamiento.repeticiones="";
+    this.entrenamiento.duracion='';
   }
 
   
   closeModal(){
-    //$('#dataModal').modal('hide');
+    $('#dataModal').modal('hide');
   }
 
 
-  newModal(){
-  }
 
   select(event:any){
     this.entrenamiento.tipo=event;
@@ -197,7 +440,7 @@ export class EjerciciosComponent implements OnInit {
     file.inProgress = true;
     file.sub = this._http.request(req).pipe(
       map(event => {
-        console.log("map");
+        
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
@@ -219,9 +462,9 @@ export class EjerciciosComponent implements OnInit {
       
       (event: any) => {
         
-        console.log(event);
+        
         if (typeof (event) === 'object') {
-          console.log(this.files)
+          //console.log(this.files)
           
           //this.removeFileFromArray(file);
           //this.complete.emit(event.body);
@@ -247,7 +490,7 @@ export class EjerciciosComponent implements OnInit {
     if (index > -1) {
       this.files.splice(index, 1);
     }
-    console.log(this.files);
+    //console.log(this.files);
   }
 
   private uploadFiletoArray(){
@@ -263,8 +506,8 @@ export class EjerciciosComponent implements OnInit {
       data=>{
         this.entrenamientos
         res= data;
-        console.log('-----------------------------');
-        console.log(res);
+        //console.log('-----------------------------');
+       // console.log(res);
 
        
         //return res;
@@ -289,15 +532,6 @@ export class EjerciciosComponent implements OnInit {
 }
 
 
-export class FileUploadModel {
-  data: File;
-  state: string;
-  inProgress: boolean;
-  progress: number;
-  canRetry: boolean;
-  canCancel: boolean;
-  sub?: Subscription;
-}
 
 
 

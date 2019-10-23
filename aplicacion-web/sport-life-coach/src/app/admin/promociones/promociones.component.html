@@ -11,6 +11,8 @@
                             <button mat-raised-button class="btn btn-info ml-auto" (click)="newModal()" data-toggle="modal" data-target="#dataModal">
                                 <i class="fas fa-plus-circle"></i> Añadir
                             </button>
+
+                            
                             <!--
                             <button mat-raised-button class="btn btn-info ml-auto" (click)="getDownload()" data-toggle="modal" data-target="#dataModal">
                                 <i class="fas fa-plus-circle"></i> get
@@ -30,15 +32,21 @@
 
                         <div class="row">
                             <div class="col-sm-6 col-md-4"  *ngFor="let item of promociones; let i = index" >
-                              <a  [routerLink]="['/promocion',item._id ]" >
+                              <a  [routerLink]="['/admin/promocion',item._id ]" >
                                   <div class="card" class="img-contenedor" >
                                     <img class="card-img-top text-center" [src]="item.imagen" alt="Card image cap" >
-                                    <div class="card-body">
+                                    <div class="card-body cardTitle">
                                         <h5 class="card-title text-center"  > {{item.titulo}}</h5>
                                     </div>
                                   </div>
 
                               </a>
+
+                              <div class="text-center btns" >
+                                  <button style='font-size: xx-small;' mat-raised-button  title="editar" type="button" class="btn btn-sm btn-outline-warning" (click)="editModal(item)" data-toggle="modal" data-target="#dataModal" ><i class="fas fa-edit" id="iconEdit"></i></button> 
+                                  <button style='font-size: xx-small;' mat-raised-button  title="eliminar" type="button"  class="btn btn-sm btn-outline-danger" (click)="cargarId(item._id,$event, item.posicion)" data-toggle="modal" data-target="#modalDeleted" ><i  class="fas fa-trash-alt" [id]="item._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif" > </button>    
+                                
+                               </div>
                 
                             </div>
                     
@@ -61,7 +69,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"> 
-              <span><i class="fas fa-running"></i> Nueva Promocion</span>
+              <span  *ngIf="new == true"><i class="fas fa-running"></i>&nbsp;Nueva Promocion</span>
+              <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Promocion</span>
+
           </h5> 
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -75,29 +85,41 @@
 
                   <div class="row">
                     <div class="col-md-12">
-                          <mat-form-field>
+                          <mat-form-field *ngIf="new == true">
                             <mat-label>Tipo de promocion</mat-label>
-                            <mat-select disableRipple (selectionChange)="select($event.value)">
+                            <mat-select disableRipple  name="tipo" [(ngModel)]="promocion.tipo" >
                               <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo.name">{{tipo.name}}</mat-option>
                             </mat-select>
+                          </mat-form-field>
+
+                          <mat-form-field *ngIf="new == false">
+                              <mat-label>Tipo de promocion</mat-label>
+                              <mat-select disableRipple name="tipo" [(ngModel)]="promocionEdit.tipo">
+                                <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo.name">{{tipo.name}}</mat-option>
+                              </mat-select>
                           </mat-form-field>
                     </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12">
-                          <mat-form-field class="example-full-width" >
-                      
+                          <mat-form-field  *ngIf="new == true">
                               <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="promocion.titulo">
+                          </mat-form-field>
+                          <mat-form-field  *ngIf="new == false">
+                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="promocionEdit.titulo">
                           </mat-form-field>
                       </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12">
-                          <mat-form-field>
+                          <mat-form-field *ngIf="new == true">
                               <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="promocion.objetivo"></textarea>
-                            </mat-form-field>
+                          </mat-form-field>
+                          <mat-form-field *ngIf="new == false">
+                              <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="promocionEdit.objetivo"></textarea>
+                          </mat-form-field>
                       </div>
                   </div>
 
@@ -140,11 +162,31 @@
           
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary" >Guardar</button>
-            
-              
+            <button type="submit" *ngIf="new == true"  class="btn btn-primary" [disabled]=btnSave >Guardar</button>
+            <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]=btnSave >Editar</button>     
           </div>
         </form>
       </div>
     </div>
 </div>
+
+
+
+<!--Comfirm Modal-->
+<!-- Modal -->
+<div class="modal fade" id="modalDeleted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Esta seguro de eliminar esta promocion?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar()">Si</button>
+          <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
+        </div>
+      </div>
+    </div>
+  </div>

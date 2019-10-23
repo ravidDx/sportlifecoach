@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Seccion About</h4>
+                        <h4 class="card-title">About</h4>
                     </div>
                     <div class="card-body">
   
@@ -19,8 +19,9 @@
                                   <p class="card-text">{{about.nombre}}</p>
                                   <p class="card-text">{{about.experiencia}}</p>
                                   <p class="card-text">{{about.servicios}}</p>
+                                  <hr>
                                   
-                                  <p class="card-text"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#dataModal">Editar</a></p>
+                                  <p class="card-text"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#dataModal"><i class="fas fa-edit"></i>  Editar</a></p>
                                 </div>
                               </div>
                             </div>
@@ -42,7 +43,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"> 
-              <span><i class="fas fa-home"></i> Actualizar About</span>
+              <span><i class="fas fa-edit"></i> Actualizar About </span>
           </h5> 
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -109,10 +110,7 @@
                             
                       </div>
                     </div>
-
-            
-                    
-                    
+   
                     
                 </div>
 
@@ -121,7 +119,7 @@
             <div class="modal-footer">
                 
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary" >Actualizar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="btnUpdate" >Actualizar</button>
               
                 
             </div>

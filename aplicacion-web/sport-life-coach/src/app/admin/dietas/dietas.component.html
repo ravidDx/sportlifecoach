@@ -22,23 +22,37 @@
                         <br>
                         <!-- DATA -->
                         <mat-chip-list aria-label="Fish selection">
-                            <mat-chip color="accent" selected>Bajo en calorias</mat-chip>
-                            <mat-chip color="accent" >Bajo en proteinas</mat-chip>
+                            
+                            <span matBadge="{{dietasCopy.length}}" matBadgeColor="warn" class="spnaBadge">
+                                <mat-chip  color="basic" selected (click)="selectTipo('todos')">Todos</mat-chip>
+                            </span>
+                            
+                            <span *ngFor="let tipo of tiposDietas" matBadge="{{tipo.longitud}}" class="spnaBadge">
+                                <mat-chip color="basic"  selected (click)="selectTipo(tipo.nombre)">{{tipo.nombre}}</mat-chip>
+                            </span>
+                            
+                           
                         </mat-chip-list>
 
                         <hr>
 
                         <div class="row">
                             <div class="col-sm-6 col-md-4"  *ngFor="let item of dietas; let i = index" >
-                              <a  [routerLink]="['/dieta',item._id ]" >
+                              <a  [routerLink]="['/admin/dieta',item._id ]" >
                                   <div class="card" class="img-contenedor" >
                                     <img class="card-img-top text-center" [src]="item.imagen" alt="Card image cap" >
-                                    <div class="card-body">
+                                    <div class="card-body cardTitle">
                                         <h5 class="card-title text-center"  > {{item.titulo}}</h5>
                                     </div>
                                   </div>
 
                               </a>
+
+                              <div class="text-center btns">
+                                  <button style='font-size: xx-small;' mat-raised-button  title="editar" type="button" class="btn btn-sm btn-outline-warning" (click)="editModal(item)" data-toggle="modal" data-target="#dataModal" ><i class="fas fa-edit" id="iconEdit"></i></button> 
+                                  <button style='font-size: xx-small;' mat-raised-button  title="eliminar" type="button"  class="btn btn-sm btn-outline-danger" (click)="cargarId(item._id,$event)" data-toggle="modal" data-target="#modalDeleted" ><i  class="fas fa-trash-alt" [id]="item._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif" > </button>    
+                          
+                               </div>
                 
                             </div>
                     
@@ -59,7 +73,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"> 
-              <span><i class="fas fa-running"></i> Nueva Dieta</span>
+              <span *ngIf="new == true" ><i class="fas fa-running"></i>&nbsp;Nueva Dieta</span>
+              <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Dieta</span>
+
           </h5> 
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -70,41 +86,112 @@
               <div class="example-container">
                   <div class="row">
                     <div class="col-md-12">
-                          <mat-form-field>
+                          
+                         <mat-form-field *ngIf="new == true" >
                             <mat-label>Tipo de dieta</mat-label>
-                            <mat-select disableRipple (selectionChange)="select($event.value)">
-                              <mat-option *ngFor="let tipo of tiposDieta" [value]="tipo.name">{{tipo.name}}</mat-option>
+                            <mat-select disableRipple name="tipo" [(ngModel)]="dieta.tipo">
+                              <mat-option *ngFor="let tipo of tiposDietas" [value]="tipo.nombre">{{tipo.nombre}}</mat-option>
                             </mat-select>
                           </mat-form-field>
+
+                          <mat-form-field *ngIf="new == false" >
+                              <mat-label>Tipo de dieta</mat-label>
+                              <mat-select disableRipple name="tipo" [(ngModel)]="dietaEdit.tipo" > 
+                                <mat-option *ngFor="let tipo of tiposDietas" [value]="tipo.nombre">{{tipo.nombre}}</mat-option>
+                              </mat-select>
+                          </mat-form-field>
+
                     </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12">
-                          <mat-form-field class="example-full-width" >
-                      
+                          <mat-form-field class="example-full-width" *ngIf="new == true">
                               <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="dieta.titulo">
+                          </mat-form-field>
+                          <mat-form-field class="example-full-width" *ngIf="new == false">
+                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="dietaEdit.titulo">
                           </mat-form-field>
                       </div>
                   </div>
 
+                  
                   <div class="row">
                       <div class="col-md-12">
-                          <mat-form-field>
+                          <mat-form-field *ngIf="new == true">
                               <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="dieta.objetivo"></textarea>
                             </mat-form-field>
+
+                            <mat-form-field *ngIf="new == false">
+                                <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="dietaEdit.objetivo"></textarea>
+                              </mat-form-field>
                       </div>
                   </div>
+
+                  <div class="row">
+                      <div class="col-md-4">
+
+                          <mat-form-field *ngIf="new == true">
+                              <mat-label>Dificultad</mat-label>
+                              <mat-select disableRipple  name='tipoDificultad' [(ngModel)]="dieta.dificultad" > 
+                                <mat-option *ngFor="let tipo of tiposDificultad" [value]="tipo">{{tipo}}</mat-option>
+                              </mat-select>
+                           </mat-form-field>
+
+                           <mat-form-field *ngIf="new == false">
+                              <mat-label>Dificultad</mat-label>
+                              <mat-select disableRipple  name='tipoDificultad' [(ngModel)]="dietaEdit.dificultad" > 
+                                <mat-option *ngFor="let tipo of tiposDificultad" [value]="tipo">{{tipo}}</mat-option>
+                              </mat-select>
+                           </mat-form-field>
+
+                      </div>
+                      <div class="col-md-4">
+
+                          <mat-form-field *ngIf="new == true">
+                              <mat-label>Duracion</mat-label>
+                              <mat-select disableRipple  name='tiempo' [(ngModel)]="dieta.tiempo" > 
+                                <mat-option *ngFor="let tipo of tiposTiempo" [value]="tipo">{{tipo}}</mat-option>
+                              </mat-select>
+                           </mat-form-field>
+
+                           <mat-form-field *ngIf="new == false">
+                              <mat-label>Duracion</mat-label>
+                              <mat-select disableRipple  name='tiempo' [(ngModel)]="dietaEdit.tiempo" > 
+                                <mat-option *ngFor="let tipo of tiposTiempo" [value]="tipo">{{tipo}}</mat-option>
+                              </mat-select>
+                           </mat-form-field>
+
+                      </div>
+                      <div class="col-md-4">
+                          <mat-form-field class="example-full-width" *ngIf="new == true">
+                              <input matInput type="number"  placeholder="Porciones" name="porciones" [(ngModel)]="dieta.porciones">
+                          </mat-form-field>
+                          <mat-form-field class="example-full-width" *ngIf="new == false">
+                              <input matInput type="number"  placeholder="Porciones" name="porciones" [(ngModel)]="dietaEdit.porciones">
+                          </mat-form-field>
+
+                  
+                      </div>
+                  </div>
+
+                  
+
 
                   <div class="row">
                       <div class="col-md-12">
                           Ingredientes  <button mat-button color="primary" class='btn-add btn-ico' (click)="addIngrediente()" type="button"> <i class="fas fa-plus-circle"></i> </button>
                           <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedIngrediente()" type="button"> <i class="fas fa-minus-circle"></i> </button>
 
-                          <mat-form-field class="add-item" *ngFor="let item of itemsIngredientes; let i = index" >
-                              <span matPrefix>- &nbsp;</span>
-                              <input matInput  type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" >
-                          </mat-form-field>
+                          
+                              <mat-form-field class="add-item" *ngFor="let item of itemsIngredientes; let i = index" >
+                                  <span matPrefix>- &nbsp;</span>
+                                  <input matInput  type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" >
+                              </mat-form-field>
+    
+                        
+                          
+                         
                       </div>
 
                       <div class="col-md-12">
@@ -120,10 +207,15 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button mat-button color="warn" (click)="onClick()" type="button">
+                            <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == true">
                                 <mat-icon>file_upload</mat-icon>
                                 {{text}} ({{files.length}})
-                              </button>
+                            </button>
+
+                            <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == false">
+                                <mat-icon>file_upload</mat-icon>
+                                Actualizar imagen ({{files.length}})
+                            </button>
                               <br/>
                               <ul>
                                 <li *ngFor="let file of files" [@fadeInOut]="file.state">
@@ -155,7 +247,8 @@
           
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary" >Guardar</button>
+            <button *ngIf="new == true" type="submit" class="btn btn-primary" [disabled]=btnSave >Guardar</button>
+            <button *ngIf="new == false" type="submit" class="btn btn-primary" [disabled]=btnSave >Editar</button>
             
           </div>
         </form>
@@ -163,6 +256,26 @@
     </div>
 </div>
 
+
+
+<!--Comfirm Modal-->
+<!-- Modal -->
+<div class="modal fade" id="modalDeleted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Esta seguro de eliminar esta dieta?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar()">Si</button>
+          <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
