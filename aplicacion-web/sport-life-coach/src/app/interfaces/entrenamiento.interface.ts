@@ -4,4 +4,7 @@ export interface Entrenamiento{
 	objetivo:string;
 	imagenes:any;
 	portada:any;
+	series:string;
+	repeticiones:string;
+	duracion:string;
 }

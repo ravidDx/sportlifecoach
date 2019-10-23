@@ -6,4 +6,9 @@ export interface Deportista{
 	fechaN:any;
 	peso:string;
 	altura:string;
+	foto:String;
+    genero:String;
+    objetivo:String;
+	observaciones:String;
+	rol:String;
 }

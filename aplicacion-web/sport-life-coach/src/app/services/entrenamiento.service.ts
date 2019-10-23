@@ -14,7 +14,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class EntrenamientoService {
 
-  url = 'http://18.191.206.194';
+  url = window['urlApi'];
   
   entrenamientosUrl=this.url+":8080/api/entrenamientos";
   entrenamientoUrl=this.url+":8080/api/entrenamiento";
@@ -34,6 +34,8 @@ export class EntrenamientoService {
   }
 
   editarEntrenamiento(entrenamiento:Entrenamiento,indice:string){
+    entrenamiento.portada = entrenamiento.imagenes[0];
+
   	let url =`${this.entrenamientoUrl}/${indice}`;
   	return this._http.put<Entrenamiento>(url,entrenamiento);
   }

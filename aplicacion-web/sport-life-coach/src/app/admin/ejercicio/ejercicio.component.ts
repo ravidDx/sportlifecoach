@@ -19,7 +19,10 @@ export class EjercicioComponent implements OnInit {
     titulo:"",
     objetivo:"",
     imagenes:[],
-    portada:''
+    portada:'',
+    series:'',
+    repeticiones:'',
+    duracion:''
   }
 
 
@@ -27,18 +30,10 @@ export class EjercicioComponent implements OnInit {
 
     this._activeRoute.params.subscribe(
       params =>{
-        console.log(params['_id']);
         this._entrenamientoService.verEntrenamiento(params['_id']).subscribe(
           data=>{
-            //console.log(data);
-            //this.imagenes=data['entrenamiento']['imagenes'];
-            //data['entrenamiento']['imagenes'] = [];
             this.entrenamiento=data['entrenamiento'];
-
             this.cargarImagenes(this.entrenamiento.imagenes);
-
-
-            //console.log(this.deportista);
           },
           error=>{
             console.log(error);
@@ -65,13 +60,11 @@ export class EjercicioComponent implements OnInit {
           //console.log(data);
         },
         error=>{
+
           //console.log('ERROR');
           //console.log(error);
         }
       );
-
-      //console.log(_this.entrenamiento);
-
         
   });
 

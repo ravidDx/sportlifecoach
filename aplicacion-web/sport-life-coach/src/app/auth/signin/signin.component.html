@@ -23,13 +23,13 @@
           <div class="contact100-form-checkbox">
             <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
             <label class="label-checkbox100" for="ckb1">
-              Remember me
+              Recuerdame
             </label>
           </div>
 
           <div class="forgot-link">
             <a href="#" class="txt1">
-              Forgot Password?
+              Olvidate tu contraseña?
             </a>
           </div>
         </div>
@@ -37,13 +37,15 @@
         <br>
     
         <div class="container-login100-form-btn">
-          <button class="login100-form-btn">
-            Login
+          <button class="login100-form-btn" [disabled]="isInvalid"> 
+            <span [hidden]="isInvalid">Iniciar sesion</span>
+            <div class="loader" [hidden]="!isInvalid"></div>
           </button>
         </div>
         
 
       </form>
+   
       <div class="login100-more" style="background-image: url('assets/images/signin2.jpeg');">
       </div>
     </div>

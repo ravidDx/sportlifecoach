@@ -4,16 +4,23 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Entrenamiento: {{entrenamiento.tipo}}</h4>
+                        <h4 class="card-title ">Entrenamiento</h4>
                     </div>
                     <div class="card-body">
                       
                         <div class="row row-1 animated fadeInRight">
 
+
                             <div class="card-body">
-                                <h5 class="card-title">{{entrenamiento.titulo | uppercase}} </h5>
+                                <h5 class="card-title" style="margin-bottom: 0px;"><strong>{{entrenamiento.titulo | uppercase}}</strong></h5>
+                                <p class="card-text">{{entrenamiento.tipo}}</p>
+                                
+                                <p style="margin-bottom: 0px;"><strong>Objetivo:</strong></p>
                                 <p class="card-text">{{entrenamiento.objetivo}}</p>
-   
+                            
+                                <p class="card-text" style="margin-bottom: 0px;"> <strong>Series: </strong> {{entrenamiento.series}} </p>
+                                <p class="card-text" style="margin-bottom: 0px;"> <strong>Repeticiones: </strong> {{entrenamiento.repeticiones}} </p>
+                                <p class="card-text" > <strong>Duracion: </strong> {{entrenamiento.duracion}} </p>
                             </div>
                       
                         </div>

@@ -19,6 +19,9 @@ export class DietaComponent implements OnInit {
     titulo:"",
     objetivo:"",
     imagen:"",
+    tiempo:"",
+    dificultad:"",
+	  porciones:"",
     ingredientes:[],
     preparacion:[]
   }
@@ -28,7 +31,7 @@ export class DietaComponent implements OnInit {
     
     this._activeRoute.params.subscribe(
       params =>{
-        console.log(params['_id']);
+        
         this._dietaService.verDieta(params['_id']).subscribe(
           data=>{
             //console.log(data);
@@ -41,7 +44,7 @@ export class DietaComponent implements OnInit {
             this.cargarImagen(codImg);
 
 
-            console.log(this.dieta);
+            
           },
           error=>{
             console.log(error);
@@ -63,14 +66,13 @@ export class DietaComponent implements OnInit {
   
       this._dietaService.downloadUrl(item).subscribe(
         data=>{
-          
-          //console.log(indice);
+         
           this.dieta.imagen= data;
-          console.log(data);
+    
         },
         error=>{
-          //console.log('ERROR');
-          //console.log(error);
+          console.log('ERROR');
+          console.log(error);
         }
       );
 

@@ -30,10 +30,11 @@ import { AboutComponent } from '../../super/about/about.component';
 import { ServicesComponent } from '../../super/services/services.component';
 import { PortafolioComponent } from '../../super/portafolio/portafolio.component';
 import { PostsComponent } from '../../super/posts/posts.component';
-
+import { ContactoComponent } from '../../super/contacto/contacto.component';
+import { CredencialesComponent } from '../../super/credenciales/credenciales.component';
+import { CategoriasComponent } from '../../admin/categorias/categorias.component';
 
 import { HttpClientModule } from '@angular/common/http';
-
 
 import {
   MatButtonModule,
@@ -50,8 +51,12 @@ import {
   MatIconModule,
   MatProgressBarModule,
   MatChipsModule,
-  MatCardModule
+  MatCardModule,
+  MatAutocompleteModule,
+  MatRadioModule,
+  MatBadgeModule
 } from '@angular/material';
+
 
 
 @NgModule({
@@ -74,6 +79,9 @@ import {
     MatProgressBarModule,
     MatChipsModule,
     MatCardModule,
+    MatAutocompleteModule,
+    MatRadioModule,
+    MatBadgeModule,
     HttpClientModule
   ],
   declarations: [
@@ -97,7 +105,10 @@ import {
     AboutComponent,
     ServicesComponent,
     PortafolioComponent,
-    PostsComponent
+    ContactoComponent,
+    PostsComponent,
+    CredencialesComponent,
+    CategoriasComponent
   ]
 })
 

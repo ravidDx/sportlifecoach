@@ -19,8 +19,15 @@ export class DeportistaComponent implements OnInit {
     telefono:"",
     fechaN:"",
     peso:"",
-    altura:""
+    altura:"",
+    foto:"",
+    genero:"",
+    objetivo:"",
+    observaciones:"",
+    rol:""
   }
+
+  edad;
 
 
   constructor(private _deportistaService:DeportistaService, private _activeRoute:ActivatedRoute) {
@@ -32,6 +39,9 @@ export class DeportistaComponent implements OnInit {
           data=>{
             //console.log(data);
             this.deportista=data['deportista'];
+
+            this.calcularEdad(this.deportista.fechaN[0])
+            
             console.log(this.deportista);
           },
           error=>{
@@ -46,7 +56,29 @@ export class DeportistaComponent implements OnInit {
    }
 
   ngOnInit() {
+  }	
+
+  calcularEdad(FechaNacimiento) {
+             
+    var fechaNace:any = new Date(FechaNacimiento);
+    var fechaActual:any = new Date()
+    
+    var mes = fechaActual.getMonth()+1;
+    var dia = fechaActual.getDate();
+    var año = fechaActual.getFullYear();
+     
+    
+    fechaActual.setDate(dia);
+    fechaActual.setMonth(mes);
+    fechaActual.setFullYear(año);
+
+    this.edad = Math.floor(((fechaActual - fechaNace) / (1000 * 60 * 60 * 24) / 365));
+    console.log(this.edad)
+        
   }
+       
+
+
 
 
 }

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database'
 import { AngularFirestore } from '@angular/fire/firestore';
 //version nueva para servicos resfult
-import {HttpClient} from '@angular/common/http';
+import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {map, finalize} from 'rxjs/operators'
 
 /*Interfaces*/
@@ -13,6 +13,7 @@ import {About} from '../interfaces/about.interface';
 import {Service} from '../interfaces/service.interface';
 import {Portafolio} from '../interfaces/portafolio.interface';
 import {Noticia} from '../interfaces/noticia.interface';
+import {Contacto} from '../interfaces/contacto.interface';
 
 //storage firebase
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -22,7 +23,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class OnepageService {
 
-  url = 'https://miapp-158221.firebaseio.com/';
+  url = window['urlFirebase'];
 
   slidersUrl=this.url+'home.json';
   sliderUrl=this.url+'home';
@@ -39,11 +40,22 @@ export class OnepageService {
   noticiasUrl=this.url+'noticias.json';
   noticiaUrl=this.url+'noticias';
 
+  contactosUrl=this.url+'contacto.json';
+  contactoUrl=this.url+'contacto';
+
+
   uploadProgress: Observable<number>;
   uploadURL: Observable<string>;
   
   sliderList:AngularFireList<Slider>;
   selectedSlider:Slider;
+
+   httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'secret-key'
+    })
+   };
     
   constructor(private firebase:AngularFireDatabase, 
               private _http:HttpClient,
@@ -67,6 +79,7 @@ export class OnepageService {
     return this._http.put<About>(url,about);     
   }
 
+  /*service */
   getServices(){
     return this._http.get<Service[]>(this.servicesUrl)
   }
@@ -76,7 +89,17 @@ export class OnepageService {
     return this._http.put<Service>(url,service);     
   }
 
-  
+  nuevaService(nuevo:Service):Observable<Service>{
+    return this._http.post<Service>(this.servicesUrl,nuevo);
+  }
+
+  deletedService(id:string){
+    let url =`${this.serviceUrl}/${id}.json`;
+    return this._http.delete(url);
+  }
+
+
+/*Portafolio */  
   getPortafolio(){
     return this._http.get<Portafolio[]>(this.portafoliosUrl)
   }
@@ -86,6 +109,7 @@ export class OnepageService {
     return this._http.put<Portafolio>(url,portafolio);     
   }
 
+  /*Noticias*/  
   getNoticias(){
     return this._http.get<Noticia[]>(this.noticiasUrl)
   }
@@ -95,6 +119,15 @@ export class OnepageService {
     return this._http.put<Noticia>(url,noticia);     
   }
 
+  /*contato*/
+  getContactos(){
+    return this._http.get<Contacto[]>(this.contactosUrl)
+  }
+
+  updateContacto(contacto:Contacto,id:string){
+    let url =`${this.contactoUrl}/${id}.json`;
+    return this._http.put<Contacto>(url,contacto);     
+  }
 
 
 
@@ -115,6 +148,7 @@ export class OnepageService {
     )
   
   }
+  
   
   downloadUrl(id:any){
     const filePath = `paginaweb/sliders/${id}`;

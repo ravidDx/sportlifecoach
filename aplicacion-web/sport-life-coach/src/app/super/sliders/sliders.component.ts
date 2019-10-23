@@ -1,11 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import {OnepageService} from '../../services/onepage.service';
-import {Slider} from '../../interfaces/slider.interface';
-import { Subscription ,  of } from 'rxjs';
-import { catchError, last, map, tap } from 'rxjs/operators';
 
+/*INTERFACES */
+import {Slider} from '../../interfaces/slider.interface';
+/*sERVICIOS */
+import {OnepageService} from '../../services/onepage.service';
+import {ToasterService} from '../../services/toaster.service';
+
+/*SERVICIOS FILE UPLOAD -------------------------------------------------------*/
+import {trigger, state, style, animate, transition} from '@angular/animations';
+import {HttpClient,HttpRequest, HttpEventType, HttpErrorResponse} from '@angular/common/http';
+import {of} from 'rxjs';
+import {catchError, last, map, tap} from 'rxjs/operators';
+import {FileUploadModel} from '../../class/fileuploadmodel'
+/*----------------------------------------------------------------------- */
 declare var  $: any;
 
 @Component({
@@ -23,7 +30,7 @@ declare var  $: any;
 })
 export class SlidersComponent implements OnInit {
 
-  new:boolean;
+  /* ...................... VARIABLES FILE UPLOAD ........................*/
   /** Link text */
   @Input() text = 'Actualizar imagen';
   /** Name used in form which will be sent in HTTP request. */
@@ -37,6 +44,9 @@ export class SlidersComponent implements OnInit {
 
   files: Array<FileUploadModel> = [];
 
+  /*................................................................*/
+  new:boolean;
+  btnUpdate:boolean = false;
   slider:Slider={
     imagen:'',
     titulo:'',
@@ -45,7 +55,7 @@ export class SlidersComponent implements OnInit {
 
   sliderList: Slider[] = [] ;
   
-  constructor(private _onepageService:OnepageService, private _http: HttpClient) { 
+  constructor(private _onepageService:OnepageService, private _http: HttpClient, private _toasterService:ToasterService) { 
     this.getSliders();
   }
 
@@ -56,13 +66,12 @@ export class SlidersComponent implements OnInit {
     this._onepageService.getSliders()
     .subscribe(
       data=>{
-        console.log(data);
+        console.log('Success');
         for(let key$ in data){
           let sliderNew = data[key$];
           sliderNew['id']=key$;
           this.sliderList.push(sliderNew);            
         }
-        
       },
       error=>{
         console.log(error);
@@ -79,10 +88,9 @@ export class SlidersComponent implements OnInit {
   }
 
   updateSlider(){
-    console.log(this.slider);
+    this.btnUpdate=true;
     var idSlider = this.slider['id'];
-    delete this.slider['id'];
-    
+    //delete this.slider['id'];
     if(this.files.length!=0){
        const idImg = Math.random().toString(36).substring(2);
         this._onepageService.onUpload(this.files[0].data,idImg)      
@@ -95,12 +103,14 @@ export class SlidersComponent implements OnInit {
                    this._onepageService.updateSilder(this.slider,idSlider)
                    .subscribe(
                      data=>{
-                       console.log('Slider Actualizado')
+                       this._toasterService.Success('Slider actualizado OK !!');
                        this.closeModal();
-                       console.log(data)
+                       this.btnUpdate=false;
                      },
                      error=>{
                        console.log(error);
+                       this._toasterService.Error('Error al actualizar !!');
+                       this.btnUpdate=false;
                      }
            
                    );
@@ -108,15 +118,19 @@ export class SlidersComponent implements OnInit {
                 },
                 error=>{
                   console.log(error);
+                  this.btnUpdate=false;
+                  this._toasterService.Error('Error al actualizar !!');
                 }
               );
             
             }
+    
             
           },
           error=>{
-  
             console.log(error);
+            this.btnUpdate=false;
+            this._toasterService.Error('Error al actualizar !!');
           }
 
         );
@@ -125,11 +139,13 @@ export class SlidersComponent implements OnInit {
       this._onepageService.updateSilder(this.slider,idSlider)
         .subscribe(
           data=>{
-            console.log('updateSlider service')
+            this._toasterService.Success('Slider actualizado OK !!');
             this.closeModal();
-            console.log(data)
+            this.btnUpdate=false;
           },
           error=>{
+            this.btnUpdate=false;
+            this._toasterService.Error('Error al actualizar !!');
             console.log(error);
           }
 
@@ -141,9 +157,26 @@ export class SlidersComponent implements OnInit {
     
   }
 
+  closeModal(){
+    $('#dataModal').modal('hide');
+  }
 
+  newModal(){
+  }
 
-  /*metodos de upload imagen*/
+  clearForm(){
+    this.slider={
+      imagen:'',
+      titulo:'',
+      detalle:''
+    }
+    this.files = [];
+    
+  }
+
+  
+
+  /* ----------------- METODOS UPLOAD -------------------*/
   onClick() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = () => {
@@ -235,40 +268,9 @@ export class SlidersComponent implements OnInit {
     console.log(this.files);
   }
 
-  private uploadFiletoArray(){
-      
-    //this._entrenamientoService.onUpload(file.data);
-  }
 
-  closeModal(){
-    $('#dataModal').modal('hide');
-  }
-
-
-  newModal(){
-  }
-
-
-  clearForm(){
-    this.slider={
-      imagen:'',
-      titulo:'',
-      detalle:''
-    }
-    this.files = [];
-    
-  }
 
 }
 
 
 
-export class FileUploadModel {
-  data: File;
-  state: string;
-  inProgress: boolean;
-  progress: number;
-  canRetry: boolean;
-  canCancel: boolean;
-  sub?: Subscription;
-}

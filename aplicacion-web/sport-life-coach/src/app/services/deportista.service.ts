@@ -22,8 +22,7 @@ export class DeportistaService {
   //deportistasUrl="https://ca07c33860904ca2acd454193de1766a.vfs.cloud9.us-east-2.amazonaws.com/api/deportistas";
   //deportistaUrl="https://ca07c33860904ca2acd454193de1766a.vfs.cloud9.us-east-2.amazonaws.com/api/deportista";
 
- 
-  url = 'http://18.191.206.194';
+ url = window['urlApi'];
  deportistasUrl=this.url+":8080/api/deportistas";
  deportistaUrl=this.url+":8080/api/deportista";
 

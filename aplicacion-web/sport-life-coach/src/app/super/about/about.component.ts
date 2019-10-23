@@ -48,6 +48,8 @@ export class AboutComponent implements OnInit {
 
   /*................................................................*/
 
+  btnUpdate:boolean = false;
+
   aboutList: About[]=[];
 
   about:About={
@@ -67,18 +69,17 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
   }
 
+  
   /*Obtener data de about*/
   getAbouts(){
     this._onepageService.getAbouts()
     .subscribe(
       data=>{
-        console.log(data);
         for(let key$ in data){
           let aboutNew = data[key$];
           this.about = aboutNew;       
           aboutNew['id']=key$;
-          this.aboutList.push(aboutNew);
-              
+          this.aboutList.push(aboutNew); 
         }
         
       },
@@ -94,7 +95,8 @@ export class AboutComponent implements OnInit {
 /*Actualizar data de about*/
   updateAbout(){
     var idAbout = this.about['id'];
-    delete this.about['id'];
+    //delete this.about['id'];
+    this.btnUpdate=true;
     
     if(this.files.length!=0){
 
@@ -109,13 +111,15 @@ export class AboutComponent implements OnInit {
                    this._onepageService.updateAbout(this.about,idAbout)
                    .subscribe(
                      data=>{
-                       console.log(data);
                        this.closeModal();
                        this.clearForm();
-                       this.Info("Perfil editado OK !!");
+                       this.toasterService.Success("Perfil editado OK !!");
+                       this.btnUpdate=false;
                      },
                      error=>{
                        console.log(error);
+                       this.toasterService.Error("Error al actualizar !!");
+                       this.btnUpdate=false;
                      }
            
                    );
@@ -123,6 +127,8 @@ export class AboutComponent implements OnInit {
                 },
                 error=>{
                   console.log(error);
+                  this.toasterService.Error("Error al actualizar !!");
+                  this.btnUpdate=false;
                 }
               );
             
@@ -130,8 +136,9 @@ export class AboutComponent implements OnInit {
             
           },
           error=>{
-  
             console.log(error);
+            this.toasterService.Error("Error al actualizar !!");
+            this.btnUpdate=false;
           }
 
         );
@@ -141,12 +148,14 @@ export class AboutComponent implements OnInit {
       this._onepageService.updateAbout(this.about,idAbout)
         .subscribe(
           data=>{
-            console.log(data);
             this.closeModal();
-            this.Info("Perfil editado OK !!");
+            this.toasterService.Success("Perfil editado OK !!");
+            this.btnUpdate=false;
           },
           error=>{
             console.log(error);
+            this.toasterService.Error("Error al actualizar !!");
+            this.btnUpdate=false;
           }
 
         );
@@ -161,16 +170,6 @@ export class AboutComponent implements OnInit {
   clearForm(){
     this.files = [];
   }
-
-
-  /*MENSAJES ALERTS*/
-  Info(title:any){
-    this.toasterService.Info(title);
-  }
-
-
-
-
 
 
 
@@ -265,11 +264,6 @@ export class AboutComponent implements OnInit {
       this.files.splice(index, 1);
     }
     console.log(this.files);
-  }
-
-  private uploadFiletoArray(){
-      
-    //this._entrenamientoService.onUpload(file.data);
   }
 
 

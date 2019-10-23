@@ -13,17 +13,21 @@ declare interface RouteInfo {
     rol:string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', rol:'admin' },
-    { path: '/deportista-list', title: 'Deportistas',  icon: 'format_list_bulleted', class: '',rol:'admin' },
-    { path: '/ejercicios', title: 'Ejercicios',  icon: 'directions_run', class: '',rol:'admin' },
-    { path: '/dietas', title: 'Dietas',  icon: 'restaurant_menu', class: '',rol:'admin' },
-    { path: '/promociones', title: 'Promociones',  icon: 'local_offer', class: '',rol:'admin' },
-    { path: '/user-profile', title: 'User Profile',  icon:'person', class: '',rol:'admin' },
-    { path: '/inicio', title: 'Inicio',  icon:'home', class: '',rol:'super' },
-    { path: '/about', title: 'About',  icon:'account_circle', class: '',rol:'super' },
-    { path: '/services', title: 'Services',  icon:'favorite', class: '',rol:'super' },
-    { path: '/portafolio', title: 'Portafolio',  icon:'work', class: '',rol:'super' },
-    { path: '/posts', title: 'Posts',  icon:'note_add', class: '',rol:'super' },
+    { path: '/admin/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', rol:'admin' },
+    { path: '/admin/deportista-list', title: 'Deportistas',  icon: 'format_list_bulleted', class: '',rol:'admin' },
+    { path: '/admin/ejercicios', title: 'Ejercicios',  icon: 'directions_run', class: '',rol:'admin' },
+    { path: '/admin/dietas', title: 'Dietas',  icon: 'restaurant_menu', class: '',rol:'admin' },
+    { path: '/admin/promociones', title: 'Promociones',  icon: 'local_offer', class: '',rol:'admin' },
+    { path: '/admin/user-profile', title: 'User Profile',  icon:'person', class: '',rol:'admin' },
+    { path: '/admin/categorias', title: 'Categorias',  icon:'sort', class: '',rol:'admin' },
+    { path: '/sadmin/inicio', title: 'Inicio',  icon:'home', class: '',rol:'super' },
+    { path: '/sadmin/about', title: 'About',  icon:'account_circle', class: '',rol:'super' },
+    { path: '/sadmin/services', title: 'Services',  icon:'favorite', class: '',rol:'super' },
+    { path: '/sadmin/portafolio', title: 'Portafolio',  icon:'work', class: '',rol:'super' },
+    { path: '/sadmin/posts', title: 'Posts',  icon:'event', class: '',rol:'super' },
+    { path: '/sadmin/contacto', title: 'Contacto',  icon:'settings_phone', class: '',rol:'super' },
+    { path: '/sadmin/credenciales', title: 'Credenciales',  icon:'assignment_ind', class: '',rol:'super' },
+
     
     
     /*
@@ -64,10 +68,11 @@ export class SidebarComponent implements OnInit {
     this.rol=localStorage.getItem('rol');
     if(this.rol === 'admin'){
       this.name='Admin Fit';
-      this.about.imagen="/assets/images/logo-black.png";
+      this.getAbouts();
+      
     }else{
       this.name='Super Admin'
-      this.getAbouts();
+      this.about.imagen="/assets/images/logo-black.png";
     }
 
     
