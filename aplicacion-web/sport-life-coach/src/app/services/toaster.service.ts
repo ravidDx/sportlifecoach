@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+//import { ToastrService } from 'ngx-toastr';
+
 declare var toastr:any;
 
 @Injectable({
@@ -11,6 +13,7 @@ export class ToasterService {
 
   Success(title: string, meassage?:string){
     //toastr.Success(title,meassage)
+    //this.toastr.success("Hello, I'm the toastr message.")
     toastr.success(title)
   }
   Info(title: string, meassage?:string){

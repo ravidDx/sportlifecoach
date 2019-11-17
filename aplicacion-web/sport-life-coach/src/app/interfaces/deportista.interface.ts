@@ -11,4 +11,6 @@ export interface Deportista{
     objetivo:String;
 	observaciones:String;
 	rol:String;
+	fechaCreacion:object;
+	estado:string;
 }

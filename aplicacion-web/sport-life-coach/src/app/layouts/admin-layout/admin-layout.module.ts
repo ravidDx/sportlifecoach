@@ -23,6 +23,8 @@ import { DietaComponent } from '../..//admin/dieta/dieta.component';
 import { DietasComponent } from '../..//admin/dietas/dietas.component';
 import { PromocionesComponent } from '../..//admin/promociones/promociones.component';
 import { PromocionComponent } from '../..//admin/promocion/promocion.component';
+import { EstadisticasComponent } from '../..//admin/estadisticas/estadisticas.component';
+import { RutinasComponent } from '../..//admin/rutinas/rutinas.component';
 
 /*COMPONENTES ROL SUPER ADMIN*/
 import { SlidersComponent } from '../../super/sliders/sliders.component';
@@ -35,6 +37,8 @@ import { CredencialesComponent } from '../../super/credenciales/credenciales.com
 import { CategoriasComponent } from '../../admin/categorias/categorias.component';
 
 import { HttpClientModule } from '@angular/common/http';
+
+import { PreloadComponent } from '../../loading/preload/preload.component';
 
 import {
   MatButtonModule,
@@ -54,7 +58,8 @@ import {
   MatCardModule,
   MatAutocompleteModule,
   MatRadioModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatCheckboxModule 
 } from '@angular/material';
 
 
@@ -82,6 +87,7 @@ import {
     MatAutocompleteModule,
     MatRadioModule,
     MatBadgeModule,
+    MatCheckboxModule,
     HttpClientModule
   ],
   declarations: [
@@ -108,7 +114,10 @@ import {
     ContactoComponent,
     PostsComponent,
     CredencialesComponent,
-    CategoriasComponent
+    CategoriasComponent,
+    EstadisticasComponent,
+    RutinasComponent,
+    PreloadComponent
   ]
 })
 

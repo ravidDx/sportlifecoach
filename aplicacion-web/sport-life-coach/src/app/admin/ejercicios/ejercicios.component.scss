@@ -1,6 +1,38 @@
 
+table {
+    width: 100%;
+  }  
+
 .btn-add button{
     margin-right: 14px;
+  }
+
+  .card-img-small{
+    width: 2em;
+    min-width: 6em;
+  }
+
+  .card-img-modal{
+    height: 250px;
+    width: 250px;
+  }
+
+.card-instruccion{
+  padding-top: 58px; 
+}
+
+  .spanEstado{
+    padding: 6px 10px 6px 10px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+  }
+  .spanActivo{
+    background-color: #1fdd7e;
+  }
+  
+  .spanInactivo{
+    background-color: #f44336;
   }
   
 
@@ -45,6 +77,28 @@
     margin-bottom: 45px;
 }
 
+
+.add-item{
+  margin-top: -19px;
+  padding-top: 0px;
+}
+
+.btn-add{
+  margin-bottom: 10px;
+}
+
+
+.btn-add button{
+  margin-right: 14px;
+}
+
+
+
+.btn-ico{
+  padding-left: 5px;
+  min-width: 10px;
+  max-width: 26px
+}
 
 
 

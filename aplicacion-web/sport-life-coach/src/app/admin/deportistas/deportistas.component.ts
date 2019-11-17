@@ -7,12 +7,18 @@ import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms'; 
 
 import {Deportista} from '../../interfaces/deportista.interface';
+import {Evaluacion} from '../../interfaces/evaluacion.interface';
+
 import {DeportistaService} from '../../services/deportista.service';
+import {EvaluacionService} from '../../services/evaluacion.service';
 import {AuthService} from '../../services/auth.service';
+
+
 import {ToasterService} from '../../services/toaster.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ModalComponent } from '../../modal/modal.component';
+import { Title } from '@angular/platform-browser';
 
 declare var  $: any;
 
@@ -28,7 +34,9 @@ export class DeportistasComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('myTable') myTable: MatTable<any>;
 
-  displayedColumns: string[] = ['position','nombre', 'apellido', 'email', 'telefono', 'acciones'];
+  titleConfirm='';
+
+  displayedColumns: string[] = ['position','nombre','apellido', 'email', 'telefono', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<Deportista>();
   
   habilitar:boolean=true;
@@ -45,6 +53,7 @@ export class DeportistasComponent implements OnInit {
 
   tiposObjetivo:string[] = ['Perder peso y quemar grasa','Ganar masa muscular y fuerza', 'Vivir de forma saludable y mantener mi peso'];
 
+  
   deportista:Deportista = {
     nombre:"",
     apellido:"",
@@ -53,11 +62,13 @@ export class DeportistasComponent implements OnInit {
     fechaN:"",
     peso:"",
     altura:"",
-    foto:"https://www.nicepng.com/png/full/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
+    foto:"",
     genero:"",
     objetivo:"",
     observaciones:"",
-    rol:"user"
+    rol:"",
+    fechaCreacion:{},
+    estado:"",
   }
 
   deportistaEdit:Deportista = {
@@ -72,45 +83,66 @@ export class DeportistasComponent implements OnInit {
     genero:"",
     objetivo:"",
     observaciones:"",
-    rol:""
+    rol:"",
+    fechaCreacion:{},
+    estado:"",
   }
+
+  evaluacion:Evaluacion = {
+    idDeportista:'',
+    edad:'',
+	  imc:'',
+    fechaCreacion:{},
+    recomendacion:'',
+  }
+  
 
   deportistas:Deportista[] =[];
 
   favoriteSeason: string; 
  
   constructor(private _deportistaService:DeportistaService,
-              private _router:Router, 
+              private _evaluacionService:EvaluacionService,
               public dialog: MatDialog,
-              private changeDetectorRefs:ChangeDetectorRef,
               private toasterService:ToasterService,
               private _authService:AuthService) { 
     this.listar();
+    this.deportista.fechaCreacion=this.getFechaActual();
+   
   }
 
   ngOnInit() {
     //"url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    //this.getFechaActual();
   }
 
   
   guardar(){
-    console.log(this.deportista)
+  
 
     if(this.new==true){
       this.disabledButton(true);
 
+      this.deportista.foto = 'https://www.nicepng.com/png/full/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png'
+      this.deportista.estado = 'Activo';
+      this.deportista.rol = 'Afiliado',
+
       this._deportistaService.nuevoDeportista(this.deportista).subscribe(
         data=>{
-          console.log(data['deportista'])
-          //Guardar credenciales email y pass en firebase
-          this.guardarAuthUser(this.deportista.email,this.deportista.email);       
           
-          this.dataSource.data = this.dataSource.data.concat(data['deportista']);
+          var obj = Object.assign({},this.deportista);
+          obj['_id']=data['name'];
+
+          //Guardar credenciales email y pass en firebase
+          this.guardarAuthUser(obj.email,obj.email);    
+  
+          this.dataSource.data = this.dataSource.data.concat(obj);
           this.clearForm();
           this.closeModal();
-          this.Success("Deportista guardado OK !!");
+          this.toasterService.Success("Deportista guardado OK !!");
           //this.viewAlert("Deportista guardado OK !!")
           this.disabledButton(false);
+          this.guardarEvaluacion(obj);      
 
         },
         error=>{
@@ -129,10 +161,12 @@ export class DeportistasComponent implements OnInit {
       this._deportistaService.editarDeportista(this.deportistaEdit,this.deportistaEdit["_id"]).subscribe(
         data=>{
           console.log(data);
+         // this.refresh(this.deportistaEdit)
+         this.listar();
           this.closeModal();
-          this.Info("Deportista editado OK !!");
-         // this.viewAlert("Deportista editado OK !!")
+          this.Success("Deportista editado OK !!");
           this.disabledButton(false);
+          
         },
         error=>{
           console.log(error);
@@ -148,21 +182,53 @@ export class DeportistasComponent implements OnInit {
   guardarAuthUser(email:any, pass:any){
     this._authService.signUpWithEmail(email,pass)
     .then(data=>{
-      console.log('succes: '+data.user)
+      console.log(data)
     })
     .catch(err=>{
       console.log('error: '+err)
     })
   }
 
+  guardarEvaluacion(obj:any){
+
+    this.evaluacion.edad = this.calcularEdad(obj['fechaN']).toString();
+    this.evaluacion.imc = this.calcularIMC(obj['peso'], obj['altura']).toString();
+    this.evaluacion.idDeportista = obj['_id'];
+    this.evaluacion.fechaCreacion=obj['fechaCreacion'];
+
+    this._evaluacionService.nuevaEvaluacion(this.evaluacion).subscribe(
+      data=>{
+        console.log(data);
+       // this.refresh(this.deportistaEdit)
+      },
+      error=>{
+        console.log(error);
+        this.disabledButton(false);
+      }
+      
+    );
+
+    console.log(this.evaluacion)
+
+  }
+
   listar(){
+    this.deportistas=[];
     this._deportistaService.consultarDesportistas()
       .subscribe(
         data=>{
-          this.deportistas = data["deportistas"];
-          this.dataSource.data =this.deportistas;
+
+          for(let key$ in data){
+	  				let deportista = data[key$];
+	  				deportista['_id']=key$;
+	  				this.deportistas.push(deportista);
+          }
+        
+          this.dataSource.data = this.deportistas;
           this.dataSource.paginator = this.paginator;
-          console.log(this.deportistas);        
+
+          console.log(this.dataSource.data)
+                 
         },
         error=>{
           console.log(error);
@@ -176,6 +242,23 @@ export class DeportistasComponent implements OnInit {
     this.indiceData=indice;
     this.eventData = event;
     console.log(this.indiceData);
+    
+    
+  }
+
+  cargarObjectBaja(deportista:Deportista, event:any){
+    this.indiceData=deportista["_id"];
+    this.deportistaEdit = Object.assign({},deportista);
+    this.eventData = event;
+
+    if(deportista['estado'] == 'Activo' ){
+      this.titleConfirm='Esta seguro de dar de baja a este deportista?';
+  
+    }else{
+      this.titleConfirm='Esta seguro de dar de alta a este deportista?';
+  
+    }
+    
   }
 
   eliminar(){
@@ -186,7 +269,7 @@ export class DeportistasComponent implements OnInit {
   		subscribe(
   			data=>{
        
-        this.refresh();
+        //this.refresh();
         this.Error("Deportista eliminado OK !!");
         //this.viewAlert("Deportista eliminado OK !!")
         this.loadTrash.hide();
@@ -202,16 +285,42 @@ export class DeportistasComponent implements OnInit {
 
   }
 
-  mostrar(indice:string){
-    //this._router.navigate(['/dashboard/perfil', indice]);
-  }
 
+  darBaja(){
+    
+    this.loadingTrash();
+    let title="";
+
+    if(this.deportistaEdit.estado == 'Activo'){
+      this.deportistaEdit.estado = 'Inactivo';
+      title = 'Deportista dado de baja OK !!';
+    }else{
+      this.deportistaEdit.estado = 'Activo';
+      title = 'Deportista dado de alta OK !!';
+    }
+    
+    this._deportistaService.darBajaDeportista(this.deportistaEdit,this.deportistaEdit["_id"]).subscribe(
+      data=>{
+        //this.refresh(this.deportistaEdit);
+        this.listar();
+        this.Success(title);
+        this.loadTrash.hide();
+        this.trash.show(); 
+      },
+      error=>{
+        console.log(error);
+        this.loadTrash.hide();
+        this.trash.show(); 
+      }
+      
+    );
+  }
 
 
   editModal(deportista:Deportista){
     
     this.new=false;
-    this.deportistaEdit=deportista;
+    this.deportistaEdit = Object.assign({},deportista);
     
   }
 
@@ -231,6 +340,10 @@ export class DeportistasComponent implements OnInit {
     this.deportista.genero="";
     this.deportista.objetivo="";
     this.deportista.observaciones="";
+    this.deportista.estado="";
+    this.deportista.rol="";
+    this.deportista.foto="";
+    this.deportista.fechaCreacion=this.getFechaActual();
   }
 
   select(event:any){
@@ -238,6 +351,35 @@ export class DeportistasComponent implements OnInit {
     //this.deportista.objetivo=event;
  
   }
+
+
+  getFechaActual(){
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth()+1;
+    var yyyy = hoy.getFullYear();
+    
+    dd=this.addZero(dd);
+    mm=this.addZero(mm);
+
+    let fecha = {
+      dd:dd,
+      mm:mm,
+      yyyy:yyyy
+    }
+
+    return fecha;
+  }
+
+  addZero(i:any){
+     if (i < 10) {
+        i = '0' + i;
+    }
+    return i;
+    
+  }
+
+  
 
 
 
@@ -260,10 +402,6 @@ export class DeportistasComponent implements OnInit {
   }
 
   loadingTrash(){
-    console.log($(this.eventData));
-    console.log($(this.eventData.target));
-    //this.habilitar=false;
- 
     this.trash = $(this.eventData.target).parent().find(`#${this.indiceData}`).hide();
     this.loadTrash = $(this.eventData.target).parent().find('img').show();
     
@@ -282,17 +420,17 @@ export class DeportistasComponent implements OnInit {
     });
   }
 
-  refresh(){
-    for (var i = 0; i < this.dataSource.data.length; i++) {
-      if (this.dataSource.data[i]['_id']  == this.indiceData ) {
-        console.log(this.dataSource.data[i] );
-        console.log(i);
-        this.dataSource.data.splice(i, 1);
-        this.dataSource.data = this.dataSource.data.slice();
-        break;
-      }  
-    }
+  refresh(deportista:Deportista){ 
+    let obj = Object.assign({},deportista);
 
+     for(let pos in this.deportistas){
+       if(this.deportistas[pos]['_id']== obj['_id']){
+        this.deportistas[pos] = obj;
+        console.log( this.deportistas[pos] )
+       }
+      
+    }
+    
   }
 
   disabledButton(valor:boolean){
@@ -316,6 +454,35 @@ export class DeportistasComponent implements OnInit {
   Error(title:any){
     this.toasterService.Error(title);
   }
+
+  calcularEdad(FechaNacimiento:any) {
+             
+    var fechaNace:any = new Date(FechaNacimiento);
+    var fechaActual:any = new Date()
+
+    var mes = fechaActual.getMonth()+1;
+    var dia = fechaActual.getDate();
+    var año = fechaActual.getFullYear();
+
+    fechaActual.setDate(dia);
+    fechaActual.setMonth(mes);
+    fechaActual.setFullYear(año);
+
+    var edad = Math.floor(((fechaActual - fechaNace) / (1000 * 60 * 60 * 24) / 365));
+    return edad;
+        
+  }
+
+  calcularIMC(peso:any, altura:any){
+    let imc:any;
+    peso = parseFloat(peso);
+    altura = parseFloat(altura);
+    altura = altura/100;
+    imc = peso/(altura*altura)
+    imc =  imc.toFixed(2);
+    return imc;
+  }
+
 
 
   
