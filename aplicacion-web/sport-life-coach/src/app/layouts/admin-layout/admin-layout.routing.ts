@@ -21,6 +21,9 @@ import { PromocionComponent } from 'app/admin/promocion/promocion.component';
 import { CategoriasComponent } from '../../admin/categorias/categorias.component';
 import { EstadisticasComponent } from '../../admin/estadisticas/estadisticas.component';
 import { RutinasComponent } from '../../admin/rutinas/rutinas.component';
+import { EntrenamientoComponent } from '../../admin/entrenamiento/entrenamiento.component';
+import { EntrenamientosComponent } from '../../admin/entrenamientos/entrenamientos.component';
+
 
 /*COMPONENTES ROL SUPER ADMIN*/
 import { SlidersComponent } from '../../super/sliders/sliders.component';
@@ -44,7 +47,9 @@ export const AdminLayoutRoutes: Routes = [
                 { path: 'deportista-profile/:_id',  component: DeportistaComponent},
                 { path: 'ejercicios',               component: EjerciciosComponent},
                 { path: 'ejercicio/:_id',           component: EjercicioComponent },
-                { path: 'rutinas',                 component: RutinasComponent},
+                { path: 'rutinas',                  component: RutinasComponent},
+                { path: 'entrenamientos',           component: EntrenamientosComponent},
+                { path: 'entrenamiento/:_id',       component: EntrenamientoComponent},
                 { path: 'dietas',                   component: DietasComponent},
                 { path: 'dieta/:_id',               component: DietaComponent },
                 { path: 'promociones',              component: PromocionesComponent },

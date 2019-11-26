@@ -17,6 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/deportista-list', title: 'Deportistas',  icon: 'format_list_bulleted', class: '',rol:'admin' },
     { path: '/admin/ejercicios', title: 'Ejercicios',  icon: 'directions_run', class: '',rol:'admin' },
     { path: '/admin/rutinas', title: 'Rutinas',  icon: 'directions_run', class: '',rol:'admin' },
+    { path: '/admin/entrenamientos', title: 'Entrenamientos',  icon: 'directions_run', class: '',rol:'admin' },
     { path: '/admin/dietas', title: 'Recetas',  icon: 'restaurant_menu', class: '',rol:'admin' },
     { path: '/admin/promociones', title: 'Promociones',  icon: 'local_offer', class: '',rol:'admin' },
     { path: '/admin/user-profile', title: 'User Profile',  icon:'person', class: '',rol:'admin' },

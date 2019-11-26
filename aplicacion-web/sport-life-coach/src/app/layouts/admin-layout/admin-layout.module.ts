@@ -25,6 +25,8 @@ import { PromocionesComponent } from '../..//admin/promociones/promociones.compo
 import { PromocionComponent } from '../..//admin/promocion/promocion.component';
 import { EstadisticasComponent } from '../..//admin/estadisticas/estadisticas.component';
 import { RutinasComponent } from '../..//admin/rutinas/rutinas.component';
+import { EntrenamientosComponent } from '../../admin/entrenamientos/entrenamientos.component';
+import { EntrenamientoComponent } from '../../admin/entrenamiento/entrenamiento.component';
 
 /*COMPONENTES ROL SUPER ADMIN*/
 import { SlidersComponent } from '../../super/sliders/sliders.component';
@@ -117,6 +119,8 @@ import {
     CategoriasComponent,
     EstadisticasComponent,
     RutinasComponent,
+    EntrenamientoComponent,
+    EntrenamientosComponent,
     PreloadComponent
   ]
 })

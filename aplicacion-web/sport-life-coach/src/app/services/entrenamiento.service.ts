@@ -3,7 +3,8 @@ import {Entrenamiento} from '../interfaces/entrenamiento.interface';
 
 //version nueva para servicos resfult
 import {HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { finalize } from 'rxjs/operators';
 
 //storage firebase
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -14,14 +15,13 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class EntrenamientoService {
 
-  //url = window['urlApi'];
-  /*
-  entrenamientosUrl=this.url+":8080/api/entrenamientos";
-  entrenamientoUrl=this.url+":8080/api/entrenamiento";
-*/
+  
   url = window['urlFirebase'];
   entrenamientosUrl=this.url+'entrenamientos.json';
   entrenamientoUrl=this.url+'entrenamientos';
+
+  uploadProgress: Observable<number>;
+  uploadURL: Observable<string>;
 
   constructor(private _http:HttpClient, 
               private storage:AngularFireStorage) 
@@ -68,8 +68,21 @@ export class EntrenamientoService {
     const filePath = `uploads/entrenamiento_${id}`;
     const ref = this.storage.ref(filePath);
     const task = this.storage.upload(filePath,file);
+    //const task = ref.put(file);
+    
+
+    return task.snapshotChanges().pipe(
+        finalize(() => this.uploadURL = ref.getDownloadURL() )
+    )
+
+    
+
+ 
         
   }
+
+
+
 
   downloadUrl(id:any){
     const filePath = `uploads/entrenamiento_${id}`;
@@ -77,7 +90,6 @@ export class EntrenamientoService {
 
     return imgRef.getDownloadURL();
   }
-
-
+  
 
 }

@@ -49,7 +49,7 @@ export class EjerciciosComponent implements OnInit {
   @ViewChild('myTable') myTable: MatTable<any>;
   titleConfirm='';
 
-  displayedColumns: string[] = ['select','position','imagen','titulo','tipo','dificultad','estado', 'acciones'];
+  displayedColumns: string[] = ['position','imagen','titulo','tipo','dificultad','estado', 'acciones'];
   dataSource = new MatTableDataSource<Entrenamiento>();
   selection = new SelectionModel<Entrenamiento>(true, []);
 
@@ -174,18 +174,32 @@ export class EjerciciosComponent implements OnInit {
     if(this.new==true){
 
       this.btnSave=true; 
-      var _this = this;
+
       this.entrenamiento.estado = 'Activo';
       this.entrenamiento.instruccion=this.itemsInstrucciones;
-     
-      //cargar y guardar imagen en firebase
-      this.files.forEach( function(item, indice, array) {
-        const id = Math.random().toString(36).substring(2);
-        _this.entrenamiento.imagen= id;
-        _this._entrenamientoService.onUpload(item.data,id);        
-      });
+      
+      const id = Math.random().toString(36).substring(2);
+
+      this.entrenamiento.imagen= id;
+
+      let data = this.files[0].data;
+      
+      this._entrenamientoService.onUpload(data, id)      
+      .subscribe(
+        data=>{
+
+          if(data.bytesTransferred === data.totalBytes){
+            this.nuevoEntrenamiento();
+          }
+          
+        },
+        error=>{
+          console.log(error);
+       
+        }
+
+      );
   
-      this.nuevoEntrenamiento();
 
     }else{
 
@@ -242,6 +256,7 @@ export class EjerciciosComponent implements OnInit {
 
     );
   }
+  
 
 
   //Metodo listar entrenamientos
@@ -305,7 +320,7 @@ export class EjerciciosComponent implements OnInit {
       this._entrenamientoService.downloadUrl(deportista['imagen']).subscribe(
         data=>{
           deportista['imagen']=data;   
-          console.log(data);      
+            
         },
         error=>{
           console.log('ERROR');
