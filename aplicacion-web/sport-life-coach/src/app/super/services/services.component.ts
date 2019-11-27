@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule} from '@angular/core';
 /*INTERFACES */
 import {Service} from '../../interfaces/service.interface';
 /*sERVICIOS */
 import {OnepageService} from '../../services/onepage.service';
 import {ToasterService} from '../../services/toaster.service';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 
 
 declare var  $: any;
-
-
 
 @Component({
   selector: 'app-services',
@@ -22,6 +20,7 @@ export class ServicesComponent implements OnInit {
   btnDisabled:boolean = false;
   
   idService:any;
+  
 
   serviciosIcon: any[] = [
     {
@@ -97,6 +96,8 @@ export class ServicesComponent implements OnInit {
     icono:""
   }
 
+  // validaciones
+  animalControl = new FormControl('', [Validators.required]);
   constructor(private _onepageService:OnepageService,
               private toasterService:ToasterService) { 
 
@@ -140,7 +141,6 @@ export class ServicesComponent implements OnInit {
   }
 
   guardar(){
-    
     if(this.newObject == true){
       this.btnDisabled=true;
       this.updateService();
@@ -230,7 +230,6 @@ export class ServicesComponent implements OnInit {
     this.service.titulo="";
     this.service.icono="";
   }
-
 
 
 

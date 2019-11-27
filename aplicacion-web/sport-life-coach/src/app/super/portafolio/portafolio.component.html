@@ -37,7 +37,7 @@
 
 
 <!-- FORMULARIO MODAL -->
-<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -48,14 +48,20 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="form-entrenamiento" (ngSubmit)="updatePortafolio()" #form="ngForm">
+        <form id="form-entrenamiento" (ngSubmit)="updatePortafolio()" #form="ngForm" novalidate>
             <div class="modal-body">
 
                 <div class="example-container">
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>      
-                                <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="portafolio.titulo">
+                                <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="portafolio.titulo"
+                                #title="ngModel" required minlength="3">
+                                 <!--MSJ ERROR TITULO-->
+                                 <mat-error *ngIf="title.errors && (title.dirty || title.touched)">
+                                  <span *ngIf="title.errors.required">Este campo no puede estar vacío</span>
+                                  <span *ngIf="title.errors.minlength">Titulo debe tener al menos 3 caracteres</span>
+                              </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -63,7 +69,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>
-                                <textarea matInput placeholder="Subtitulo" rows="3" name="subtitulo" [(ngModel)]="portafolio.subtitulo"></textarea>
+                                <textarea matInput placeholder="Subtitulo" rows="3" name="subtitulo" [(ngModel)]="portafolio.subtitulo"
+                                #stitle="ngModel" required minlength="3"></textarea>
+                                <!--MSJ ERROR TITULO-->
+                                <mat-error *ngIf="stitle.errors && (stitle.dirty || stitle.touched)">
+                                  <span *ngIf="stitle.errors.required">Este campo no puede estar vacío</span>
+                                  <span *ngIf="stitle.errors.minlength">Subitulo debe tener al menos 3 caracteres</span>
+                              </mat-error>
                               </mat-form-field>
                         </div>
                     </div>
@@ -71,7 +83,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>
-                                <textarea matInput placeholder="Detalle" rows="4" name="detalle" [(ngModel)]="portafolio.detalle"></textarea>
+                                <textarea matInput placeholder="Detalle" rows="4" name="detalle" [(ngModel)]="portafolio.detalle"
+                                #detail="ngModel" required minlength="10"></textarea>
+                                <!--MSJ ERROR DETALLE-->
+                                <mat-error *ngIf="detail.errors && (detail.dirty || detail.touched)">
+                                  <span *ngIf="detail.errors.required">Este campo no puede estar vacío</span>
+                                  <span *ngIf="detail.errors.minlength">Detalle debe tener al menos 10 caracteres</span>
+                              </mat-error>
                               </mat-form-field>
                         </div>
                     </div>
@@ -81,7 +99,7 @@
                       <div class="col-md-12">
                           <button mat-button color="warn" (click)="onClick()" type="button">
                               <mat-icon>file_upload</mat-icon>
-                              {{text}} ({{files.length}})
+                              {{text}} ({{files.length}}) (requerido)
                             </button>
                             <br/>
                             <ul>
@@ -98,7 +116,7 @@
                                 </span>
                               </li>
                             </ul>
-                            <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" accept="{{accept}}" style="display:none;" />
+                            <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" accept="{{accept}}" style="display:none;" required />
                             
                       </div>
                     </div>
@@ -110,8 +128,8 @@
             
             <div class="modal-footer">
                 
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary" [disabled]="btnUpdate" >Actualizar</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" [disabled]="form.invalid">Cerrar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="form.invalid" >Actualizar</button>
               
             </div>
         </form>

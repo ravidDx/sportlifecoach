@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from './components/components.module';
@@ -49,13 +49,15 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SocialComponent } from './shared/social/social.component';
 import { ModalComponent } from './modal/modal.component';
 import { SigninComponent } from './auth/signin/signin.component';
+import { MatSliderModule } from '@angular/material';
 
 
 @NgModule({
   imports: [
+    MatSliderModule,
     BrowserAnimationsModule,
-    DataTablesModule,    
-    FormsModule,
+    DataTablesModule,
+    FormsModule, ReactiveFormsModule,
     HttpModule,
     ComponentsModule,
     RouterModule,
@@ -75,7 +77,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     ModalComponent,
     SigninComponent
   ],
-  providers: [AngularFireAuth, AuthService,DeportistaService,ToasterService],
+  providers: [AngularFireAuth, AuthService, DeportistaService, ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,7 +14,7 @@ import {
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   exports: [
     MatTableModule,

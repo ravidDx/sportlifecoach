@@ -7,16 +7,17 @@ export const environment = {
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBjyWK7eorJaa7oIEwKAeW6rQ3WzLaq1Vo",
-  authDomain: "miapp-158221.firebaseapp.com",
-  databaseURL: "https://miapp-158221.firebaseio.com",
-  projectId: "miapp-158221",
-  storageBucket: "gs://miapp-158221.appspot.com/",
-  messagingSenderId: "231674641543"
+  apiKey: 'AIzaSyBjyWK7eorJaa7oIEwKAeW6rQ3WzLaq1Vo',
+    authDomain: 'miapp-158221.firebaseapp.com',
+    databaseURL: 'https://miapp-158221.firebaseio.com',
+    projectId: 'miapp-158221',
+    storageBucket: 'miapp-158221.appspot.com',
+    messagingSenderId: '231674641543',
+    appId: '1:231674641543:web:0606d3bd128c1c37c68c22'
 };
 
-/*
-export const firebaseConfig = {
+
+/*export const firebaseConfig = {
   apiKey: 'AIzaSyBhL8lgiRFP9ulboiiX8FbS6baNOKhr5R8',
   authDomain: 'fblogin-75a75.firebaseapp.com',
   databaseURL: 'https://fblogin-75a75.firebaseio.com',

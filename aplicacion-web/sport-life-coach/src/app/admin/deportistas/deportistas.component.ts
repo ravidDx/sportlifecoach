@@ -1,20 +1,22 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import {MatPaginator, MatTableDataSource, MatTable} from '@angular/material';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, NgModule } from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatTable } from '@angular/material';
 
 import { Subject } from 'rxjs/Subject';
 
-import {Router} from '@angular/router';
-import {NgForm} from '@angular/forms'; 
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
-import {Deportista} from '../../interfaces/deportista.interface';
-import {DeportistaService} from '../../services/deportista.service';
-import {AuthService} from '../../services/auth.service';
-import {ToasterService} from '../../services/toaster.service';
+import { Deportista } from '../../interfaces/deportista.interface';
+import { DeportistaService } from '../../services/deportista.service';
+import { AuthService } from '../../services/auth.service';
+import { ToasterService } from '../../services/toaster.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ModalComponent } from '../../modal/modal.component';
 
-declare var  $: any;
+import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
+
+declare var $: any;
 
 @Component({
   selector: 'app-deportistas',
@@ -22,89 +24,109 @@ declare var  $: any;
   styleUrls: ['./deportistas.component.scss']
 })
 export class DeportistasComponent implements OnInit {
-  
+
   //Datatable
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('myTable') myTable: MatTable<any>;
 
-  displayedColumns: string[] = ['position','nombre', 'apellido', 'email', 'telefono', 'acciones'];
+  displayedColumns: string[] = ['position', 'nombre', 'apellido', 'email', 'telefono', 'acciones'];
   dataSource = new MatTableDataSource<Deportista>();
-  
-  habilitar:boolean=true;
-  new:boolean;
-  cargar:boolean=false;
-  load=false;
-  loadTrash:any;
-  trash:any;
-  msgAlert:string;
+
+  habilitar: boolean = true;
+  new: boolean;
+  cargar: boolean = false;
+  load = false;
+  loadTrash: any;
+  trash: any;
+  msgAlert: string;
   btnDisabled = false;
-  
-  indiceData:any;
-  eventData:any; 
 
-  tiposObjetivo:string[] = ['Perder peso y quemar grasa','Ganar masa muscular y fuerza', 'Vivir de forma saludable y mantener mi peso'];
+  indiceData: any;
+  eventData: any;
 
-  deportista:Deportista = {
-    nombre:"",
-    apellido:"",
-    email:"",
-    telefono:"",
-    fechaN:"",
-    peso:"",
-    altura:"",
-    foto:"https://www.nicepng.com/png/full/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
-    genero:"",
-    objetivo:"",
-    observaciones:"",
-    rol:"user"
+  tiposObjetivo: string[] = ['Perder peso y quemar grasa', 'Ganar masa muscular y fuerza', 'Vivir de forma saludable y mantener mi peso'];
+
+  deportista: Deportista = {
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    fechaN: "",
+    peso: "",
+    altura: "",
+    foto: "https://www.nicepng.com/png/full/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
+    genero: "",
+    objetivo: "",
+    observaciones: "",
+    rol: "user"
   }
 
-  deportistaEdit:Deportista = {
-    nombre:"",
-    apellido:"",
-    email:"",
-    telefono:"",
-    fechaN:[],
-    peso:"",
-    altura:"",
-    foto:"",
-    genero:"",
-    objetivo:"",
-    observaciones:"",
-    rol:""
+  deportistaEdit: Deportista = {
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    fechaN: [],
+    peso: "",
+    altura: "",
+    foto: "",
+    genero: "",
+    objetivo: "",
+    observaciones: "",
+    rol: ""
   }
 
-  deportistas:Deportista[] =[];
+  deportistas: Deportista[] = [];
 
-  favoriteSeason: string; 
- 
-  constructor(private _deportistaService:DeportistaService,
-              private _router:Router, 
-              public dialog: MatDialog,
-              private changeDetectorRefs:ChangeDetectorRef,
-              private toasterService:ToasterService,
-              private _authService:AuthService) { 
+  favoriteSeason: string;
+
+  minDate = new Date(1920, 0, 1);
+  maxDate = new Date(2001, 0, 1);
+
+  myForm: FormGroup;
+
+  constructor(private _deportistaService: DeportistaService, public fb: FormBuilder, 
+    private _router: Router,
+    public dialog: MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef,
+    private toasterService: ToasterService,
+    private _authService: AuthService) {
     this.listar();
+  }
+
+  reactiveForm() {
+    this.myForm = this.fb.group({
+      name: ['', [Validators.required]],
+    })
+  }
+
+  public errorHandling = (control: string, error: string) => {
+    return this.myForm.controls[control].hasError(error);
+  }
+
+  submitForm() {
+    console.log(this.myForm.value)
   }
 
   ngOnInit() {
     //"url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    this.reactiveForm();
   }
 
-  
-  guardar(){
+
+  guardar() {
     console.log(this.deportista)
 
-    if(this.new==true){
+    if (this.new == true) {
       this.disabledButton(true);
 
       this._deportistaService.nuevoDeportista(this.deportista).subscribe(
-        data=>{
+        data => {
           console.log(data['deportista'])
           //Guardar credenciales email y pass en firebase
-          this.guardarAuthUser(this.deportista.email,this.deportista.email);       
-          
+          this.guardarAuthUser(this.deportista.email, this.deportista.email);
+
           this.dataSource.data = this.dataSource.data.concat(data['deportista']);
           this.clearForm();
           this.closeModal();
@@ -113,160 +135,160 @@ export class DeportistasComponent implements OnInit {
           this.disabledButton(false);
 
         },
-        error=>{
+        error => {
           console.log('ERROR');
           console.log(error);
           this.disabledBtn(false);
           this.loading(false);
         }
-  
-      );
-      
 
-    }else if(this.new==false){
+      );
+
+
+    } else if (this.new == false) {
       this.disabledButton(true);
-      
-      this._deportistaService.editarDeportista(this.deportistaEdit,this.deportistaEdit["_id"]).subscribe(
-        data=>{
+
+      this._deportistaService.editarDeportista(this.deportistaEdit, this.deportistaEdit["_id"]).subscribe(
+        data => {
           console.log(data);
           this.closeModal();
           this.Info("Deportista editado OK !!");
-         // this.viewAlert("Deportista editado OK !!")
+          // this.viewAlert("Deportista editado OK !!")
           this.disabledButton(false);
         },
-        error=>{
+        error => {
           console.log(error);
           this.disabledButton(false);
         }
-        
+
       );
-      
+
     }
-    
+
   }
 
-  guardarAuthUser(email:any, pass:any){
-    this._authService.signUpWithEmail(email,pass)
-    .then(data=>{
-      console.log('succes: '+data.user)
-    })
-    .catch(err=>{
-      console.log('error: '+err)
-    })
+  guardarAuthUser(email: any, pass: any) {
+    this._authService.signUpWithEmail(email, pass)
+      .then(data => {
+        console.log('succes: ' + data.user)
+      })
+      .catch(err => {
+        console.log('error: ' + err)
+      })
   }
 
-  listar(){
+  listar() {
     this._deportistaService.consultarDesportistas()
       .subscribe(
-        data=>{
+        data => {
           this.deportistas = data["deportistas"];
-          this.dataSource.data =this.deportistas;
+          this.dataSource.data = this.deportistas;
           this.dataSource.paginator = this.paginator;
-          console.log(this.deportistas);        
+          console.log(this.deportistas);
         },
-        error=>{
+        error => {
           console.log(error);
         }
 
       );
 
   }
-  
-  cargarId(indice:string, event:any){
-    this.indiceData=indice;
+
+  cargarId(indice: string, event: any) {
+    this.indiceData = indice;
     this.eventData = event;
     console.log(this.indiceData);
   }
 
-  eliminar(){
+  eliminar() {
 
     this.loadingTrash();
-       
+
     this._deportistaService.eliminarDeportista(this.indiceData).
-  		subscribe(
-  			data=>{
-       
-        this.refresh();
-        this.Error("Deportista eliminado OK !!");
-        //this.viewAlert("Deportista eliminado OK !!")
-        this.loadTrash.hide();
-        this.trash.show();       
-  			},
-  			error=>{
+      subscribe(
+        data => {
+
+          this.refresh();
+          this.Error("Deportista eliminado OK !!");
+          //this.viewAlert("Deportista eliminado OK !!")
+          this.loadTrash.hide();
+          this.trash.show();
+        },
+        error => {
           console.log(error);
           this.loadTrash.hide();
           this.trash.show();
-  			}
+        }
 
-    );
+      );
 
   }
 
-  mostrar(indice:string){
+  mostrar(indice: string) {
     //this._router.navigate(['/dashboard/perfil', indice]);
   }
 
 
 
-  editModal(deportista:Deportista){
-    
-    this.new=false;
-    this.deportistaEdit=deportista;
-    
+  editModal(deportista: Deportista) {
+
+    this.new = false;
+    this.deportistaEdit = deportista;
+
   }
 
-  newModal(){
-    this.new=true;
+  newModal() {
+    this.new = true;
   }
 
 
-  clearForm(){
-    this.deportista.nombre="";
-    this.deportista.apellido="";
-    this.deportista.email="";
-    this.deportista.telefono="";
-    this.deportista.fechaN="";
-    this.deportista.peso="";
-    this.deportista.altura="";
-    this.deportista.genero="";
-    this.deportista.objetivo="";
-    this.deportista.observaciones="";
+  clearForm() {
+    this.deportista.nombre = "";
+    this.deportista.apellido = "";
+    this.deportista.email = "";
+    this.deportista.telefono = "";
+    this.deportista.fechaN = "";
+    this.deportista.peso = "";
+    this.deportista.altura = "";
+    this.deportista.genero = "";
+    this.deportista.objetivo = "";
+    this.deportista.observaciones = "";
   }
 
-  select(event:any){
+  select(event: any) {
     console.log(event)
     //this.deportista.objetivo=event;
- 
+
   }
 
 
 
-  viewAlert(msg:string){
+  viewAlert(msg: string) {
     this.msgAlert = msg;
     $('.alert').fadeIn(1500);
     $('.alert').fadeOut(2500);
   }
 
-  closeModal(){
+  closeModal() {
     $('#dataModal').modal('hide');
   }
 
-  disabledBtn(access:boolean){
+  disabledBtn(access: boolean) {
     this.btnDisabled = access;
   }
 
-  loading(load:boolean){
+  loading(load: boolean) {
     this.load = load;
   }
 
-  loadingTrash(){
+  loadingTrash() {
     console.log($(this.eventData));
     console.log($(this.eventData.target));
     //this.habilitar=false;
- 
+
     this.trash = $(this.eventData.target).parent().find(`#${this.indiceData}`).hide();
     this.loadTrash = $(this.eventData.target).parent().find('img').show();
-    
+
     this.trash.hide();
     this.loadTrash.show();
   }
@@ -274,7 +296,7 @@ export class DeportistasComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '250px',
-      data: {nombre: this.deportista.nombre, apellido: this.deportista.apellido}
+      data: { nombre: this.deportista.nombre, apellido: this.deportista.apellido }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -282,20 +304,20 @@ export class DeportistasComponent implements OnInit {
     });
   }
 
-  refresh(){
+  refresh() {
     for (var i = 0; i < this.dataSource.data.length; i++) {
-      if (this.dataSource.data[i]['_id']  == this.indiceData ) {
-        console.log(this.dataSource.data[i] );
+      if (this.dataSource.data[i]['_id'] == this.indiceData) {
+        console.log(this.dataSource.data[i]);
         console.log(i);
         this.dataSource.data.splice(i, 1);
         this.dataSource.data = this.dataSource.data.slice();
         break;
-      }  
+      }
     }
 
   }
 
-  disabledButton(valor:boolean){
+  disabledButton(valor: boolean) {
     this.disabledBtn(valor);
     this.loading(valor);
   }
@@ -304,21 +326,21 @@ export class DeportistasComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  Success(title:any){
+  Success(title: any) {
     this.toasterService.Success(title);
   }
-  Info(title:any){
+  Info(title: any) {
     this.toasterService.Info(title);
   }
-  Warning(title:any){
+  Warning(title: any) {
     this.toasterService.Warning(title);
   }
-  Error(title:any){
+  Error(title: any) {
     this.toasterService.Error(title);
   }
 
 
-  
 
- 
+
+
 }

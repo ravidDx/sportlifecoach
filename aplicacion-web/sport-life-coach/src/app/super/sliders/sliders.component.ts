@@ -13,6 +13,8 @@ import {of} from 'rxjs';
 import {catchError, last, map, tap} from 'rxjs/operators';
 import {FileUploadModel} from '../../class/fileuploadmodel'
 /*----------------------------------------------------------------------- */
+
+
 declare var  $: any;
 
 @Component({
@@ -55,6 +57,7 @@ export class SlidersComponent implements OnInit {
 
   sliderList: Slider[] = [] ;
   
+
   constructor(private _onepageService:OnepageService, private _http: HttpClient, private _toasterService:ToasterService) { 
     this.getSliders();
   }
@@ -62,6 +65,7 @@ export class SlidersComponent implements OnInit {
   ngOnInit() {
   }
 
+  
   getSliders(){
     this._onepageService.getSliders()
     .subscribe(
@@ -182,7 +186,9 @@ export class SlidersComponent implements OnInit {
     fileUpload.onchange = () => {
       for (let index = 0; index < fileUpload.files.length; index++) {
         const file = fileUpload.files[index];
+        console.log(file);
         this.files.push({ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true });
+        console.log(this.files);
       }
       this.uploadFiles();
     };

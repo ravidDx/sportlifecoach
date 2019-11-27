@@ -23,9 +23,7 @@ export class PerfilPage implements OnInit {
   prof_Frm: FormGroup;
   usuario: any = {};
   photo = false;
-  image: string; // 'assets/video/barras.png';
-  // storageRef = firebase.storage().ref();
-  // mountainImagesRef = this.storageRef.child('imagenes/perfil.jpg');
+  image: string;
   validation_messages = {
     'nombre': [
       { type: 'required', message: 'Nombre es requerido' }

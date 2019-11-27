@@ -121,8 +121,8 @@ export class AuthService {
   loginGoogle() {
     if (this.platform.is('cordova')) {
       this.gplus.login({
-        scopes: '',
-        webClientId: '67946954997-jekd82u5gbsuqpaf595qnv6unqg2srn7.apps.googleusercontent.com',
+        scopes: 'profile email',
+        webClientId: '231674641543-hek1pi0mqerjv8b15j24ubldblh4iuug.apps.googleusercontent.com',
         offline: true
       }).then(res => {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))

@@ -15,18 +15,18 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/admin/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', rol:'admin' },
     { path: '/admin/deportista-list', title: 'Deportistas',  icon: 'format_list_bulleted', class: '',rol:'admin' },
-    { path: '/admin/ejercicios', title: 'Ejercicios',  icon: 'directions_run', class: '',rol:'admin' },
-    { path: '/admin/dietas', title: 'Dietas',  icon: 'restaurant_menu', class: '',rol:'admin' },
+    { path: '/admin/ejercicios', title: 'Entrenamientos',  icon: 'directions_run', class: '',rol:'admin' },
+    { path: '/admin/dietas', title: 'Recetas',  icon: 'restaurant_menu', class: '',rol:'admin' },
     { path: '/admin/promociones', title: 'Promociones',  icon: 'local_offer', class: '',rol:'admin' },
-    { path: '/admin/user-profile', title: 'User Profile',  icon:'person', class: '',rol:'admin' },
+    { path: '/admin/user-profile', title: 'Mi Perfil',  icon:'person', class: '',rol:'admin' },
     { path: '/admin/categorias', title: 'Categorias',  icon:'sort', class: '',rol:'admin' },
     { path: '/sadmin/inicio', title: 'Inicio',  icon:'home', class: '',rol:'super' },
-    { path: '/sadmin/about', title: 'About',  icon:'account_circle', class: '',rol:'super' },
-    { path: '/sadmin/services', title: 'Services',  icon:'favorite', class: '',rol:'super' },
+    { path: '/sadmin/about', title: 'Acerca de mi',  icon:'account_circle', class: '',rol:'super' },
+    { path: '/sadmin/services', title: 'Servicios',  icon:'favorite', class: '',rol:'super' },
     { path: '/sadmin/portafolio', title: 'Portafolio',  icon:'work', class: '',rol:'super' },
-    { path: '/sadmin/posts', title: 'Posts',  icon:'event', class: '',rol:'super' },
+    //{ path: '/sadmin/posts', title: 'Posts',  icon:'event', class: '',rol:'super' },
     { path: '/sadmin/contacto', title: 'Contacto',  icon:'settings_phone', class: '',rol:'super' },
-    { path: '/sadmin/credenciales', title: 'Credenciales',  icon:'assignment_ind', class: '',rol:'super' },
+    //{ path: '/sadmin/credenciales', title: 'Credenciales',  icon:'assignment_ind', class: '',rol:'super' },
 
     
     
