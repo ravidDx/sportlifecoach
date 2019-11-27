@@ -2,6 +2,7 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
+<<<<<<< HEAD
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header card-header-danger">
@@ -79,28 +80,9 @@
                                     </div> -->
                                 </div>
                             </div>
+=======
+>>>>>>> 4174e0b93d3766e9addb3deb95ac1c136a91e61a
 
-                            <div class="row">
-                                    <div class="col-md-12">
-                                      <mat-form-field class="example-full-width">
-                                         <textarea matInput placeholder="Observaciones" value="{{deportista.observaciones}}" disabled></textarea>
-                                       </mat-form-field>
-                                        <!-- <div class="form-group">
-      
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea class="form-control" rows="5"></textarea>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                </div>
-
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
-                            <div class="clearfix"></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-4">
                 <div class="card card-profile">
                     <div class="card-avatar">
@@ -109,60 +91,95 @@
                         </a>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                        <h4 class="card-title">{{deportista.nombre | uppercase}} {{deportista.apellido | uppercase}}</h4>
-                        <p class="card-description">
-                                {{deportista.objetivo}} 
-                        </p>
-                        <a href="#pablo" class="btn btn-danger btn-round">Follow</a>
+                        <h3 class="card-title-1 card-color-1">{{deportista.nombre | uppercase}} {{deportista.apellido | uppercase}}</h3>
+                        <span class="card-description card-color-1" >email</span>
+                        <p class="card-item"> {{deportista.email}} </p>
+                        
+                        <span class="card-description card-color-1">telefono</span>
+                        <p class="card-item"> {{deportista.telefono}}  </p>
+
+                        <span class="card-description card-color-1">Fecha de Nacimiento</span>
+                        <p class="card-item"> {{deportista.fechaN | date : format : timezone }}  </p>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                    <span class="card-description card-color-1">Edad</span>
+                                    <p class="card-item"> {{edad}}  </p>
+                            </div>
+                            <div class="col-md-4">
+                                    <span class="card-description card-color-1">Peso (kg)</span>
+                                    <p class="card-item"> {{deportista.peso}}  </p>
+                            </div>
+                            <div class="col-md-4">
+                                    <span class="card-description card-color-1">Altura (cm)</span>
+                                    <p class="card-item"> {{deportista.altura}}  </p>
+                            </div>
+                        </div>
+                      
+                        <span class="card-description card-color-1">Objetivo</span>
+                        <p class="card-item"> {{deportista.objetivo }}  </p>
+                        
+                        <span class="card-description card-color-1">Observaciones</span>
+                        <p class="card-item"> {{deportista.observaciones }}  </p>
+                        
+                        
+                       
+                        <a href="#pablo" class="btn btn-primary btn-round">Evaluar</a>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Perfil</h4>
+                            <p class="card-category">Informacion personal</p>
+                        </div>
+                        <div class="card-body">
+
+             
+                            <canvas id="myChart"></canvas>
+
+                            <br><br>
+
+                            <div class="row">
+                                <div class="col-md-3 col-niveles col-color-1">Por debajo del peso</div>
+                                <div class="col-md-3 col-niveles col-color-2">Peso normal</div>
+                                <div class="col-md-3 col-niveles col-color-3">Sobrepeso</div>
+                                <div class="col-md-3 col-niveles col-color-4">Obesidad</div>
+                            </div>
+
+                            <div class="row">
+                                    <div class="col-md-3 col-text">< 18.50</div>
+                                    <div class="col-md-3 col-text">18.5 - 24.9</div>
+                                    <div class="col-md-3 col-text">25 - 29.9</div>
+                                    <div class="col-md-3 col-text">> 30</div>
+                            </div>
+
+                            
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div *ngIf="posNivelPeso == 0" class="col-niveles-sub col-color-1"></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div *ngIf="posNivelPeso == 1" class="col-niveles-sub col-color-2"></div>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div *ngIf="posNivelPeso == 2" class="col-niveles-sub col-color-3"></div>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div *ngIf="posNivelPeso == 3" class="col-niveles-sub col-color-4"></div>
+                                </div>
+                            </div>
+
+                            <!--*ngIf="posNivelPeso == 0"-->
+
+
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
   </div>
   
-
-
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Perfil</h4>
-                    </div>
-                    <div class="card-body">
-                      
-                        <div class="row row-1 animated fadeInRight">
-
-                            <div class="col-sm-5">
-                                <img class="card-img-top profile" src="assets/images/profile.png" alt="Card image cap" >
-                                <div class="card-body">
-                                    <h2 class="title1">{{deportista.nombre | uppercase}} {{deportista.apellido | uppercase}}</h2>
-                                    <p id="title2" > {{deportista.email}}</p>
-                                    <p id="title2" > {{deportista.telefono}}</p>
-                                </div>
-                      
-                      
-                            </div>
-                            <div class="col-sm-7">
-                      
-                              <h3>Historial</h3>
-                      
-                        
-                            </div>
-                         
-                      
-                        </div>
-                    
-                        
-                      
-                       
-                    </div>
-                </div>
-            </div>
-     
-        </div>
-    </div>
-</div>

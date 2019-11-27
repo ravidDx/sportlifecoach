@@ -7,10 +7,14 @@ import {AngularFireDatabase, AngularFireList} from '@angular/fire/database'
 
 
 
+<<<<<<< HEAD
 // import decode from 'jwt-decode';
+=======
+
+>>>>>>> 4174e0b93d3766e9addb3deb95ac1c136a91e61a
 import { EmailValidator } from '@angular/forms';
 
-// import decode from 'jwt-decode';
+
 
 
 
@@ -97,9 +101,12 @@ export class AuthService {
     //this._router.navigate(['/login']);
   }
 
+<<<<<<< HEAD
   /*decode() {
     return this.decode(localStorage.getItem('token'));
   }*/
+=======
+>>>>>>> 4174e0b93d3766e9addb3deb95ac1c136a91e61a
 
 
   /*

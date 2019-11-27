@@ -19,6 +19,10 @@ import { DietasComponent } from '../..//admin/dietas/dietas.component';
 import { PromocionesComponent } from 'app/admin/promociones/promociones.component';
 import { PromocionComponent } from 'app/admin/promocion/promocion.component';
 import { CategoriasComponent } from '../../admin/categorias/categorias.component';
+import { EstadisticasComponent } from '../../admin/estadisticas/estadisticas.component';
+import { RutinasComponent } from '../../admin/rutinas/rutinas.component';
+import { EntrenamientoComponent } from '../../admin/entrenamiento/entrenamiento.component';
+import { EntrenamientosComponent } from '../../admin/entrenamientos/entrenamientos.component';
 
 
 /*COMPONENTES ROL SUPER ADMIN*/
@@ -43,6 +47,9 @@ export const AdminLayoutRoutes: Routes = [
                 { path: 'deportista-profile/:_id',  component: DeportistaComponent},
                 { path: 'ejercicios',               component: EjerciciosComponent},
                 { path: 'ejercicio/:_id',           component: EjercicioComponent },
+                { path: 'rutinas',                  component: RutinasComponent},
+                { path: 'entrenamientos',           component: EntrenamientosComponent},
+                { path: 'entrenamiento/:_id',       component: EntrenamientoComponent},
                 { path: 'dietas',                   component: DietasComponent},
                 { path: 'dieta/:_id',               component: DietaComponent },
                 { path: 'promociones',              component: PromocionesComponent },
@@ -55,6 +62,7 @@ export const AdminLayoutRoutes: Routes = [
                 { path: 'notifications',            component: NotificationsComponent },
                 { path: 'upgrade',                  component: UpgradeComponent },
                 { path: 'categorias',               component: CategoriasComponent },
+                { path: 'estadistica/:_id',             component: EstadisticasComponent },
                 { path: '**',           redirectTo: 'dashboard'}, 
              ]
     },

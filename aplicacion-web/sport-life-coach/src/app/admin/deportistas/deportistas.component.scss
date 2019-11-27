@@ -22,6 +22,22 @@ table {
   padding-bottom: 18px;
 }
 
+.spanEstado{
+  padding: 6px 10px 6px 10px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+}
+.spanActivo{
+  background-color: #1fdd7e;
+}
+
+.spanInactivo{
+  background-color: #f44336;
+}
+
+#f44336
+
 ::ng-deep .cdk-overlay-container{
   z-index: 1200 !important;
 }

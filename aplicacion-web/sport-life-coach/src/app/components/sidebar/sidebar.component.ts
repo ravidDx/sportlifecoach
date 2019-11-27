@@ -15,7 +15,13 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/admin/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', rol:'admin' },
     { path: '/admin/deportista-list', title: 'Deportistas',  icon: 'format_list_bulleted', class: '',rol:'admin' },
+<<<<<<< HEAD
     { path: '/admin/ejercicios', title: 'Entrenamientos',  icon: 'directions_run', class: '',rol:'admin' },
+=======
+    { path: '/admin/ejercicios', title: 'Ejercicios',  icon: 'directions_run', class: '',rol:'admin' },
+    { path: '/admin/rutinas', title: 'Rutinas',  icon: 'directions_run', class: '',rol:'admin' },
+    { path: '/admin/entrenamientos', title: 'Entrenamientos',  icon: 'directions_run', class: '',rol:'admin' },
+>>>>>>> 4174e0b93d3766e9addb3deb95ac1c136a91e61a
     { path: '/admin/dietas', title: 'Recetas',  icon: 'restaurant_menu', class: '',rol:'admin' },
     { path: '/admin/promociones', title: 'Promociones',  icon: 'local_offer', class: '',rol:'admin' },
     { path: '/admin/user-profile', title: 'Mi Perfil',  icon:'person', class: '',rol:'admin' },

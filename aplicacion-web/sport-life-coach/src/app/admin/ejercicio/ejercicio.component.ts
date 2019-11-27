@@ -18,12 +18,14 @@ export class EjercicioComponent implements OnInit {
     tipo:"",
     titulo:"",
     objetivo:"",
-    imagenes:[],
-    portada:'',
-    series:'',
-    repeticiones:'',
-    duracion:''
+    imagen:"",
+    dificultad:'',
+    fechaCreacion:{},
+    estado:"",
+    instruccion:"",
   }
+
+  
 
 
   constructor(private _entrenamientoService:EntrenamientoService, private _activeRoute:ActivatedRoute) { 
@@ -32,8 +34,10 @@ export class EjercicioComponent implements OnInit {
       params =>{
         this._entrenamientoService.verEntrenamiento(params['_id']).subscribe(
           data=>{
-            this.entrenamiento=data['entrenamiento'];
-            this.cargarImagenes(this.entrenamiento.imagenes);
+
+            console.log(data)
+            this.entrenamiento=data;
+            this.cargarUrlImagen(this.entrenamiento.imagen);
           },
           error=>{
             console.log(error);
@@ -47,26 +51,24 @@ export class EjercicioComponent implements OnInit {
 
   ngOnInit() {
   }
+  urlImage=''
+  cargarUrlImagen(idImagen:any){
 
-  cargarImagenes(imagenes:any){
+    //this.urlImage = "https://2.bp.blogspot.com/-zpkdHbE717M/V6zIBmEpDFI/AAAAAAAAA-0/APQQeS8fCRw3eSITJVZZ68oIeeol1TjDwCLcB/s1600/bella%2Bla%2Bpaz%2Bcopia.jpg";
 
-    let _this = this;
-
-    imagenes.forEach( function(item, indice, array) {
-      _this._entrenamientoService.downloadUrl(item).subscribe(
-        data=>{
-          _this.imagenes.push(data);
-          //console.log(indice);
-          //console.log(data);
-        },
-        error=>{
-
-          //console.log('ERROR');
-          //console.log(error);
-        }
-      );
+    this._entrenamientoService.downloadUrl(idImagen).subscribe(
+      data=>{ 
+        this.entrenamiento.imagen = data;
         
-  });
+      },
+      error=>{
+        console.log('ERROR');
+        console.log(error);
+      }
+    );
+
+    
+
 
   }
 

@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from './components/components.module';
 
+
+
 /*FIREBASE */
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';

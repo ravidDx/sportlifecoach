@@ -1,6 +1,7 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl} from '@angular/forms';
 
 /*Interfaces */
 import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
@@ -9,6 +10,10 @@ import {Entrenamiento} from '../../interfaces/entrenamiento.interface';
 import {CategoriaService} from '../../services/categoria.service';
 import {EntrenamientoService} from '../../services/entrenamiento.service';
 import {ToasterService} from '../../services/toaster.service';
+
+/*Mata table -------------------------------------------------------*/
+import {MatPaginator, MatTableDataSource, MatTable} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
 
 
 /*SERVICIOS FILE UPLOAD -------------------------------------------------------*/
@@ -37,11 +42,25 @@ declare var  $: any;
 })
 
 export class EjerciciosComponent implements OnInit {
+
+  //Datatable
+  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('myTable') myTable: MatTable<any>;
+  titleConfirm='';
+
+  displayedColumns: string[] = ['position','imagen','titulo','tipo','dificultad','estado', 'acciones'];
+  dataSource = new MatTableDataSource<Entrenamiento>();
+  selection = new SelectionModel<Entrenamiento>(true, []);
+
+
  
-  
+  toppings = new FormControl();
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
   /* ...................... VARIABLES FILE UPLOAD ........................*/
   /** Link text */
-  @Input() text = 'Cargar imagenes';
+  @Input() text = 'Cargar ejercicio';
   /** Name used in form which will be sent in HTTP request. */
   @Input() param = 'file';
   /** Target URL for file uploading. */
@@ -58,36 +77,42 @@ export class EjerciciosComponent implements OnInit {
   btnSave:boolean = false;
   
 
-  tiposEntrenamiento= []
+  tiposEntrenamiento:any= [];
 
-  duracionList=['10 min','20 min','30 min','40 min','50 min','1 hora','1 h 15 min','1 h 30 min' ,'1 h 45 min']
+  lisImg:any= [];
+  
+  //duracionList=['10 min','20 min','30 min','40 min','50 min','1 hora','1 h 15 min','1 h 30 min' ,'1 h 45 min']
+  dificultadList:any=['Principiante','Medio','Avanzado'];
 
   entrenamiento:Entrenamiento = {
     tipo:"",
     titulo:"",
     objetivo:"",
-    imagenes:[],
-    portada:'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg',
-    series:'',
-    repeticiones:'',
-    duracion:''
+    imagen:"assets/images/foto.png",
+    dificultad:'',
+    fechaCreacion:{},
+    estado:"",
+    instruccion:[],
   }
 
   entrenamientoEdit:Entrenamiento = {
     tipo:"",
     titulo:"",
     objetivo:"",
-    imagenes:[],
-    portada:'',
-    series:'',
-    repeticiones:'',
-    duracion:''
+    imagen:"",
+    dificultad:'',
+    fechaCreacion:{},
+    estado:"",
+    instruccion:[],
   }
 
   entrenamientos:Entrenamiento[]=[];
   entrenamientosTodo:Entrenamiento[]=[];
 
+  itemsInstrucciones:any[]=[];
+
   url:any;
+  urlImg:any='https://cdn2.iconfinder.com/data/icons/commercial-center-1/32/13-512.png';
 
   indiceDelete:any;
   load=false;
@@ -116,46 +141,86 @@ export class EjerciciosComponent implements OnInit {
   }
 
 
+  getFechaActual(){
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth()+1;
+    var yyyy = hoy.getFullYear();
+    
+    dd=this.addZero(dd);
+    mm=this.addZero(mm);
+
+    let fecha = {
+      dd:dd,
+      mm:mm,
+      yyyy:yyyy
+    }
+
+    return fecha;
+  }
+
+  addZero(i:any){
+    if (i < 10) {
+       i = '0' + i;
+   }
+   return i;
+   
+ }
+
+
   //Metodo para guardar y editar  datos
   guardar(){
-    
+
     if(this.new==true){
+
       this.btnSave=true; 
-      var _this = this;
-      //cargar y guardar imagenes en firebase
-      this.files.forEach( function(item, indice, array) {
-        const id = Math.random().toString(36).substring(2);
-        _this.entrenamiento.imagenes.push(id);
-        _this._entrenamientoService.onUpload(item.data,id);      
-        if(indice==0){
-          _this.entrenamiento.portada = id;
+
+      this.entrenamiento.estado = 'Activo';
+      this.entrenamiento.instruccion=this.itemsInstrucciones;
+      
+      const id = Math.random().toString(36).substring(2);
+
+      this.entrenamiento.imagen= id;
+
+      let data = this.files[0].data;
+      
+      this._entrenamientoService.onUpload(data, id)      
+      .subscribe(
+        data=>{
+
+          if(data.bytesTransferred === data.totalBytes){
+            this.nuevoEntrenamiento();
+          }
+          
+        },
+        error=>{
+          console.log(error);
+       
         }
+
+      );
   
-      });
-  
-      this.nuevoEntrenamiento();
 
     }else{
 
       if(this.files.length ==0){
+        this.entrenamientoEdit.imagen = this.entrenamientoEdit['idImg'];
+        delete this.entrenamientoEdit['idImg'];
 
         this.editarEntrenamiento();
         
       }else{
 
             var _this = this;
-            this.entrenamientoEdit.imagenes = [];
+            //this.entrenamientoEdit.imagen = "";
           //cargar y guardar imagenes en firebase
           this.files.forEach( function(item, indice, array) {
             const id = Math.random().toString(36).substring(2);
-            _this.entrenamientoEdit.imagenes.push(id);
+            _this.entrenamientoEdit.imagen = id;
             _this._entrenamientoService.onUpload(item.data,id);      
-            if(indice==0){
-              _this.entrenamientoEdit.portada = id;
-            }
       
           });
-
+          delete this.entrenamientoEdit['idImg'];
           this.editarEntrenamiento();
 
         
@@ -191,36 +256,30 @@ export class EjerciciosComponent implements OnInit {
 
     );
   }
+  
 
 
   //Metodo listar entrenamientos
   listar(){
-    let _this = this;
+
     this._entrenamientoService.consultarEntrenamientos()
       .subscribe(
         data=>{
+          this.entrenamientos=[];
+          for(let key$ in data){
+	  				let entrenamiento = data[key$];
+	  				entrenamiento['_id']=key$;
+            this.entrenamientos.push(entrenamiento);
+            this.getUrlsImg(entrenamiento);
+          }
+          //Para el data table
+          this.dataSource.data = this.entrenamientos;
+          this.dataSource.paginator = this.paginator;
 
-          data["entrenamientos"].forEach( function(item, indice, array) {
+          this.entrenamientosTodo = this.entrenamientos;
 
-              _this._entrenamientoService.downloadUrl(item.portada).subscribe(
-                data=>{
-                  item.portada=data;         
-                },
-                error=>{
-                  console.log('ERROR');
-                  
-                }
-              );
-
-              item.portada = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-
-             
-          });
-
-          this.entrenamientos = data["entrenamientos"];
-          this.entrenamientosTodo = data["entrenamientos"];
           console.log(this.entrenamientos)
-           
+
           this.getCategoriasEntrenamiento();
           
         },
@@ -253,6 +312,25 @@ export class EjerciciosComponent implements OnInit {
     }
 
    
+  }
+
+  //Devuelve la url de la imagen
+  getUrlsImg(deportista:any){
+      deportista['idImg']=deportista['imagen'];
+      this._entrenamientoService.downloadUrl(deportista['imagen']).subscribe(
+        data=>{
+          deportista['imagen']=data;   
+            
+        },
+        error=>{
+          console.log('ERROR');
+          console.log(error);
+          
+        }
+      );
+
+      deportista['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+
   }
 
 
@@ -322,14 +400,20 @@ export class EjerciciosComponent implements OnInit {
 
   editModal(entrenamiento:Entrenamiento){
     this.new=false;
+    this.files=[];
     this.entrenamientoEdit=entrenamiento;
+
+    console.log(entrenamiento)
     
   }
 
 
   editarEntrenamiento(){
+
+    var id:any= this.entrenamientoEdit["_id"];
+    delete this.entrenamientoEdit["_id"];
     
-    this._entrenamientoService.editarEntrenamiento(this.entrenamientoEdit,this.entrenamientoEdit["_id"]).subscribe(
+    this._entrenamientoService.editarEntrenamiento(this.entrenamientoEdit,id).subscribe(
       data=>{
         console.log(data);
         this.closeModal();
@@ -351,6 +435,7 @@ export class EjerciciosComponent implements OnInit {
 
   newModal(){
     this.new = true;
+    this.files=[];
   }
   
 
@@ -384,16 +469,36 @@ export class EjerciciosComponent implements OnInit {
     this.entrenamiento.tipo="";
     this.entrenamiento.titulo="";
     this.entrenamiento.objetivo="";
-    this.entrenamiento.imagenes=[];
-    this.entrenamiento.series="";
-    this.entrenamiento.repeticiones="";
-    this.entrenamiento.duracion='';
+    this.entrenamiento.imagen="assets/images/foto.png";
+    this.entrenamiento.dificultad='';
+    this.entrenamiento.estado='';
+    this.entrenamiento.instruccion=[];
+    this.entrenamiento.fechaCreacion=this.getFechaActual();
+    this.files=[];
+    this.itemsInstrucciones=[];
   }
 
   
   closeModal(){
     $('#dataModal').modal('hide');
   }
+
+
+
+  
+  addInstruccion(){
+
+    let key = (this.itemsInstrucciones.length)+1;
+    this.itemsInstrucciones.push({id:key, value:''});
+
+    console.log(this.itemsInstrucciones)
+  }
+  
+
+  deletedInstruccion(){
+    this.itemsInstrucciones.pop();
+  }
+
 
 
 
@@ -407,7 +512,7 @@ export class EjerciciosComponent implements OnInit {
     fileUpload.onchange = () => {
       for (let index = 0; index < fileUpload.files.length; index++) {
         const file = fileUpload.files[index];
-        this.files.push({ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true });
+        this.files[0]={ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true };
       }
       this.uploadFiles();
     };
@@ -420,6 +525,7 @@ export class EjerciciosComponent implements OnInit {
         file.sub.unsubscribe();
       }
       this.removeFileFromArray(file);
+      this.entrenamientoEdit.imagen="assets/images/foto.png";
     }
   }
 
@@ -429,7 +535,7 @@ export class EjerciciosComponent implements OnInit {
   }
 
   private uploadFile(file: FileUploadModel) {
-  
+    console.log(file)
     const fd = new FormData();
     fd.append(this.param, file.data);
 
@@ -474,7 +580,7 @@ export class EjerciciosComponent implements OnInit {
   }
 
   private uploadFiles() {
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement; 
     fileUpload.value = '';
 
     this.files.forEach(file => {
@@ -525,6 +631,72 @@ export class EjerciciosComponent implements OnInit {
   
    
   }
+
+
+  
+
+      public imagePath:any;
+      
+      onSelectFile(event:any,val:any) { // called each time file input changes
+        console.log(event)
+        if (event.target.files && event.target.files[0]) {
+          var reader = new FileReader();
+          this.imagePath = event.target.files;
+          reader.readAsDataURL(event.target.files[0]); // read file as data url
+          reader.onload = (event) => { // called once readAsDataURL is completed
+            if(val==0){
+              console.log(val);
+              this.entrenamiento.imagen = reader.result; //add source to image
+            }else{
+              this.entrenamientoEdit.imagen = reader.result; //add source to image
+            }
+            
+          }
+        }
+      }
+
+      selectedFile = null;
+
+      cancelFileImg(val:any){
+
+        this.files=[];
+        if(val == 0){
+          this.entrenamiento.imagen="assets/images/foto.png";  
+        }else{
+          this.entrenamientoEdit.imagen="assets/images/foto.png";
+        }
+        
+      }
+
+
+      /*DATA TABLE --------------------------------------------------*/
+
+      applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+      }
+
+          /** Whether the number of selected elements matches the total number of rows. */
+      isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+      }
+
+      /** Selects all rows if they are not all selected; otherwise clear selection. */
+      masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
+      }
+
+      /** The label for the checkbox on the passed row */
+      checkboxLabel(row?: Entrenamiento): string {
+        if (!row) {
+          return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${1}`;
+      }
+      
 
 
   
