@@ -8,10 +8,10 @@ ion-toolbar {
 
 .fondo {
     --ion-background-color: #0f0f0f;
-    //background-color:black;
+    // background-color:black;
 }
 
-ion-label {
+ion-label, h2, h3 {
     color: white;
     font-size: 15px;
     font-weight: bold;
@@ -26,5 +26,10 @@ ion-label {
 
 
 .background1 {
-    background-color:#969aaa;
+    background-color:#858b96b7;
+}
+
+p {
+    // color: #62676db7;
+    color: #c2dfe0b7;
 }

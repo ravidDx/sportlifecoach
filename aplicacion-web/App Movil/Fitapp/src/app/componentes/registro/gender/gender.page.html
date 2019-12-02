@@ -3,10 +3,10 @@
     <!--<div ><ion-note slot="end">Skip</ion-note></div>  Skip  -->
     <ion-row>
       <ion-col size="2" class="ion-margin-top">
-          <ion-icon name="arrow-back" routerLink="/slide"></ion-icon>
+        <ion-icon name="arrow-back" routerLink="/slide"></ion-icon>
       </ion-col>
       <ion-col class="ion-padding-top ion-margin-top">
-        <ion-text  text-center class="text">
+        <ion-text text-center class="text">
           REGISTRO NUEVA CUENTA
         </ion-text>
       </ion-col>
@@ -14,7 +14,7 @@
 
 
     <form [formGroup]="regForm" (ngSubmit)="registrar()">
-      <ion-slides  mode="ios" pager="true" [options]="slideOpts" #slides>
+      <ion-slides mode="ios" pager="true" [options]="slideOpts" #slides>
         <ion-slide>
           <ion-label>
             ¿Eres hombre o mujer?
@@ -203,6 +203,10 @@
                   <ion-label class="ion-padding-end ion-margin-end dato1">PESO</ion-label>
                   <ion-input text-end type="number" formControlName="peso" placeholder="60"></ion-input>
                   <ion-note class="mag">KG</ion-note>
+                  <ion-range min="-200" max="200" color="secondary">
+                  <ion-label slot="start">-200</ion-label>
+                  <ion-label slot="end">200</ion-label>
+                  </ion-range>
                 </ion-item>
                 <div class="validation-errors">
                   <div *ngFor="let validation of validation_messages.peso">

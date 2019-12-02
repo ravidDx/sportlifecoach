@@ -39,13 +39,13 @@ export class PersonalPage implements OnInit {
     ],
     'peso': [
       { type: 'required', message: 'Peso es requerido' },
-      { type: 'min', message: 'Altura solo contiene valores 30 y 200 kg' },
-      { type: 'max', message: 'Altura solo contiene valores 30 y 200 kg' }
+      { type: 'min', message: 'Peso contiene valores entre 30 y 200 kg' },
+      { type: 'max', message: 'Peso contiene valores entre 30 y 200 kg' }
     ],
     'altura': [
       { type: 'required', message: 'Altura es requerido' },
-      { type: 'min', message: 'Altura solo contiene valores 130 y 220 cm' },
-      { type: 'max', message: 'Altura solo contiene valores 130 y 220 cm' }
+      { type: 'min', message: 'Altura contiene valores entre 130 y 220 cm' },
+      { type: 'max', message: 'Altura contiene valores entre 130 y 220 cm' }
     ],
   };
   constructor(private userService: UsuariosService, private AFauth: AngularFireAuth,

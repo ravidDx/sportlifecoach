@@ -1,5 +1,5 @@
-<ion-header class="fondo">
-  <ion-toolbar>
+<ion-header >
+  <ion-toolbar color="shade">
     <ion-title text-center class="title">Nombre Receta</ion-title>
     <ion-buttons slot="start">
       <ion-back-button color="light" text=""></ion-back-button>
@@ -9,11 +9,13 @@
 
 <ion-content class="fondo">
   <div class="ion-no-padding ion-no-margin">
-    <img class="imgc" style="width: 100%;" [src]="dieta.imagen" />
+    <!--<img class="imgc" style="width: 100%;" [src]="dieta.imagen" />-->
+    <img class="imgc" style="width: 100%;" src="https://images-gmi-pmc.edge-generalmills.com/a1c69e41-007b-4d72-8b9a-ed7a974a06e7.jpg" />
+    
   </div>
 
   <div class="contenedor ion-margin ion-padding ">
-    <ion-row class="ion-nopadding ion-no-margin">
+    <ion-row class="ion-no-padding ion-no-margin">
       <ion-col size="6">
         <ion-icon color=light ios="ios-alarm" md="md-alarm"></ion-icon>
         <ion-text class="ion-padding-start" color=light>{{dieta.tiempo}}</ion-text>

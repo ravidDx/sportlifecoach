@@ -59,3 +59,55 @@ ion-note{
 ion-card-header{
     padding-bottom: 0%;
 }
+
+// ************************** GRAFICO IMC 
+
+.y{
+    background-color: #fdfa28;
+    color: #aca91e;
+}
+.v{
+    background-color: #10dc60;
+    color: #084e24;
+}
+.t{
+    background-color: #ffae00;
+    color: #b37b04;
+}
+.to{
+    background-color: #ff8800;
+    color: #c76f0a;
+}
+.r{
+    background-color: #ff3300;
+    color: #851f06;
+}
+
+ion-grid {
+    --ion-grid-padding:5px;
+    font-size: 10px;
+    font-weight: bolder;
+    color: white;
+}
+ion-item{
+    color:white;
+    font-size:15px;
+    font-weight: bold;
+}
+.pasos {
+    padding: 10px ;
+    margin: 10px;
+    background-color: rgba(138, 137, 137, 0.877);
+    border-radius: 17px 17px 17px 17px;
+    font-size: 15px;
+    font-weight: bolder;
+    color: white;
+}
+ion-thumbnail {
+    --size: 110px;
+}
+
+.peso {
+    margin-top: 20px;
+    font-size: 30px;
+}

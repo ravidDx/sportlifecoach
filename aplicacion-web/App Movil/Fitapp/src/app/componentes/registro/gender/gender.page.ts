@@ -49,8 +49,8 @@ export class GenderPage implements OnInit {
     ],
     'peso': [
       { type: 'required', message: 'Peso es requerido' },
-      { type: 'min', message: 'Altura solo contiene valores 30 y 200 kg' },
-      { type: 'max', message: 'Altura solo contiene valores 30 y 200 kg' }
+      { type: 'min', message: 'Peso solo contiene valores 30 y 200 kg' },
+      { type: 'max', message: 'Peso solo contiene valores 30 y 200 kg' }
     ],
     'altura': [
       { type: 'required', message: 'Altura es requerido' },
