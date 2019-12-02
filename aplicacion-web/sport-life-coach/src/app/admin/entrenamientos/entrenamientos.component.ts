@@ -28,8 +28,8 @@ export class EntrenamientosComponent implements OnInit {
 
   titleConfirm='';
   
-  displayedColumns: string[] = ['position','titulo','duracion', 'dificultad', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource<Rutina>();  
+  displayedColumns: string[] = ['position','nombre','apellido', 'progreso', 'fecha', 'estado', 'acciones'];
+  dataSource = new MatTableDataSource<PlanEntrenamiento>();  
   
   new:boolean = true;
 
@@ -76,11 +76,46 @@ export class EntrenamientosComponent implements OnInit {
               private _deportistaService:DeportistaService,
               private _planEntrenamientoService:PlanEntrenamientoService,
               private _toasterService:ToasterService) { 
+    
+    this.listar();
     this.listarRutinas();
     this.listarDeportistas();
+    
   }
 
   ngOnInit() {
+
+  }
+
+
+  listar(){
+    
+    
+    this._planEntrenamientoService.consultarPlanEntrenamientos()
+      .subscribe(
+        data=>{
+
+      
+
+          for(let key$ in data){
+	  				let planEntrenamiento = data[key$];
+            planEntrenamiento['_id']=key$;
+	  				this.planEntrenamientos.push(planEntrenamiento);
+          }
+        
+          this.dataSource.data = this.planEntrenamientos;
+          this.dataSource.paginator = this.paginator;
+
+          console.log(this.planEntrenamientos)
+
+          //console.log(this.dataSource.data)
+                 
+        },
+        error=>{
+          console.log(error);
+        }
+
+      );
 
   }
 

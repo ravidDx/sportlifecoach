@@ -24,7 +24,8 @@ import { DietasComponent } from '../..//admin/dietas/dietas.component';
 import { PromocionesComponent } from '../..//admin/promociones/promociones.component';
 import { PromocionComponent } from '../..//admin/promocion/promocion.component';
 import { EstadisticasComponent } from '../..//admin/estadisticas/estadisticas.component';
-import { RutinasComponent } from '../..//admin/rutinas/rutinas.component';
+import { RutinasComponent } from '../../admin/rutinas/rutinas.component';
+import { RutinaComponent } from '../../admin/rutina/rutina.component';
 import { EntrenamientosComponent } from '../../admin/entrenamientos/entrenamientos.component';
 import { EntrenamientoComponent } from '../../admin/entrenamiento/entrenamiento.component';
 
@@ -119,6 +120,7 @@ import {
     CategoriasComponent,
     EstadisticasComponent,
     RutinasComponent,
+    RutinaComponent,
     EntrenamientoComponent,
     EntrenamientosComponent,
     PreloadComponent

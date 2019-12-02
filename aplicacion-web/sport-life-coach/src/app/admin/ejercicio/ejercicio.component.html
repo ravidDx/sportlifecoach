@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Entrenamiento</h4>
+                        <h4 class="card-title ">Ejercicio</h4>
                     </div>
                     <div class="card-body">
                       
@@ -13,8 +13,11 @@
 
                             <div class="card-body">
                                 <h5 class="card-title" style="margin-bottom: 0px;"><strong>{{entrenamiento.titulo | uppercase}}</strong></h5>
-                                <p class="card-text">Estado: {{entrenamiento.estado}}</p>
                                 
+                                <p *ngIf="entrenamiento.estado == 'Activo'" class="card-text subtitle-activo">{{entrenamiento.estado}}</p>
+                                <p *ngIf="entrenamiento.estado == 'Inactivo'" class="card-text subtitle-inactivo">{{entrenamiento.estado}}</p>
+                                
+
                                 <p style="margin-bottom: 0px;"><strong>Beneficios:</strong></p>
                                 <p class="card-text">{{entrenamiento.objetivo}}</p>
                             
@@ -30,17 +33,19 @@
                         <div class="row row-1 animated fadeInRight">
                               <div class="col-sm-6">
                                   <div class="card" >
-                                      <!--
+                                      
                                         <app-preload [url]="entrenamiento.imagen"></app-preload>
-                                    -->
+                                    <!--
                                       <img class="card-img-top text-center" [src]="entrenamiento.imagen" alt="Card image cap" >                           
-                                  </div>
+                                    -->
+                                    </div>
                               </div>
                               <div class="col-sm-6">
                                     <br>
                                     <br>
-                                    <p style="margin-bottom: 0px;"><strong>Instrucciones:</strong></p>
-                                    <p class="card-text">{{entrenamiento.instruccion}}</p>       
+
+                                    <p style="margin-bottom: 0px;"><strong>Pasos de ejecucion:</strong></p>
+                                    <p *ngFor="let item of entrenamiento.instruccion; let i = index"  ><span class="">{{item.id}}. </span> {{item.value}}</p>     
                                    
                                 </div>
                          

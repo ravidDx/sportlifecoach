@@ -82,10 +82,10 @@
                                 <td mat-cell *matCellDef="let element">
                                   <button mat-raised-button  title="visualizar"  type="button" [routerLink]="['/admin/ejercicio',element._id ]" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#dataModal"><i class="fas fa-eye" id="iconEdit"></i></button>    
                                   <button mat-raised-button  title="editar" type="button" (click)="editModal(element)" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i class="fas fa-edit" id="iconEdit"></i></button> 
-                                  <!--
+                                  
                                   <button *ngIf="element.estado == 'Activo'" mat-raised-button  title="dar de baja" type="button"  (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock-open" [id]="element._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif" > </button>    
                                   <button *ngIf="element.estado == 'Inactivo'" mat-raised-button  title="dar de alta" type="button"  (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock" [id]="element._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif" > </button>    
-                                    -->
+                                  
                                 </td>
                               </ng-container>
   
@@ -222,19 +222,12 @@
                     </div>
 
                     <div class="col-md-7" >
-                      <!--                       
-                         <mat-form-field  *ngIf="new == true" class='card-instruccion' >
-                          <textarea matInput placeholder="Instrucciones" rows="7" name="instruccion" [(ngModel)]="entrenamiento.instruccion"></textarea>
-                        </mat-form-field>
-                        <mat-form-field  *ngIf="new == false" class='card-instruccion' >
-                            <textarea matInput placeholder="Instrucciones" rows="7" name="instruccion" [(ngModel)]="entrenamientoEdit.instruccion"></textarea>
-                          </mat-form-field>
-                        -->
-
+                 
                           Instrucciones  
                           <button mat-button color="primary" class='btn-add btn-ico' (click)="addInstruccion()" type="button"> <i class="fas fa-plus-circle"></i> </button>
                           <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedInstruccion()" type="button"> <i class="fas fa-minus-circle"></i> </button>
-                            <mat-form-field class="add-item" *ngFor="let item of itemsInstrucciones; let i = index" >
+                          
+                          <mat-form-field class="add-item" *ngFor="let item of itemsInstrucciones; let i = index" >
                                 <span matPrefix>- &nbsp;</span>
                                 <input matInput  type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" >
                             </mat-form-field>
@@ -268,13 +261,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Esta seguro de eliminar este ejercicio?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{titleConfirm}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar()">Si</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="darBaja()">Si</button>
         <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
       </div>
     </div>

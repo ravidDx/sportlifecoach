@@ -21,6 +21,7 @@ import { PromocionComponent } from 'app/admin/promocion/promocion.component';
 import { CategoriasComponent } from '../../admin/categorias/categorias.component';
 import { EstadisticasComponent } from '../../admin/estadisticas/estadisticas.component';
 import { RutinasComponent } from '../../admin/rutinas/rutinas.component';
+import { RutinaComponent } from '../../admin/rutina/rutina.component';
 import { EntrenamientoComponent } from '../../admin/entrenamiento/entrenamiento.component';
 import { EntrenamientosComponent } from '../../admin/entrenamientos/entrenamientos.component';
 
@@ -48,6 +49,7 @@ export const AdminLayoutRoutes: Routes = [
                 { path: 'ejercicios',               component: EjerciciosComponent},
                 { path: 'ejercicio/:_id',           component: EjercicioComponent },
                 { path: 'rutinas',                  component: RutinasComponent},
+                { path: 'rutina/:_id',              component: RutinaComponent},
                 { path: 'entrenamientos',           component: EntrenamientosComponent},
                 { path: 'entrenamiento/:_id',       component: EntrenamientoComponent},
                 { path: 'dietas',                   component: DietasComponent},

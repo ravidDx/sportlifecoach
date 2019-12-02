@@ -25,6 +25,8 @@ export class EjercicioComponent implements OnInit {
     instruccion:"",
   }
 
+  estado='Activo';
+
   
 
 
@@ -37,6 +39,8 @@ export class EjercicioComponent implements OnInit {
 
             console.log(data)
             this.entrenamiento=data;
+
+            this.estado = this.entrenamiento.estado;
             this.cargarUrlImagen(this.entrenamiento.imagen);
           },
           error=>{

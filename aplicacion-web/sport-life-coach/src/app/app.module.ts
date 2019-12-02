@@ -53,6 +53,7 @@ import { ModalComponent } from './modal/modal.component';
 import { SigninComponent } from './auth/signin/signin.component';
 
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,

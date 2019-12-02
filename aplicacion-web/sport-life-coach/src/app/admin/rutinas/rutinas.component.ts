@@ -25,7 +25,7 @@ export class RutinasComponent implements OnInit {
 
   titleConfirm='';
 
-  displayedColumns: string[] = ['position','titulo','duracion', 'dificultad', 'estado', 'acciones'];
+  displayedColumns: string[] = ['position','titulo','numEjers','duracion', 'dificultad', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<Rutina>();
 
 
@@ -43,6 +43,8 @@ export class RutinasComponent implements OnInit {
      fechaCreacion:{},
      estado:'',
    }
+
+  
  
    rutinaEdit:Rutina = {
     titulo:"",
@@ -60,6 +62,7 @@ export class RutinasComponent implements OnInit {
    rutinas:Rutina[]=[];
 
    listaEjercicios:any[]=[];
+   listaEjerciciosEdit:any[]=[];
    listEjerRutina:any[]=[];
 
    listEjerRutinaEdit:any[]=[];
@@ -70,9 +73,8 @@ export class RutinasComponent implements OnInit {
                private _toasterService:ToasterService)
   {
     this.listarEjercicios();
-
     this.listar();
-
+    this.rutina['numEjers']='0';
   }
 
   ngOnInit() {
@@ -81,16 +83,12 @@ export class RutinasComponent implements OnInit {
 
 
   guardar(){
-
+    
     this.rutina.estado='Activo';
     this.rutina.fechaCreacion=this.getFechaActual();
     this.rutina.ejercicios = this.listEjerRutina;
 
     this.nuevaRutina();
-
-
-
-
 
     console.log(this.rutina);
 
@@ -104,7 +102,6 @@ export class RutinasComponent implements OnInit {
         
         this._toasterService.Success('Rutina guardado OK !!');
         
-
       },
       error=>{
         console.log('ERROR');
@@ -119,6 +116,7 @@ export class RutinasComponent implements OnInit {
 
   listar(){
     this.rutinas=[];
+    
     this._rutinaService.consultarRutinas()
       .subscribe(
         data=>{
@@ -127,7 +125,8 @@ export class RutinasComponent implements OnInit {
 
           for(let key$ in data){
 	  				let rutina = data[key$];
-	  				rutina['_id']=key$;
+            rutina['_id']=key$;
+            rutina['numEjers']=rutina.ejercicios.length;    
 	  				this.rutinas.push(rutina);
           }
         
@@ -145,12 +144,8 @@ export class RutinasComponent implements OnInit {
 
   }
 
-
-  
-
-
   newModal(){
-
+    this.new = true;
   }
 
 
@@ -194,7 +189,7 @@ export class RutinasComponent implements OnInit {
         }
         this.listEjerRutina.push(data);
     }
-    //console.log(this.listEjerRutina)
+    console.log(this.listaEjercicios)
     
 
   }
@@ -245,5 +240,27 @@ export class RutinasComponent implements OnInit {
     deportista['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
 
 }
+
+
+
+
+
+editModal(rutina:Rutina){
+  this.new=false;
+
+  
+  this.listaEjerciciosEdit=[];
+  this.rutinaEdit=rutina;
+  this.listaEjercicios=this.rutinaEdit['selectEjercs']; 
+
+
+  this.listEjerRutina =  this.rutinaEdit.ejercicios;
+
+  console.log(this.listaEjerciciosEdit)
+
+  //this.itemsInstrucciones=entrenamiento.instruccion;
+  
+}
+
 
 }

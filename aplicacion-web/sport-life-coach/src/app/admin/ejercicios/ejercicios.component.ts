@@ -23,6 +23,7 @@ import {HttpClient,HttpRequest, HttpEventType, HttpErrorResponse} from '@angular
 import {of} from 'rxjs';
 import {catchError, last, map, tap} from 'rxjs/operators';
 import {FileUploadModel} from '../../class/fileuploadmodel'
+import { Ejercicio } from 'app/interfaces/ejercicio.interface';
 /*----------------------------------------------------------------------- */
 
 declare var  $: any;
@@ -52,6 +53,8 @@ export class EjerciciosComponent implements OnInit {
   displayedColumns: string[] = ['position','imagen','titulo','tipo','dificultad','estado', 'acciones'];
   dataSource = new MatTableDataSource<Entrenamiento>();
   selection = new SelectionModel<Entrenamiento>(true, []);
+
+  indiceData:any='';
 
 
  
@@ -124,6 +127,13 @@ export class EjerciciosComponent implements OnInit {
   posicion:any;
 
   new:boolean = true;
+
+  habilitar:boolean=true;
+  
+  cargar:boolean=false;
+  
+  btnDisabled = false;
+  
 
 
 
@@ -402,8 +412,7 @@ export class EjerciciosComponent implements OnInit {
     this.new=false;
     this.files=[];
     this.entrenamientoEdit=entrenamiento;
-
-    console.log(entrenamiento)
+    this.itemsInstrucciones=entrenamiento.instruccion;
     
   }
 
@@ -433,6 +442,46 @@ export class EjerciciosComponent implements OnInit {
 
   }
 
+  darBaja(){
+    
+    this.loadingTrash();
+    let title="";
+    var id:any= this.entrenamientoEdit["_id"];
+    delete this.entrenamientoEdit["_id"];
+   
+    this.entrenamientoEdit.imagen = this.entrenamientoEdit['idImg'];
+    delete this.entrenamientoEdit["idImg"];
+  
+
+    if(this.entrenamientoEdit.estado == 'Activo'){
+      this.entrenamientoEdit.estado = 'Inactivo';
+      title = 'Ejercicio dado de baja OK !!';
+    }else{
+      this.entrenamientoEdit.estado = 'Activo';
+      title = 'Ejerciciosta dado de alta OK !!';
+    }
+
+    console.log(this.entrenamientoEdit)
+
+    
+    this._entrenamientoService.darBajaEntrenamiento(this.entrenamientoEdit,id).subscribe(
+      data=>{
+        //this.refresh(this.deportistaEdit);
+        this.listar();
+        this._toasterService.Success(title);
+        this.loadTrash.hide();
+        this.trash.show(); 
+      },
+      error=>{
+        console.log(error);
+        this.loadTrash.hide();
+        this.trash.show(); 
+      }
+      
+    );
+    
+  }
+
   newModal(){
     this.new = true;
     this.files=[];
@@ -455,9 +504,7 @@ export class EjerciciosComponent implements OnInit {
 
 
   loadingTrash(){
-    //this.habilitar=false;
- 
-    this.trash = $(this.eventData.target).parent().find(`#${this.indiceDelete}`).hide();
+    this.trash = $(this.eventData.target).parent().find(`#${this.indiceData}`).hide();
     this.loadTrash = $(this.eventData.target).parent().find('img').show();
     
     this.trash.hide();
@@ -497,6 +544,22 @@ export class EjerciciosComponent implements OnInit {
 
   deletedInstruccion(){
     this.itemsInstrucciones.pop();
+  }
+
+
+  cargarObjectBaja(entrenamiento:Entrenamiento, event:any){
+    this.indiceData=entrenamiento["_id"];
+    this.entrenamientoEdit = Object.assign({},entrenamiento);
+    this.eventData = event;
+
+    if(entrenamiento['estado'] == 'Activo' ){
+      this.titleConfirm='Esta seguro de dar de baja a este ejercicio?';
+  
+    }else{
+      this.titleConfirm='Esta seguro de dar de alta a este ejercicio?';
+  
+    }
+    
   }
 
 
@@ -696,7 +759,9 @@ export class EjerciciosComponent implements OnInit {
         }
         return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${1}`;
       }
-      
+
+    
+
 
 
   

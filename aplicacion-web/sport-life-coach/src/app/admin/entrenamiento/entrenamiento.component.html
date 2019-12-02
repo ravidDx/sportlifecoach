@@ -1,97 +1,69 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">Listado de Ejercicios</h4>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="row animated fadeInRight btn-add">
-                            <button mat-raised-button class="btn btn-info ml-auto" (click)="newModal()" data-toggle="modal" data-target="#dataModal">
-                                <i class="fas fa-plus-circle"></i> Añadir
-                            </button>
-                            <!--
-                            <button mat-raised-button class="btn btn-info ml-auto" (click)="getDownload()" data-toggle="modal" data-target="#dataModal">
-                                <i class="fas fa-plus-circle"></i> get
-                            </button>
-                            -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title ">Entrenamiento</h4>
                         </div>
+                        <div class="card-body">
+                          
+                            <div class="row row-1 animated fadeInRight">
+    
+    
+                                    <div class="card-body">
 
-                        <br>
+                                            <h5 class="card-title" style="margin-bottom: 0px;"><strong>Datos del entrenamiento</strong></h5>
+                                              
+                                         
+              
+                                            <p style="margin-bottom: 0px;"><strong>Deportista: {{planEntrenamiento.deportista.nombre}} {{planEntrenamiento.deportista.apellido}}</strong></p>
+                                            
+              
+              
+                                        </div>
+                          
+                            </div>
+    
+                            <hr>
 
-                          <!-- DATA TABLE -->
 
-                   
+                            <div class="row row-1 animated fadeInRight" >
+
+                                <table class="table">
+                                            <thead class="thead-light">
+                                              <tr>
+                                                <th scope="col">LUNES</th>
+                                                <th scope="col">MARTES</th>
+                                                <th scope="col">MIERCOLES</th>
+                                                <th scope="col">JUEVES</th>
+                                                <th scope="col">VIERNES</th>
+                                                <th scope="col">SABADO</th>
+                                                <th scope="col">DOMINGO</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr *ngFor="let item of planEntrenamiento.rutinas; let i = index">
+                                                <td>{{entrenamiento[i][0]['valor']}}</td>
+                                                <td>{{entrenamiento[i][1]['valor']}}</td>
+                                                <td>{{entrenamiento[i][2]['valor'] }}</td>
+                                                <td>{{entrenamiento[i][3]['valor'] }}</td>
+                                                <td>{{entrenamiento[i][4]['valor']}}</td>
+                                                <td>{{entrenamiento[i][5]['valor']}}</td>
+                                                <td>{{entrenamiento[i][6]['valor']}}</td>
+                                              </tr>
                                         
+                                            </tbody>
+                                </table>
+                            
+                            </div>
+    
+                     
+                        
+                        </div>
                     </div>
                 </div>
+         
             </div>
-     
         </div>
     </div>
-</div>
-
-
-
-<!-- FORMULARIO MODAL -->
-<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"> 
-              <span *ngIf="new == true" ><i class="fas fa-running"></i>&nbsp;Nuevo Entrenamiento</span>
-              <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Entrenamiento</span>
-
-          </h5> 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form id="form-entrenamiento" (ngSubmit)="guardar()" #form="ngForm">
-          <div class="modal-body">
-
-
-              <div class="example-container">
-
-          
-
-               
-              </div>
-          
-    
-          </div>
-          
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            
-            <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]=btnSave >Guardar</button>
-            <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]=btnSave >Editar</button>
-            
-              
-          </div>
-        </form>
-      </div>
-    </div>
-</div>
-
-
-<!--Comfirm Modal-->
-<!-- Modal -->
-<div class="modal fade" id="modalDeleted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Esta seguro de eliminar este ejercicio?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar()">Si</button>
-        <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
-      </div>
-    </div>
-  </div>
-</div>
