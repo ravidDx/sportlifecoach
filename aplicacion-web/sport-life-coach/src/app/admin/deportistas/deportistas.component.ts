@@ -11,6 +11,7 @@ import {Evaluacion} from '../../interfaces/evaluacion.interface';
 
 import {DeportistaService} from '../../services/deportista.service';
 import {EvaluacionService} from '../../services/evaluacion.service';
+import {UserolesService} from '../../services/useroles.service';
 import {AuthService} from '../../services/auth.service';
 
 
@@ -95,6 +96,8 @@ export class DeportistasComponent implements OnInit {
     fechaCreacion:{},
     recomendacion:'',
   }
+
+ 
   
 
   deportistas:Deportista[] =[];
@@ -105,7 +108,8 @@ export class DeportistasComponent implements OnInit {
               private _evaluacionService:EvaluacionService,
               public dialog: MatDialog,
               private toasterService:ToasterService,
-              private _authService:AuthService) { 
+              private _authService:AuthService,
+              private _useroleService:UserolesService) { 
     this.listar();
     this.deportista.fechaCreacion=this.getFechaActual();
    
@@ -134,8 +138,11 @@ export class DeportistasComponent implements OnInit {
           obj['_id']=data['name'];
 
           //Guardar credenciales email y pass en firebase
-          this.guardarAuthUser(obj.email,obj.email);    
-  
+          this.guardarAuthUser(obj.email,obj.email);
+
+          //Guardar credencial y rol en firebase
+          this.guardarUserRole(this.deportista.email,this.deportista.rol);
+
           this.dataSource.data = this.dataSource.data.concat(obj);
           this.clearForm();
           this.closeModal();
@@ -209,6 +216,26 @@ export class DeportistasComponent implements OnInit {
     );
 
     console.log(this.evaluacion)
+
+  }
+
+  guardarUserRole(emaill:any, roll:any){
+
+    let userole:any = {
+      email:emaill,
+      rol:roll
+    }
+    this._useroleService.newUserRole(userole).subscribe(
+      data=>{
+        console.log(data);
+       // this.refresh(this.deportistaEdit)
+      },
+      error=>{
+        console.log(error);
+        
+      }
+      
+    );
 
   }
 
