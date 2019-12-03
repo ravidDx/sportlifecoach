@@ -29,12 +29,12 @@ export class HomePage implements OnInit {
 
   constructor(private route: Router, public router: Router, private AFauth: AngularFireAuth,
     private DBFire: AngularFireDatabase, private calcu: CalculadoraService) {
-      this.doRefresh();
+      //this.doRefresh();
   }
 
   ngOnInit() {
   }
-
+/*
   doRefresh () {
     this.AFauth.authState.subscribe(user => {
       this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe(
@@ -60,6 +60,6 @@ export class HomePage implements OnInit {
           }
         });
     });
-  }
+  }*/
 
 }

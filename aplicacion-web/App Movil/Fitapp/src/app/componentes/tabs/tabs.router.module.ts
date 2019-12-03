@@ -46,6 +46,24 @@ const routes: Routes = [
       }
     ]
   },
+
+  {
+    path: 'afiliado/tabs',
+    component: TabsPage,
+    children: [
+      {
+        path: 'home',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../../afiliado/home/home.module').then(m => m.HomePageModule)
+          }
+        ]
+      }
+
+    ]
+  },
+  
   {
     path: '',
     redirectTo: '/tabs/home',
