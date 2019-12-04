@@ -89,17 +89,17 @@ export class PerfilPage implements OnInit {
           outputType: 1,
         };
         this.imagePicker.getPictures(options).then((results) => {
-          alert('inicio :' + results);
+          console.log('inicio :' + results);
           for (let i = 0; i < results.length; i++) {
             this.image = 'data:image/jpeg;base64,' + results[i];
-            alert('con datos :' + this.image);
+            console.log('con datos :' + this.image);
             this.photo = true;
           }
         }, (err) => alert(err));
       }
     }, (err) => {
-      alert('err');
-      alert(err);
+      console.log('err');
+      console.log(err);
     });
   }
 

@@ -110,4 +110,6 @@ export class PersonalPage implements OnInit {
     });
     toast.present();
   }
+
+ 
 }

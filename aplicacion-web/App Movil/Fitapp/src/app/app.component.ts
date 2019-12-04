@@ -37,6 +37,7 @@ export class AppComponent {
     private authService: AuthService,
     public router: Router, private AFauth: AngularFireAuth, private DBFire: AngularFireDatabase
   ) {
+    
     this.initializeApp();
     // para saber si existe un usuario logeado
     this.AFauth.authState.subscribe(user => {
@@ -78,6 +79,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       timer(3000).subscribe(() => this.showSplash = false);
