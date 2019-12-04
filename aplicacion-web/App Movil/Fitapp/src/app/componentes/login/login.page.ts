@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 // importando el servicio para poder acceder a metodos
 import { AuthService } from '../../servicios/auth.service';
+import { UserolesService } from '../../servicios/useroles.service';
+
 // importando router para poder redirigir a otra page home
 import { Router } from '@angular/router';
 // Para validar el formulario
@@ -32,7 +34,11 @@ export class LoginPage implements OnInit {
   email: string;
   password: string;
 
-  constructor(private authService: AuthService, public router: Router,
+  /*credenciales*/
+  isInvalid:boolean = false;
+  isAccessInvalid:boolean = true;
+
+  constructor(private authService: AuthService, private _userolesService:UserolesService, public router: Router,
     private formBuilder: FormBuilder, public loadingController: LoadingController, public toastController: ToastController) { }
 
   ngOnInit() {
@@ -41,12 +47,28 @@ export class LoginPage implements OnInit {
   }
 
   loginFire() {
+    
     this.email = this.login_form.value.email;
     this.password = this.login_form.value.password;
     this.cargando();
     this.authService.loginFire(this.email, this.password).then(res => {
-      this.presentToast();
-      this.router.navigate(['/tabs/home']);
+      //Logeago correctamente
+      this.presentToast(); 
+      //verificar que tipo de usuario es   
+      this.getTipoUser();
+
+      /* 
+      this.authService.authState.subscribe(state => {
+        if (state) {
+          console.log('acceso')
+          console.log(this.localStorage)
+          //this.router.navigate(['dashboard']);
+        } else {
+          console.log('no acceso')
+          //this.router.navigate(['login']);
+        }
+      });*/
+    
     }).catch(err => {
       if (err.code === 'auth/wrong-password') {
         this.error1_Toast();
@@ -56,6 +78,8 @@ export class LoginPage implements OnInit {
         this.error3_Toast();
       }
     });
+    
+
   }
 
   loginFB() {
@@ -139,4 +163,59 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
+
+  getTipoUser(){
+    let long=0;
+    this._userolesService.getTipoUser()
+      .snapshotChanges()
+      .subscribe(item =>{
+        item.forEach(element =>
+        {
+          long++;
+          let data = element.payload.toJSON();
+          if(data['email'] == this.email){
+            console.log(data['rol']);
+            this.isAccessInvalid=false;
+            localStorage.setItem('rol',data['rol']);
+            localStorage.setItem('email', this.email);
+            this.onLoginRedirect();
+          }
+
+          
+        });
+
+        if(item.length==long && this.isAccessInvalid==true){
+            let msg='No tiene Acceso al sistema';
+            //this.toasterService.Error(msg);
+             this.isInvalid=false;
+             console.log(msg)    
+        }
+          
+      })
+
+      
+
+  }
+
+  onLoginRedirect(){
+    console.log('onLoginRedirect');
+    const rol = localStorage.getItem('rol');
+
+    if(rol==='Afiliado'){
+      console.log('afil');
+      //this._router.navigate(['/sadmin/inicio']);
+      this.router.navigate(['afiliado/tabs/home']);
+      //this.router.navigate(['/tabs/home']);
+    }else if(rol==='no afiliado'){
+      //this._router.navigate(['/admin/dashboard']);
+      this.router.navigate(['/tabs/home']);
+      console.log('no afil');
+    }
+
+    //this.isInvalid=false;
+  }
+
+  
+
+
 }

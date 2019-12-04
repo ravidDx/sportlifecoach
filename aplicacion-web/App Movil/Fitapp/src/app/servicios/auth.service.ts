@@ -17,10 +17,14 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
+import {map} from 'rxjs/operators'
+import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  authState = new BehaviorSubject(false);
 
   nombre: string;
   apellido: string;
@@ -37,18 +41,37 @@ export class AuthService {
   // INICIO  Y CIERRE DE SESION
   logout() {
     this.AFauth.auth.signOut();
+    console.log('cerrar sesion');
     console.log('Usuario mail ' + this.AFauth.auth.signOut());
+    this.authState.next(false);
     this.router.navigate(['/login']);
+    this.clear();
+    this.authState.next(false);
   }
 
   loginFire(email: any, password: any) {
     return new Promise((resolve, rejected) => {
       this.AFauth.auth.signInWithEmailAndPassword(email, password).then(user => {
         resolve(user);
+        this.authState.next(true);
+
       }).catch(err =>
         rejected(err));
     });
   }
+
+  isAuthenticated() {
+    return this.authState.value;
+  }
+
+  clear(): void {
+    localStorage.clear();
+  }
+
+
+
+
+
 
   loginwithFacebook() {
     if (this.platform.is('cordova')) {
@@ -231,6 +254,9 @@ export class AuthService {
     });
     toast.present();
   }
+
+
+
 
 }
 

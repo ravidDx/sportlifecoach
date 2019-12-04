@@ -4,6 +4,10 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { User } from '../share/user.class';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+
+import { UserolesService } from '../servicios/useroles.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +18,7 @@ export class UsuariosService {
   apellido: string;
 
   constructor(private AFauth: AngularFireAuth, private router: Router, public toastController: ToastController,
-    private DBFire: AngularFireDatabase) { }
+    private DBFire: AngularFireDatabase, private _userolesService:UserolesService) { }
 
   // METODO GENERICO DE REGISTRO EN REALTIME DATABASE FIREBASE PARA REDES SOCIALES
   generic_register(usuario: any, user: User) {
@@ -68,7 +72,10 @@ export class UsuariosService {
       then(auth => { // lo crea en database authentication
         this.realtime(auth, user); // lo crea en database realtime firebase*/
         console.log('se guardó serv autenti', auth);
-        this.loginFire(user.email, user.matching_passwords.password);
+
+        this.guardarUserRole(user.email, user.matching_passwords.password);
+
+       
       }).catch(err => {
         if (err.code === 'auth/email-already-in-use') {
           console.log('Usuario no creado : el email ingresado esta siendo usado por otra cuenta '); // **ese es un toast**
@@ -143,6 +150,29 @@ export class UsuariosService {
       animated: true
     });
     toast.present();
+  }
+
+
+
+  guardarUserRole(emaill:any,  pass:any){
+
+    let userole:any = {
+      email:emaill,
+      rol:'no afiliado'
+    }
+    this._userolesService.newUserRole(userole).subscribe(
+      data=>{
+        console.log(data);
+        this.loginFire(emaill,pass);
+       // this.refresh(this.deportistaEdit)
+      },
+      error=>{
+        console.log(error);
+        
+      }
+      
+    );
+
   }
 
 

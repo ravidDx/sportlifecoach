@@ -7,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit {
 
-  constructor() { }
+  
+  email:string = '';
+  rol:string = '';
+
+  constructor() {
+    this.email = localStorage.getItem('email');
+    this.rol = localStorage.getItem('rol');
+    console.log(this.rol);
+    console.log(this.email);
+   }
+
+  
 
   ngOnInit() {
   }
