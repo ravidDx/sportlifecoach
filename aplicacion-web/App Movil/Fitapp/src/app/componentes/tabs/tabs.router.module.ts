@@ -38,11 +38,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'estadisticas',
+        path: 'calculadora',
         children: [
           {
             path: '',
-            loadChildren: () => import('../../componentes/estadisticas/estadisticas.module').then(m => m.EstadisticasPageModule)
+            loadChildren: () => import('../../componentes/calculadora/calculadora.module').then(m => m.CalculadoraPageModule)
           }
         ]
       },

@@ -19,7 +19,8 @@ const routes: Routes = [
   },
   { path: 'registro/gender', loadChildren: () => import('./componentes/registro/gender/gender.module').then(m => m.GenderPageModule) },
   { path: 'registro/datos', loadChildren: () => import('./componentes/registro/datos/datos.module').then(m => m.DatosPageModule) },
-  { path: 'reset-password', loadChildren: './componentes/reset-password/reset-password.module#ResetPasswordPageModule' },  { path: 'home', loadChildren: './afiliado/home/home.module#HomePageModule' },
+  { path: 'reset-password', loadChildren: './componentes/reset-password/reset-password.module#ResetPasswordPageModule' },
+  { path: 'home', loadChildren: './afiliado/home/home.module#HomePageModule' },
   { path: 'entrenamientos', loadChildren: './afiliado/entrenamientos/entrenamientos.module#EntrenamientosPageModule' },
 
   

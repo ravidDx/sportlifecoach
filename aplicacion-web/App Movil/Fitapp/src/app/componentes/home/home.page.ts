@@ -29,7 +29,30 @@ export class HomePage implements OnInit {
 
   constructor(private route: Router, public router: Router, private AFauth: AngularFireAuth,
     private DBFire: AngularFireDatabase, private calcu: CalculadoraService) {
-      //this.doRefresh();
+      this.AFauth.authState.subscribe(user => {
+        this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe(
+          suc => {
+            this.usuario = suc;
+            if (user !== null ) {
+              // calculo IMC
+              this.imc = this.calcu.calcularIMC(this.usuario.peso, this.usuario.altura);
+              console.log('imc: ' + this.imc);
+              console.log('genero: ' + this.usuario.genero);
+              if (this.usuario.genero === 'hombre') {
+                this.gimch = true;
+                this.gimcm = false;
+              } else if (this.usuario.genero === 'mujer') {
+                this.gimcm = true;
+                this.gimch = false;
+              }
+              // calculo peso ideal
+              this.p_ideal = this.calcu.pesoIdeal(this.usuario.altura, this.usuario.genero);
+              console.log('peso ideal: ' + this.p_ideal);
+            } else {
+              console.log('No hay usuario');
+            }
+          });
+      });
   }
 
   ngOnInit() {

@@ -11,22 +11,22 @@ import { Observable } from 'rxjs';
 })
 export class EjericicosService {
 
-  url = window['urlApi'];
+  url = window['urlFirebase'];
   
-  entrenamientosUrl=this.url+":8080/api/entrenamientos";
-  entrenamientoUrl=this.url+":8080/api/entrenamiento";
+  entrenamientosUrl=this.url+"entrenamientos.json";
+  entrenamientoUrl=this.url+"entrenamientos";
 
   constructor(private _http:HttpClient) { 
 
   }
 
-  consultarEjercicios():Observable<Ejercicio[]>{
-  	return this._http.get<Ejercicio[]>(this.entrenamientosUrl);
+  consultarEjercicios():Observable<any[]>{
+  	return this._http.get<any[]>(this.entrenamientosUrl);
   }
 
   consultarEjercicio(indice:string){
   	let url =`${this.entrenamientoUrl}/${indice}`;
-  	return this._http.get<Ejercicio>(url);
+  	return this._http.get<any>(url);
   }
 
 

@@ -1,9 +1,12 @@
 <ion-header class="fondo">
   <ion-toolbar >
+    <ion-menu-button slot="start" color="light" autoHide="false"></ion-menu-button>
     <ion-title text-center class="title">Calculadora</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button color="light" text=""></ion-back-button>
     </ion-buttons>
+    <a slot="end" routerLink="/news">
+      <ion-icon color="light" name="notifications-outline"></ion-icon>
+  </a>
   </ion-toolbar>
 </ion-header>
 
@@ -27,9 +30,9 @@
 
   <div [ngSwitch]="section">
     <form *ngSwitchCase="'imc'"  [formGroup]="imc_form" (ngSubmit)="calcularIMC()">
-      <ion-text>
+      <!--<ion-text>
         <ion-label>INDICE DE MASA CORPORAL </ion-label>
-      </ion-text>
+      </ion-text>-->
       <div class="pasos">
         <ion-row class="ion-justify-content-center">
           <ion-col>
@@ -197,9 +200,9 @@
     </form>
 
     <form *ngSwitchCase="'peso_ideal'" [formGroup]="peso_form" (ngSubmit)="pesoIdeal(); gpi=true">
-      <ion-text>
+      <!--<ion-text>
         <ion-label>PESO IDEAL</ion-label>
-      </ion-text>
+      </ion-text>-->
       <div class="pasos">
         <ion-row class="ion-justify-content-center">
           <ion-col>

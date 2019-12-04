@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 })
 export class DietasService {
 
-  url = window['urlApi'];
+  url = window['urlFirebase'];
 
-  dietasUrl=this.url+":8080/api/dietas";
-  dietaUrl=this.url+":8080/api/dieta";
+  dietasUrl=this.url+"recetas.json";
+  dietaUrl=this.url+"recetas";
 
   constructor(private _http:HttpClient) { }
 
