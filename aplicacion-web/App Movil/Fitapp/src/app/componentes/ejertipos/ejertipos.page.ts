@@ -24,7 +24,7 @@ export class EjertiposPage implements OnInit {
     type: 'custom',
   },
   };
-
+/*
   ejercicio:Ejercicio = {
     tipo:"",
     titulo:"",
@@ -35,7 +35,7 @@ export class EjertiposPage implements OnInit {
     repeticiones:'',
     duracion:''
   }
-
+*/
   ejercicios:Ejercicio[]=[];
   ejerciciosCopy:Ejercicio[]=[];
 

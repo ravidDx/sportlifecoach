@@ -23,7 +23,7 @@ export class DietaService {
               private storage:AngularFireStorage) { }
 
   nuevaDieta(nuevo:Dieta):Observable<Dieta>{
-    return this._http.post<Dieta>(this.dietaUrl,nuevo);
+    return this._http.post<Dieta>(this.dietasUrl,nuevo);
   }
 
   consultarDietas():Observable<Dieta[]>{
@@ -31,17 +31,17 @@ export class DietaService {
   }
 
   editarDieta(dieta:Dieta,indice:string){
-  	let url =`${this.dietaUrl}/${indice}`;
+  	let url =`${this.dietaUrl}/${indice}.json`;
   	return this._http.put<Dieta>(url,dieta);
   }
 
   eliminarDieta(indice:string){
-  	let url =`${this.dietaUrl}/${indice}`;
+  	let url =`${this.dietaUrl}/${indice}.json`;
   	return this._http.delete(url);
   }
 
   verDieta(indice:string){
-  	let url =`${this.dietaUrl}/${indice}`;
+  	let url =`${this.dietaUrl}/${indice}.json`;
   	return this._http.get<Dieta>(url);
   }
 
@@ -50,8 +50,7 @@ export class DietaService {
     const file = data;
     const filePath = `uploads/dieta_${id}`;
     const ref = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath,file);
-        
+    const task = this.storage.upload(filePath,file);   
   }
 
   downloadUrl(id:any){
