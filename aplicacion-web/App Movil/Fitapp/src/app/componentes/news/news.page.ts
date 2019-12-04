@@ -13,6 +13,7 @@ export class NewsPage implements OnInit {
   constructor(private fcm: FCM) { }
 
   ngOnInit() {
+    
     this.fcm.onNotification().subscribe(
       data => {
         console.log('aqui');

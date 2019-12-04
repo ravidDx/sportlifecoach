@@ -65,7 +65,8 @@ export class EjertiposPage implements OnInit {
             data["entrenamientos"].forEach( function(item, indice, array) {
               _this._storageService.downloadUrl(item.portada).subscribe(
                 data=>{
-                  item.portada=data;         
+                  item.portada=data;  
+                  
                 },
                 error=>{
                   console.log('ERROR');
@@ -84,7 +85,7 @@ export class EjertiposPage implements OnInit {
 
           this.getCategoriasEntrenamiento();
           
-          //console.log(this.ejercicios)
+          //console.log(this.ejercicios,'ejericios');
           },
           error=>{
             console.log(error);
@@ -138,7 +139,9 @@ export class EjertiposPage implements OnInit {
           this.ejerciciosCopy.forEach( function(item, indice, array) {
             if(tipo == item.tipo){
               item['posicion']=indice;
+              // console.log(item,'item');
             _this.ejercicios.push(item);
+           
             
             }
       
