@@ -21,12 +21,14 @@ export class EjericicosService {
   }
 
   consultarEjercicios():Observable<any[]>{
-  	return this._http.get<any[]>(this.entrenamientosUrl);
+  	return this._http.get<Ejercicio[]>(this.entrenamientosUrl);
   }
 
   consultarEjercicio(indice:string){
-  	let url =`${this.entrenamientoUrl}/${indice}`;
-  	return this._http.get<any>(url);
+  	let url =`${this.entrenamientoUrl}/${indice}.json`;
+  	return this._http.get<Ejercicio>(url);
+
+
   }
 
 

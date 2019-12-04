@@ -206,13 +206,17 @@ export class ContentComponent implements OnInit {
         item.forEach(element =>
         {
           let data = element.payload.toJSON();
-          this.serviciosList[element.key].titulo=data['titulo'];
-          this.serviciosList[element.key].detalle=data['detalle']; 
-          this.serviciosList[element.key].delay=this.serviciosDelay[element.key];
-          this.serviciosList[element.key].icon=this.serviciosIcon[element.key];
+          console.log(element.key)
+          this.serviciosList[element.key]['titulo']=data['titulo'];
+          this.serviciosList[element.key]['detalle']=data['detalle']; 
+          this.serviciosList[element.key]['delay']=this.serviciosDelay[element.key];
+          this.serviciosList[element.key]['icon']=this.serviciosIcon[element.key];
         
         });
-        
+
+        console.log(item);
+         
+        console.log('lllllllllllllllllllllllllllllllllllllllllllllllllllll')
         console.log( this.serviciosList);
         
       })

@@ -13,18 +13,17 @@ import {StorageService} from '../../servicios/storage.service';
   styleUrls: ['./ejercicio.page.scss'],
 })
 export class EjercicioPage implements OnInit {
-
+  
   ejercicio:Ejercicio = {
     tipo:"",
     titulo:"",
     objetivo:"",
-    imagenes:[],
-    portada:'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg',
-    series:'',
-    repeticiones:'',
-    duracion:''
+    imagen:"",
+    dificultad:'',
+    fechaCreacion:{},
+    estado:"",
+    instruccion:"",
   }
-
 
 
 
@@ -35,44 +34,18 @@ export class EjercicioPage implements OnInit {
   ngOnInit() {
     let id = this._activateRute.snapshot.paramMap.get('id');
     this.consultarEjercicio(id);
-    //console.log(id);
+    console.log(id);
   }
 
 
   consultarEjercicio(id:any){
 
-    var _this = this;
     this._ejercicioService.consultarEjercicio(id)
       .subscribe(
         data=>{
-          //console.log(data['entrenamiento'])
-          this.ejercicio = data['entrenamiento'];
-        
-
-          this.ejercicio.imagenes.forEach( function(item, indice, array) {
-
-            _this._storageService.downloadUrl(item).subscribe(
-              data=>{
-                _this.ejercicio.imagenes[indice] = data;
-                if(indice == 0){
-                  
-                  _this.ejercicio.portada = data ;
-                }
-              },
-              error=>{
-                console.log('ERROR');
-                
-              }
-              
-            );
-
-          
-            
-          });
-
-        
-          console.log(this.ejercicio);
-
+          console.log(data);
+          let ejercicio = data
+          this.getUrlsImg(ejercicio);
 
         },
         error=>{
@@ -82,5 +55,25 @@ export class EjercicioPage implements OnInit {
       );
 
   }
+
+
+      //Devuelve la url de la imagen
+      getUrlsImg(deportista:any){
+        deportista['idImg']=deportista['imagen'];
+        this._storageService.downloadUrlEjercicio(deportista['imagen']).subscribe(
+          data=>{
+            deportista['imagen']=data;   
+              
+          },
+          error=>{
+            console.log('ERROR');
+            console.log(error);
+            
+          }
+        );
+  
+        deportista['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+  
+    }
 
 }

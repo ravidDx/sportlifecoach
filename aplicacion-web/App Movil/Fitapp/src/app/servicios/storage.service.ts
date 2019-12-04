@@ -25,5 +25,13 @@ export class StorageService {
   }
 
 
+  downloadUrlEjercicio(id:any){
+    const filePath = `uploads/entrenamiento_${id}`;
+    const imgRef = this._storage.ref(filePath);
+
+    return imgRef.getDownloadURL();
+  }
+
+
   
 }

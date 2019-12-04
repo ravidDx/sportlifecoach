@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from 'src/app/servicios/storage.service';
-import { CategoriasService } from 'src/app/servicios/categorias.service';
-import { Router } from '@angular/router';
-import { EjericicosService } from 'src/app/servicios/ejericicos.service';
 
+
+import { Router } from '@angular/router';
+
+//Interfas
+import {Ejercicio} from '../../interfaces/ejercicio.interface';
+
+//servicios
+import { EjericicosService } from 'src/app/servicios/ejericicos.service';
+import { CategoriasService } from 'src/app/servicios/categorias.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 
 @Component({
   selector: 'app-ejercicios',
@@ -13,42 +19,78 @@ import { EjericicosService } from 'src/app/servicios/ejericicos.service';
 export class EjerciciosPage implements OnInit {
 
 
-  ejercicio: any = {}
+  
 
-  ejercicios: any[] = [];
-  ejerciciosCopy: any[] = [];
+  ejercicios: Ejercicio[] = [];
+  ejerciciosCopy: Ejercicio[] = [];
   tiposEntrenamiento: any = [];
-  tipo1 = '';
+
+
+  
   constructor(private _ejercicioService: EjericicosService, private _storageService: StorageService,
-    private _categoriaService: CategoriasService,
-    private _router: Router) {
-    this.getEjercicios();
+    private _categoriaService: CategoriasService,private _router: Router) 
+    {
+    this.listar();
   }
 
   ngOnInit() {
   }
 
 
-  //Metodo listar entrenamientos
-  getEjercicios() {
-    console.log('get Ejercicios');
+  //Metodo trate toda la data de ejercicios
+  listar() {
+    
     this._ejercicioService.consultarEjercicios().subscribe(
       data => {
-        console.log(data);
-        this.ejerciciosCopy = data;
-        console.log(this.ejerciciosCopy);
+      
 
-        this.getCategoriasEntrenamiento();
+        let ejercicios=[];
+        for(let key$ in data){
+          let ejercicio = data[key$];
+          ejercicio['_id']=key$;
+          ejercicios.push(ejercicio);
+           this.getUrlsImg(ejercicio);
+        }
+
+        this.ejerciciosCopy = Object.assign({},ejercicios);;
+     
+        //Metodo para listar los tipos de ejercicios
+        this.listarCategoriasEnjercicio();
+
+      
 
 
       }, error => {
+        console.log('error')
         console.log(error);
       });
 
   }
 
 
-  getCategoriasEntrenamiento() {
+
+    //Devuelve la url de la imagen
+    getUrlsImg(deportista:any){
+      deportista['idImg']=deportista['imagen'];
+      this._storageService.downloadUrlEjercicio(deportista['imagen']).subscribe(
+        data=>{
+          deportista['imagen']=data;   
+            
+        },
+        error=>{
+          console.log('ERROR');
+          console.log(error);
+          
+        }
+      );
+
+      deportista['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+
+  }
+
+
+ //lista las categorias
+  listarCategoriasEnjercicio() {
     this.tiposEntrenamiento = [];
     this._categoriaService.getCategoriasEntrenamiento()
       .subscribe(
@@ -56,20 +98,12 @@ export class EjerciciosPage implements OnInit {
           for (let key$ in data) {
             let catgNew = data[key$];
             catgNew['id'] = key$;
-            catgNew['longitud'] = 0;
-           
-            for (let pos in this.ejerciciosCopy) {
-              let obj = this.ejerciciosCopy[pos];
-              if (obj['tipo'] == catgNew['nombre']) {
-                catgNew['longitud'] = catgNew['longitud'] + 1;
-              }
-            }
-
-            this.tiposEntrenamiento.push(catgNew);
+            this.tiposEntrenamiento.push(catgNew);          
           }
-          // this.getEjercicios_x_tipo(this.tiposEntrenamiento['0']['nombre']);
-          this.tipo1 = this.tiposEntrenamiento['0']['nombre'];
-          //console.log(this.tiposEntrenamiento)
+
+          //Filtrar la data por el primer tipo o categoria de ejercicio
+          this.getEjercicios_x_tipo(this.tiposEntrenamiento['0']['nombre']);
+    
 
         },
         error => {
@@ -80,19 +114,30 @@ export class EjerciciosPage implements OnInit {
 
   }
 
-  getEjercicios_x_tipo(tipo: any) {
+  
+getEjercicios_x_tipo(tipo: any) {
     this.ejercicios = [];
 
-    var _this = this;
-    console.log(tipo);
-    this.ejerciciosCopy.forEach(function (item, indice, array) {
-      if (tipo == item.tipo) {
-        item['posicion'] = indice;
-        _this.ejercicios.push(item);
+    let long = 0;
+    for (let key$ in this.ejerciciosCopy) {
+      let ejercicio =  this.ejerciciosCopy[key$];
+      let tipos:any =  ejercicio.tipo;
+      
+      for (let key2$ in tipos) {
+        
+        if (tipo === tipos[key2$]) {
+              
+          long = long +1;
+          this.ejercicios.push(ejercicio);
+          break;
 
+        }
+      
       }
-
-    });
+        
+    }
+   
+    console.log('LONGITUD ' + long)
 
 
   }
