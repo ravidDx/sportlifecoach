@@ -37,7 +37,8 @@ import {StorageService} from './servicios/storage.service';
 import { AuthGuardService } from './servicios/auth-guard.service';
 import { EntrenamientosPipe } from './afiliado/entrenamientos.pipe';
 
-
+/*NOTIFICACIONES*/
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @NgModule({
   declarations: [AppComponent, EntrenamientosPipe],
@@ -62,7 +63,7 @@ import { EntrenamientosPipe } from './afiliado/entrenamientos.pipe';
     ImagePicker,
     EjericicosService,
     StorageService,
-    AuthGuardService,
+    AuthGuardService,FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
