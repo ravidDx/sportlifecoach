@@ -29,6 +29,10 @@ export class EntrenamientoComponent implements OnInit {
 
   entrenamiento:any=[];
 
+  listEntrenaminetoXsemanas:any = [];
+
+  listSemanas:any=[];
+
   listDias:any=[
     {
       dia:'Lunes',
@@ -69,11 +73,21 @@ export class EntrenamientoComponent implements OnInit {
         this._planEntrenamientoService.verPlanEntrenamiento(params['_id']).subscribe(
           data=>{
 
-            console.log(data)
+            //console.log(data)
             this.planEntrenamiento=data;
 
             this.estado = this.planEntrenamiento.estado;
-
+            this.listSemanas = [];
+           
+            for(let key$ in this.planEntrenamiento.rutinas){
+              let rutina = this.planEntrenamiento.rutinas[key$]
+              console.log(rutina)
+              
+              this.totalSemanasEntrenamiento(rutina);
+            }  
+           
+            
+            /*
             for(let key$ in data.rutinas){
               let dias = data.rutinas[key$].dias;
 
@@ -97,13 +111,10 @@ export class EntrenamientoComponent implements OnInit {
                 this.entrenamiento.push(listDiasCopy)
 
              }
-
+            */
              console.log(this.entrenamiento)
 
-            
-            
-
-
+          
 
           },
           error=>{
@@ -120,4 +131,26 @@ export class EntrenamientoComponent implements OnInit {
   ngOnInit() {
   }
 
+  totalSemanasEntrenamiento(rutina:any){
+    
+   
+    //this.listSemanas = [];
+
+
+      for(let key$ in rutina.semanas){
+        
+          let obj = {
+            semana: rutina.semanas[key$],
+            rutina:rutina.rutina.titulo
+          }
+          this.listSemanas.push(obj);
+      }
+     
+    
+
+
+
+
+    console.log(this.listSemanas);
+  }
 }

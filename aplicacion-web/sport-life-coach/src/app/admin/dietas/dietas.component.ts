@@ -213,25 +213,18 @@ export class DietasComponent implements OnInit {
     this._dietaService.consultarDietas()
       .subscribe(
         data=>{
-          data["dietas"].forEach( function(item, indice, array) {
-            item['imagenId']=item.imagen;
-              _this._dietaService.downloadUrl(item.imagen).subscribe(
-                data=>{
-                  item.imagen=data;         
-                },
-                error=>{
-                  console.log('ERROR');
-                  
-                  console.log(error);
-                }
-              );
 
-              item.imagen = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-           
-          });
+          let dietas=[];
+          for(let key$ in data){
+	  				let dieta = data[key$];
+	  				dieta['_id']=key$;
+            dietas.push(dieta);
+            this.getUrlsImg(dieta);
+          }
 
-          this.dietas = data["dietas"];
-          this.dietasCopy = data["dietas"];
+          this.dietasCopy = Object.assign({},dietas);
+
+          console.log(this.dietasCopy)
 
           this.getCategoriasDietas();
 
@@ -244,7 +237,25 @@ export class DietasComponent implements OnInit {
     }
 
   
+  //Devuelve la url de la imagen
+  getUrlsImg(dieta:any){
+    dieta['idImg']=dieta['imagen'];
+    this._dietaService.downloadUrl(dieta['imagen']).subscribe(
+      data=>{
+        dieta['imagen']=data;   
+          
+      },
+      error=>{
+        console.log('ERROR');
+        console.log(error);
+        
+      }
+    );
 
+    dieta['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+
+
+}
 
   getCategoriasDietas() {
     this.tiposDietas = [];
@@ -267,6 +278,8 @@ export class DietasComponent implements OnInit {
             this.tiposDietas.push(catgNew);
           }
 
+          this.listar_por_tipo(this.tiposDietas[0]['nombre']);
+
         },
         error => {
           console.log(error);
@@ -283,22 +296,28 @@ export class DietasComponent implements OnInit {
 
   listar_por_tipo(tipo: any) {
 
-    if (tipo == 'todos') {
+    console.log(tipo)
 
+    if (tipo == 'todos') {
+      
       this.dietas = this.dietasCopy;
 
     } else {
 
-      var _this = this;
+      
       this.dietas = [];
-      this.dietasCopy.forEach(function (item, indice, array) {
-        if (tipo == item.tipo) {
-          item['posicion'] = indice;
-          _this.dietas.push(item);
+
+      for (let key$ in this.dietasCopy) {
+        let dieta =  this.dietasCopy[key$];
+        if (tipo === dieta.tipo) {
+          
+          this.dietas.push(dieta);
 
         }
 
-      });
+      }
+
+
 
     }
 

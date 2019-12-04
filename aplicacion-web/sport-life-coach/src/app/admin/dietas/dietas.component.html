@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">Listado de Dietas</h4>
+            <h4 class="card-title ">Listado de Recetas</h4>
           </div>
           <div class="card-body">
 
@@ -23,11 +23,11 @@
             <br>
             <!-- DATA -->
             <mat-chip-list aria-label="Fish selection">
-
+              <!--
               <span matBadge="{{dietasCopy.length}}" matBadgeColor="warn" class="spnaBadge">
                 <mat-chip color="basic" selected (click)="selectTipo('todos')">Todos</mat-chip>
               </span>
-
+              -->
               <span *ngFor="let tipo of tiposDietas" matBadge="{{tipo.longitud}}" class="spnaBadge">
                 <mat-chip color="basic" selected (click)="selectTipo(tipo.nombre)">{{tipo.nombre}}</mat-chip>
               </span>
@@ -76,7 +76,7 @@
 <!-- FORMULARIO MODAL -->
 <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">

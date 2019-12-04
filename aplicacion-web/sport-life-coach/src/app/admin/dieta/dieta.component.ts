@@ -27,6 +27,8 @@ export class DietaComponent implements OnInit {
     estado:''
   }
 
+  estado:string = '';
+
 
   constructor(private _dietaService:DietaService, private _activeRoute:ActivatedRoute) { 
     
@@ -35,14 +37,14 @@ export class DietaComponent implements OnInit {
         
         this._dietaService.verDieta(params['_id']).subscribe(
           data=>{
-            //console.log(data);
-            //this.imagenes=data['entrenamiento']['imagenes'];
-            //data['entrenamiento']['imagenes'] = [];
-            let codImg = data['dieta'].imagen; 
-            data['dieta'].imagen = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-            this.dieta=data['dieta'];
-            
-            this.cargarImagen(codImg);
+          
+            this.dieta=data;
+
+            this.estado = this.dieta.estado;
+            this.cargarUrlImagen(this.dieta.imagen);
+
+              
+            console.log(this.dieta)
 
 
             
@@ -62,22 +64,23 @@ export class DietaComponent implements OnInit {
 
   
 
-  cargarImagen(item:any){
+  cargarUrlImagen(idImagen:any){
 
-  
-      this._dietaService.downloadUrl(item).subscribe(
-        data=>{
-         
-          this.dieta.imagen= data;
+    //this.urlImage = "https://2.bp.blogspot.com/-zpkdHbE717M/V6zIBmEpDFI/AAAAAAAAA-0/APQQeS8fCRw3eSITJVZZ68oIeeol1TjDwCLcB/s1600/bella%2Bla%2Bpaz%2Bcopia.jpg";
+
+    this._dietaService.downloadUrl(idImagen).subscribe(
+      data=>{ 
+        this.dieta.imagen = data;
+        
+      },
+      error=>{
+        console.log('ERROR');
+        console.log(error);
+      }
+    );
+
     
-        },
-        error=>{
-          console.log('ERROR');
-          console.log(error);
-        }
-      );
 
-      //console.log(_this.entrenamiento);
 
   }
 
