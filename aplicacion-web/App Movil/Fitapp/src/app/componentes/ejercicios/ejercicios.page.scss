@@ -5,6 +5,10 @@ ion-toolbar {
     background-color:#0f0f0f;
 }
 
+.font {
+    font-weight:bolder;
+}
+
 .card-title {
     position: absolute;
     top: 36%;
@@ -34,4 +38,10 @@ ion-toolbar {
 
 .background1 {
     background-color:#808da5b7;
+}
+
+ion-label, h2, h3 {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
 }

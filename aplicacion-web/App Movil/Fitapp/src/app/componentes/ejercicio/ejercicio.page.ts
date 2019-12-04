@@ -25,7 +25,10 @@ export class EjercicioPage implements OnInit {
     instruccion:"",
   }
 
-
+  // para el botón 
+  color="primary";
+  text="NO LISTO";
+  btn:boolean=false;
 
   constructor(private _activateRute:ActivatedRoute,
               private _ejercicioService:EjericicosService,
@@ -37,6 +40,23 @@ export class EjercicioPage implements OnInit {
     console.log(id);
   }
 
+  listo(){
+    this.btn=true;
+    console.log(this.btn,'listo');
+    if(this.btn){
+      this.color="success";
+      this.text="LISTO"
+    }
+  }
+
+  nolisto(){
+    this.btn=false;
+    console.log(this.btn,'nolisto');
+    if(!this.btn){
+      this.color="primary";
+      this.text="NO LISTO"
+    }
+  }
 
   consultarEjercicio(id:any){
 
@@ -45,7 +65,9 @@ export class EjercicioPage implements OnInit {
         data=>{
           console.log(data);
           let ejercicio = data
+          this.ejercicio =  ejercicio;
           this.getUrlsImg(ejercicio);
+          // console.log(this.ejercicio,'mi');
 
         },
         error=>{

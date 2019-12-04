@@ -10,6 +10,8 @@ import { User } from 'src/app/share/user.class';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
+import { UserolesService } from '../servicios/useroles.service';
+
 @Component({
   selector: 'app-personal',
   templateUrl: './personal.page.html',
@@ -50,7 +52,7 @@ export class PersonalPage implements OnInit {
   };
   constructor(private userService: UsuariosService, private AFauth: AngularFireAuth,
     public router: Router, private formBuilder: FormBuilder, public toastController: ToastController,
-    public loadingController: LoadingController) {
+    public loadingController: LoadingController, private _userolesService:UserolesService) {
     this.AFauth.authState.subscribe(usuario => {
       if (usuario.displayName) {
         const name = usuario.displayName.split(' ');
@@ -94,7 +96,9 @@ export class PersonalPage implements OnInit {
     this.AFauth.authState.subscribe(auth => {
       this.userService.generic_register(auth, this.user).then(() => {
         this.OKToast();
-        this.router.navigate(['/tabs/home']);
+        this.guardarUserRole(auth.email);
+        //this.router.navigate(['/tabs/home']);
+
       });
     });
   }
@@ -110,6 +114,27 @@ export class PersonalPage implements OnInit {
     });
     toast.present();
   }
+
+  
+  guardarUserRole(emaill:any){
+
+    let userole:any = {
+      email:emaill,
+      rol:'no afiliado'
+    }
+    this._userolesService.newUserRole(userole).subscribe(
+      data=>{
+        console.log(data);
+        this.router.navigate(['/tabs/home']);
+       // this.refresh(this.deportistaEdit)
+      },
+      error=>{
+        console.log(error);
+        
+      }
+      
+    );
+
 
  
 }

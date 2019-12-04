@@ -10,7 +10,20 @@
 }
 
 .title{
-    font-size:17px;
+    font-size:15px;
     color:white;
     font-weight: bolder;
+}
+
+.contenedor{
+    background-color: rgba(22, 22, 22, 0.877);
+    font-size:15px;
+}
+
+.space {
+    padding-bottom:0px;
+}
+
+ion-card-content {
+    padding-top:10px;
 }
