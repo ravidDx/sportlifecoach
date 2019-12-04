@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { AuthGuardService } from '../../servicios/auth-guard.service';
 
 import {TabsPage} from './tabs.page';
 
 const routes: Routes = [
   {
     path: 'tabs',
+    canActivate:[AuthGuardService], data:{role:'no afiliado'},
     component: TabsPage,
     children: [
       {
@@ -43,12 +45,18 @@ const routes: Routes = [
             loadChildren: () => import('../../componentes/estadisticas/estadisticas.module').then(m => m.EstadisticasPageModule)
           }
         ]
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
       }
     ]
   },
 
   {
     path: 'afiliado/tabs',
+    canActivate:[AuthGuardService], data:{role:'Afiliado'},
     component: TabsPage,
     children: [
       {
@@ -58,16 +66,24 @@ const routes: Routes = [
             path: '',
             loadChildren: () => import('../../afiliado/home/home.module').then(m => m.HomePageModule)
           }
+         
         ]
-      }
+      },
+
+   
+      {
+        path: 'entrenamientos',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../../afiliado/entrenamientos/entrenamientos.module').then(m => m.EntrenamientosPageModule)
+          }
+        ]
+      },
+
+      { path: '**',           redirectTo: 'home'}, 
 
     ]
-  },
-  
-  {
-    path: '',
-    redirectTo: '/tabs/home',
-    pathMatch: 'full'
   }
 ];
 

@@ -34,11 +34,13 @@ import {EjericicosService} from './servicios/ejericicos.service';
 import {StorageService} from './servicios/storage.service';
 
 
+import { AuthGuardService } from './servicios/auth-guard.service';
+import { EntrenamientosPipe } from './afiliado/entrenamientos.pipe';
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EntrenamientosPipe],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import {StorageService} from './servicios/storage.service';
     ImagePicker,
     EjericicosService,
     StorageService,
+    AuthGuardService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

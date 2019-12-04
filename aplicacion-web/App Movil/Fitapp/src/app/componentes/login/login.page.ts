@@ -47,6 +47,7 @@ export class LoginPage implements OnInit {
   }
 
   loginFire() {
+    
     this.email = this.login_form.value.email;
     this.password = this.login_form.value.password;
     this.cargando();
@@ -56,7 +57,17 @@ export class LoginPage implements OnInit {
       //verificar que tipo de usuario es   
       this.getTipoUser();
 
-  
+      /* 
+      this.authService.authState.subscribe(state => {
+        if (state) {
+          console.log('acceso')
+          console.log(this.localStorage)
+          //this.router.navigate(['dashboard']);
+        } else {
+          console.log('no acceso')
+          //this.router.navigate(['login']);
+        }
+      });*/
     
     }).catch(err => {
       if (err.code === 'auth/wrong-password') {
@@ -67,6 +78,8 @@ export class LoginPage implements OnInit {
         this.error3_Toast();
       }
     });
+    
+
   }
 
   loginFB() {
@@ -164,6 +177,7 @@ export class LoginPage implements OnInit {
             console.log(data['rol']);
             this.isAccessInvalid=false;
             localStorage.setItem('rol',data['rol']);
+            localStorage.setItem('email', this.email);
             this.onLoginRedirect();
           }
 
@@ -188,16 +202,20 @@ export class LoginPage implements OnInit {
     const rol = localStorage.getItem('rol');
 
     if(rol==='Afiliado'){
+      console.log('afil');
       //this._router.navigate(['/sadmin/inicio']);
       this.router.navigate(['afiliado/tabs/home']);
       //this.router.navigate(['/tabs/home']);
     }else if(rol==='no afiliado'){
       //this._router.navigate(['/admin/dashboard']);
-      //this.router.navigate(['/tabs/home']);
+      this.router.navigate(['/tabs/home']);
+      console.log('no afil');
     }
 
     //this.isInvalid=false;
   }
+
+  
 
 
 }

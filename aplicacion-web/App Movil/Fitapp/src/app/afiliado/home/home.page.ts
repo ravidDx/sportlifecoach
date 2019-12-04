@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+   email:string = '';
+
+  constructor() {
+    this.email = localStorage.getItem('email');
+    console.log(localStorage)
+    console.log(this.email);
+   }
 
   ngOnInit() {
   }

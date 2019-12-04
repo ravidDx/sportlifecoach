@@ -8,7 +8,7 @@
 
 </ion-content>-->
 <ion-tabs>
-    <ion-tab-bar >
+    <ion-tab-bar *ngIf="rol == 'no afiliado'" >
         <ion-tab-button tab="home">
             <ion-icon name="planet"></ion-icon>
             <ion-label>Home</ion-label>
@@ -29,4 +29,18 @@
           <ion-label>Estadisticas</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
+
+      <ion-tab-bar *ngIf="rol == 'Afiliado'" >
+          <ion-tab-button tab="home">
+              <ion-icon name="planet"></ion-icon>
+              <ion-label>Home</ion-label>
+          </ion-tab-button>
+
+          <ion-tab-button tab="entrenamientos">
+              <ion-icon name="heart-half"></ion-icon>
+              <ion-label>Entrenamientos</ion-label>
+            </ion-tab-button>
+          
+
+        </ion-tab-bar>
   </ion-tabs>
