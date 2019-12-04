@@ -10,7 +10,7 @@ import { User } from 'src/app/share/user.class';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
-import { UserolesService } from '../servicios/useroles.service';
+import { UserolesService } from '../../../servicios/useroles.service';
 
 @Component({
   selector: 'app-personal',
@@ -134,7 +134,7 @@ export class PersonalPage implements OnInit {
       }
       
     );
-
+  }
 
  
 }
