@@ -247,7 +247,7 @@ export class EjerciciosComponent implements OnInit {
     this._entrenamientoService.nuevoEntrenamiento(this.entrenamiento).subscribe(
       data=>{
         
-        this._toasterService.Success('Entrenamiento guardado OK !!');
+        this._toasterService.Success('Ejercicios guardado OK !!');
         this.files = [];
         this.btnSave=false;
         this.clearForm();
@@ -426,7 +426,7 @@ export class EjerciciosComponent implements OnInit {
       data=>{
         console.log(data);
         this.closeModal();
-        this._toasterService.Success("Entrenamiento editado OK !!");
+        this._toasterService.Success("Ejercicio editado OK !!");
         this.listar();
        // this.viewAlert("Deportista editado OK !!")
         //this.disabledButton(false);
@@ -458,7 +458,7 @@ export class EjerciciosComponent implements OnInit {
       title = 'Ejercicio dado de baja OK !!';
     }else{
       this.entrenamientoEdit.estado = 'Activo';
-      title = 'Ejerciciosta dado de alta OK !!';
+      title = 'Ejercicio dado de alta OK !!';
     }
 
     console.log(this.entrenamientoEdit)

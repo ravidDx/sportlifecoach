@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ServiceService} from '../../services/service.service';
 
+
 /*INTERFACES */
 import {Service} from '../../models/service';
 import {Portafolio} from '../../models/portafolio.interface';
+import {Contacto} from '../../models/contacto.interface';
 
-import { element } from '@angular/core/src/render3';
+import { element } from '@angular/core/src/render3'; 
 //import { url } from 'inspector';
 
 declare var  $: any;
@@ -123,21 +125,53 @@ export class ContentComponent implements OnInit {
 
   list: any[] = [] ;
 
+  contactoList: Contacto[]=[];
+  contacto:Contacto={
+    ciudad:"",
+    direccion:"",
+    email:"",
+    telefono:"",
+    facebook:"",
+    instagram:"",
+    twitter:"",
+  }
+
   constructor(private _serviceService:ServiceService) { 
     this.getSliders();
     this.getServices();
     this.getAbout();
     this.getNoticias();
     this.getPortafolio();
-    
+    this.getContacto();
   }
 
 
 
   ngOnInit() {
+  }
 
+  /*Obtener data */
+  getContacto(){
+    this._serviceService.getContactos()
+    .subscribe(
+      data=>{
+        console.log(data, 'este es');
+        
+        for(let key$ in data){
+          let contactoNew = data[key$];
+          this.contacto = contactoNew;       
+          contactoNew['id']=key$;
+          this.contactoList.push(contactoNew);
+              
+        }
+        
+      },
+      error=>{
+        console.log(error);
+      }
 
-
+    );
+      
   }
 
 

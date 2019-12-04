@@ -113,7 +113,7 @@ export class AboutComponent implements OnInit {
                      data=>{
                        this.closeModal();
                        this.clearForm();
-                       this.toasterService.Success("Perfil editado OK !!");
+                       this.toasterService.Success("Acerca de mí editado OK !!");
                        this.btnUpdate=false;
                      },
                      error=>{
@@ -149,7 +149,7 @@ export class AboutComponent implements OnInit {
         .subscribe(
           data=>{
             this.closeModal();
-            this.toasterService.Success("Perfil editado OK !!");
+            this.toasterService.Success("Acerca de mí editado OK !!");
             this.btnUpdate=false;
           },
           error=>{

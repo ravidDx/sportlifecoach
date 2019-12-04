@@ -1,125 +1,142 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-primary">
-                      <h4 class="card-title ">Listado de Rutinas</h4>
-                  </div>
-                  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Listado de Rutinas</h4>
+          </div>
+          <div class="card-body">
 
-                      <div class="row animated fadeInRight btn-add">
-                          <button mat-raised-button class="btn btn-info ml-auto" (click)="newModal()" data-toggle="modal" data-target="#dataModal">
-                              <i class="fas fa-plus-circle"></i> Añadir
-                          </button>
-                          <!--
+            <div class="row animated fadeInRight btn-add">
+              <button mat-raised-button class="btn btn-info ml-auto" (click)="newModal()" data-toggle="modal"
+                data-target="#dataModal">
+                <i class="fas fa-plus-circle"></i> Añadir
+              </button>
+              <!--
                           <button mat-raised-button class="btn btn-info ml-auto" (click)="getDownload()" data-toggle="modal" data-target="#dataModal">
                               <i class="fas fa-plus-circle"></i> get
                           </button>
                           -->
-                      </div>
+            </div>
 
-                      <br>
+            <br>
 
-                        <!-- DATA TABLE -->
+            <!-- DATA TABLE -->
 
-                           <!-- DATA TABLE -->
+            <!-- DATA TABLE -->
 
-                           <mat-form-field>
-                              <mat-icon matPrefix>search</mat-icon>
-                            <input matInput tabindex="1" (keyup)="applyFilter($event.target.value)" placeholder="Busqueda">
-                          </mat-form-field>
-                          
-  
-                          <div class="mat-elevation-z8">
-                            <table mat-table  [dataSource]="dataSource" class="text-center" >
-                          
-                              <!-- Position Column -->
-                              <ng-container matColumnDef="position">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Num. </th>
-                                <td mat-cell *matCellDef="let element; let i = index">{{(dataSource.filteredData.indexOf(element)) + 1}}</td>
-                              </ng-container>
-                              
-                 
-                              <!-- Titulo Column -->
-                              <ng-container matColumnDef="titulo" >
-                                <th mat-header-cell *matHeaderCellDef class="text-center"> Titulo </th>
-                                <td mat-cell *matCellDef="let element"> {{element.titulo}}</td>
-                              </ng-container>
-
-                              <!-- Num Ejercis Column -->
-                              <ng-container matColumnDef="numEjers" >
-                                  <th mat-header-cell *matHeaderCellDef class="text-center"> # Ejercicios </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.numEjers}}</td>
-                                </ng-container>
-  
-                               <!-- Duracion Column -->
-                               <ng-container matColumnDef="duracion" >
-                                <th mat-header-cell *matHeaderCellDef class="text-center"> Duracion </th>
-                                <td mat-cell *matCellDef="let element"> {{element.duracion}}</td>
-                              </ng-container>
-                              
-                          
-                              <!-- Dificultad Column -->
-                              <ng-container matColumnDef="dificultad">
-                                <th mat-header-cell *matHeaderCellDef class="text-center"> Dificultad </th>
-                                <td mat-cell *matCellDef="let element"> {{element.dificultad}} </td>
-                              </ng-container>
-  
-  
-                              <ng-container matColumnDef="estado">
-                                <th mat-header-cell *matHeaderCellDef class="text-center"> Estado </th>
-                                <td mat-cell *matCellDef="let element" >
-                                   
-                                  <span  *ngIf="element.estado == 'Activo'" class='spanEstado spanActivo'>{{element.estado}}</span>
-                                  <span  *ngIf="element.estado == 'Inactivo'" class='spanEstado spanInactivo'>{{element.estado}}</span>  
-                                
-                                </td>
-                              </ng-container>
-  
-                              <!-- Acciones Column -->
-                              <ng-container matColumnDef="acciones">
-                                <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>  
-                                <td mat-cell *matCellDef="let element">
-                                  <button mat-raised-button  title="perfil"  type="button" [routerLink]="['/admin/rutina',element._id ]"  class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#dataModal"><i class="fas fa-eye" id="iconEdit"></i></button>    
-                                  <button mat-raised-button  title="editar" type="button" (click)="editModal(element)" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i class="fas fa-edit" id="iconEdit"></i></button> 
-                                  
-                                </td>
-                              </ng-container>
-                          
-                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                            </table>
-  
-  
-                        
-  
-                          
-                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                          </div>
+            <mat-form-field>
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput tabindex="1" (keyup)="applyFilter($event.target.value)" placeholder="Busqueda">
+            </mat-form-field>
 
 
-                                      
-                  </div>
-              </div>
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" class="text-center">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Num. </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    {{(dataSource.filteredData.indexOf(element)) + 1}}</td>
+                </ng-container>
+
+
+                <!-- Titulo Column -->
+                <ng-container matColumnDef="titulo">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> Titulo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.titulo}}</td>
+                </ng-container>
+
+                <!-- Num Ejercis Column -->
+                <ng-container matColumnDef="numEjers">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> # Ejercicios </th>
+                  <td mat-cell *matCellDef="let element"> {{element.numEjers}}</td>
+                </ng-container>
+
+                <!-- Duracion Column -->
+                <ng-container matColumnDef="duracion">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> Duracion </th>
+                  <td mat-cell *matCellDef="let element"> {{element.duracion}}</td>
+                </ng-container>
+
+
+                <!-- Dificultad Column -->
+                <ng-container matColumnDef="dificultad">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> Dificultad </th>
+                  <td mat-cell *matCellDef="let element"> {{element.dificultad}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="estado">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> Estado </th>
+                  <td mat-cell *matCellDef="let element">
+
+                    <span *ngIf="element.estado == 'Activo'" class='spanEstado spanActivo'>{{element.estado}}</span>
+                    <span *ngIf="element.estado == 'Inactivo'" class='spanEstado spanInactivo'>{{element.estado}}</span>
+
+                  </td>
+                </ng-container>
+
+                <!-- Acciones Column -->
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-raised-button title="perfil" type="button" [routerLink]="['/admin/rutina',element._id ]"
+                      class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#dataModal"><i
+                        class="fas fa-eye" id="iconEdit"></i></button>
+                    <button mat-raised-button title="editar" type="button" (click)="editModal(element)"
+                      class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i
+                        class="fas fa-edit" id="iconEdit"></i></button>
+
+                        <button *ngIf="element.estado == 'Activo'" mat-raised-button title="dar de baja" type="button"
+                        (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger"
+                        data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock-open"
+                          [id]="element._id"></i> <img class='load' > </button>
+                      <button *ngIf="element.estado == 'Inactivo'" mat-raised-button title="dar de alta" type="button"
+                        (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger"
+                        data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock" [id]="element._id"></i>
+                        <img class='load' > </button>
+
+
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+
+
+
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+
+
+
           </div>
-   
+        </div>
       </div>
+
+    </div>
   </div>
 </div>
 
 
 
 <!-- FORMULARIO MODAL -->
-<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> 
-            <span *ngIf="new == true" ><i class="fas fa-running"></i>&nbsp;Nuevo Rutina</span>
-            <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Rutina</span>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <span *ngIf="new == true"><i class="fas fa-running"></i>&nbsp;Nuevo Rutina</span>
+          <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Rutina</span>
 
-        </h5> 
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -128,135 +145,216 @@
         <div class="modal-body">
 
 
-            <div class="example-container">
+          <div class="example-container">
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field class="example-full-width" *ngIf="new == true" >
-                            <input matInput placeholder="Nombre de la rutina" type="text" name="titulo" [(ngModel)]="rutina.titulo">
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width" *ngIf="new == false" >
-                            <input matInput placeholder="Nombre de la rutina" type="text" name="titulo" [(ngModel)]="rutinaEdit.titulo">
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                
-                <div class="row">
-                    <div class="col-md-12">
-                          <mat-form-field  *ngIf="new == true">
-                            <textarea matInput placeholder="Objetivo" rows="2" name="objetivo" [(ngModel)]="rutina.objetivo"></textarea>
-                          </mat-form-field>
-                          <mat-form-field  *ngIf="new == false">
-                              <textarea matInput placeholder="Objetivo" rows="2" name="objetivo" [(ngModel)]="rutinaEdit.objetivo"></textarea>
-                            </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field *ngIf="new == true">
-                            <mat-label>Duracion</mat-label>
-                            <mat-select disableRipple [(ngModel)] = "rutina.duracion" name="duracion">
-                              <mat-option *ngFor="let duracion of duracionList" [value]="duracion" >{{duracion}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-  
-                        <mat-form-field *ngIf="new == false">
-                            <mat-label>Duracion</mat-label>
-                            <mat-select disableRipple [(ngModel)] = "rutinaEdit.duracion" name="duracion">
-                              <mat-option *ngFor="let duracion of duracionList" [value]="duracion" >{{duracion}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="col-md-6">
-                        <mat-form-field *ngIf="new == true">
-                            <mat-label>Nivel de dificultad</mat-label>
-                            <mat-select disableRipple [(ngModel)] = "rutina.dificultad" name="dificultad">
-                              <mat-option *ngFor="let dificultad of dificultadList" [value]="dificultad" >{{dificultad}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-  
-                        <mat-form-field *ngIf="new == false">
-                            <mat-label>Nivel de dificultad</mat-label>
-                            <mat-select disableRipple [(ngModel)] = "rutinaEdit.dificultad" name="dificultad">
-                              <mat-option *ngFor="let dificultad of dificultadList" [value]="dificultad" >{{dificultad}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                 </div>
-
-                 <div class="row">
-                    <div class="col-md-12">
-                          <mat-form-field >        
-                            <mat-label>Lista de ejercicios</mat-label>
-                            <mat-select disableRipple name="tipo"  [(ngModel)] = "listaEjercicios" multiple > 
-                              <mat-option *ngFor="let item of entrenamientos" [value]="item" (click)="addEjercicio($event)">{{item.titulo}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          
-
-                    </div>
-                  </div>
-
-                  <div class="row" *ngFor="let item of listEjerRutina" >
-                      <div class="col-md-2">
-                          <img [src]="item.ejercicio.imagen" class="card-img-small" alt="imagen">
-                      </div>
-
-                      <div class="col-md-4">
-                          <p mat-line class="demo-2"> {{item.ejercicio.titulo}} </p>
-                      </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field class="example-full-width" *ngIf="new == true">
+                  <input matInput placeholder="Nombre de la rutina" type="text" name="titulo"
+                    [(ngModel)]="rutina.titulo" #title="ngModel" required maxlength="100" #input>
+                  <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+                  <!--MSJ ERROR TITULO-->
+                  <mat-error *ngIf="title.errors && (title.dirty || title.touched)">
+                    <span *ngIf="title.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" *ngIf="new == false">
+                  <input matInput placeholder="Nombre de la rutina" type="text" name="titulo"
+                    [(ngModel)]="rutinaEdit.titulo" #title="ngModel" required maxlength="100" #input>
+                  <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+                  <!--MSJ ERROR TITULO-->
+                  <mat-error *ngIf="title.errors && (title.dirty || title.touched)">
+                    <span *ngIf="title.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
 
 
-                      
-                      <div class="col-md-2">
-                          <mat-form-field *ngIf="new == true"> 
-                              <input matInput type="number" placeholder="Series" name="Series" [(ngModel)] = "item.series">
-                          </mat-form-field>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field *ngIf="new == true">
+                  <textarea matInput placeholder="Objetivo" rows="2" name="objetivo" [(ngModel)]="rutina.objetivo"
+                    #obj="ngModel" required maxlength="256" #input></textarea>
+                  <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
+                  <!--MSJ ERROR OBJETIVO-->
+                  <mat-error *ngIf="obj.errors && (obj.dirty || obj.touched)">
+                    <span *ngIf="obj.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="new == false">
+                  <textarea matInput placeholder="Objetivo" rows="2" name="objetivo" [(ngModel)]="rutinaEdit.objetivo"
+                    #obj="ngModel" required maxlength="256" #input></textarea>
+                  <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
+                  <!--MSJ ERROR OBJETIVO-->
+                  <mat-error *ngIf="obj.errors && (obj.dirty || obj.touched)">
+                    <span *ngIf="obj.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
 
-                          <mat-form-field *ngIf="new == false"> 
-                              <input matInput type="number" placeholder="Series" name="Series" [(ngModel)] = "item.series">
-                          </mat-form-field>
-                      </div>
-                      <div class="col-md-2">
-                          <mat-form-field *ngIf="new == true">
-                              <input matInput type="number" placeholder="Repeticiones" name="repeticiones" [(ngModel)] = "item.repeticiones">
-                          </mat-form-field>
-                          <mat-form-field *ngIf="new == false">
-                              <input matInput type="number" placeholder="Repeticiones" name="repeticiones" [(ngModel)] = "item.repeticiones">
-                          </mat-form-field>
-                      </div>
-                      <div class="col-md-2">
-                          <mat-form-field *ngIf="new == true">
-                              <mat-label>Descanso</mat-label>
-                            <mat-select disableRipple  name="descanso" [(ngModel)] = "item.descanso">
-                              <mat-option *ngFor="let descanso of descansoList" [value]="descanso" >{{descanso}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <mat-form-field *ngIf="new == false">
-                              <mat-label>Descanso</mat-label>
-                            <mat-select disableRipple  name="descanso" [(ngModel)] = "item.descanso">
-                              <mat-option *ngFor="let descanso of descansoList" [value]="descanso" >{{descanso}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                      </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field *ngIf="new == true">
+                  <mat-label>Duracion</mat-label>
+                  <mat-select disableRipple [(ngModel)]="rutina.duracion" name="duracion" #tiempo="ngModel" required>
+                    <mat-option *ngFor="let duracion of duracionList" [value]="duracion">{{duracion}}</mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR  DURACION-->
+                  <mat-error *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)">
+                    <span *ngIf="tiempo.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
 
-                  </div>
+                <mat-form-field *ngIf="new == false">
+                  <mat-label>Duracion</mat-label>
+                  <mat-select disableRipple [(ngModel)]="rutinaEdit.duracion" name="duracion" #tiempo="ngModel"
+                    required>
+                    <mat-option *ngFor="let duracion of duracionList" [value]="duracion">{{duracion}}</mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR  DURACION-->
+                  <mat-error *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)">
+                    <span *ngIf="tiempo.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field *ngIf="new == true">
+                  <mat-label>Nivel de dificultad</mat-label>
+                  <mat-select disableRipple [(ngModel)]="rutina.dificultad" name="dificultad" #dif="ngModel" required>
+                    <mat-option *ngFor="let dificultad of dificultadList" [value]="dificultad">{{dificultad}}
+                    </mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR DIFICULTAD-->
+                  <mat-error *ngIf="dif.errors && (dif.dirty || dif.touched)">
+                    <span *ngIf="dif.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="new == false">
+                  <mat-label>Nivel de dificultad</mat-label>
+                  <mat-select disableRipple [(ngModel)]="rutinaEdit.dificultad" name="dificultad" #dif="ngModel"
+                    required>
+                    <mat-option *ngFor="let dificultad of dificultadList" [value]="dificultad">{{dificultad}}
+                    </mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR DIFICULTAD-->
+                  <mat-error *ngIf="dif.errors && (dif.dirty || dif.touched)">
+                    <span *ngIf="dif.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-label>Lista de ejercicios</mat-label>
+                  <mat-select disableRipple name="tipo" [(ngModel)]="listaEjercicios" multiple #list="ngModel" required>
+                    <mat-option *ngFor="let item of entrenamientos" [value]="item" (click)="addEjercicio($event)">
+                      {{item.titulo}}</mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR LISTA EJERCICIOS-->
+                  <mat-error *ngIf="list.errors && (list.dirty || list.touched)">
+                    <span *ngIf="list.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+
+
+              </div>
+            </div>
+
+            <div class="row" *ngFor="let item of listEjerRutina">
+              <div class="col-md-2">
+                <img [src]="item.ejercicio.imagen" class="card-img-small" alt="imagen">
+              </div>
+
+              <div class="col-md-4">
+                <p mat-line class="demo-2"> {{item.ejercicio.titulo}} </p>
+              </div>
+
+
+
+              <div class="col-md-2">
+                <mat-form-field *ngIf="new == true">
+                  <input matInput type="number" placeholder="Series" name="Series" [(ngModel)]="item.series" required
+                    min="1" max="10" #ser="ngModel">
+                  <!--MSJ ERROR SERIES-->
+                  <mat-error *ngIf="ser.errors && (ser.dirty || ser.touched)">
+                    <span *ngIf="ser.errors.required">Este campo no puede estar vacío</span>
+                    <span *ngIf="ser.errors.min || ser.errors.max">Series solo puede valores entre 1 y 10</span>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="new == false">
+                  <input matInput type="number" placeholder="Series" name="Series" [(ngModel)]="item.series" required
+                    min="1" max="10" #ser="ngModel">
+                  <!--MSJ ERROR SERIES-->
+                  <mat-error *ngIf="ser.errors && (ser.dirty || ser.touched)">
+                    <span *ngIf="ser.errors.required">Este campo no puede estar vacío</span>
+                    <span *ngIf="ser.errors.min || ser.errors.max">Series solo puede valores entre 1 y 10</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field *ngIf="new == true">
+                  <input matInput type="number" placeholder="Repeticiones" name="repeticiones"
+                    [(ngModel)]="item.repeticiones" #rep="ngModel" required min="1" max="10">
+                  <!--MSJ ERROR REPETICIONES-->
+                  <mat-error *ngIf="rep.errors && (rep.dirty || rep.touched)">
+                    <span *ngIf="rep.errors.required">Este campo no puede estar vacío</span>
+                    <span *ngIf="rep.errors.min || rep.errors.max">Repeticiones solo puede valores entre 1 y 10</span>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="new == false">
+                  <input matInput type="number" placeholder="Repeticiones" name="repeticiones"
+                    [(ngModel)]="item.repeticiones" #rep="ngModel" required min="1" max="10">
+                  <!--MSJ ERROR REPETICIONES-->
+                  <mat-error *ngIf="rep.errors && (rep.dirty || rep.touched)">
+                    <span *ngIf="rep.errors.required">Este campo no puede estar vacío</span>
+                    <span *ngIf="rep.errors.min || rep.errors.max">Repeticiones solo puede valores entre 1 y 10</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field *ngIf="new == true">
+                  <mat-label>Descanso</mat-label>
+                  <mat-select disableRipple name="descanso" [(ngModel)]="item.descanso" #rest="ngModel" required>
+                    <mat-option *ngFor="let descanso of descansoList" [value]="descanso">{{descanso}}</mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR DESCANSO-->
+                  <mat-error *ngIf="rest.errors && (rest.dirty || rest.touched)">
+                    <span *ngIf="rest.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="new == false">
+                  <mat-label>Descanso</mat-label>
+                  <mat-select disableRipple name="descanso" [(ngModel)]="item.descanso" #rest="ngModel" required>
+                    <mat-option *ngFor="let descanso of descansoList" [value]="descanso">{{descanso}}</mat-option>
+                  </mat-select>
+                  <!--MSJ ERROR DESCANSO-->
+                  <mat-error *ngIf="rest.errors && (rest.dirty || rest.touched)">
+                    <span *ngIf="rest.errors.required">Este campo no puede estar vacío</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
             </div>
-        
-  
+
+          </div>
+
+
         </div>
-        
+
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-          
-          <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]=btnSave >Guardar</button>
-          <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]=btnSave >Editar</button>
-          
-            
+
+          <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
+          <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]="form.invalid">Editar</button>
+
+
         </div>
       </form>
     </div>
@@ -266,19 +364,20 @@
 
 <!--Comfirm Modal-->
 <!-- Modal -->
-<div class="modal fade" id="modalDeleted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Esta seguro de eliminar este ejercicio?</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar()">Si</button>
-      <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
+<div class="modal fade" id="modalDeleted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{titleConfirm}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="darBaja()">Si</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
     </div>
   </div>
-</div>
 </div>

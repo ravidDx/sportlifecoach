@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">About</h4>
+                        <h4 class="card-title">Acerca de mí</h4>
                     </div>
                     <div class="card-body">
   
@@ -43,7 +43,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"> 
-              <span><i class="fas fa-edit"></i> Actualizar About </span>
+              <span><i class="fas fa-edit"></i> Actualizar Acerca de mí </span>
           </h5> 
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -56,7 +56,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>      
-                                <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="about.titulo">
+                                <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="about.titulo"
+                                #title="ngModel" required maxlength="50" #input>
+                                <mat-hint align="end">{{input.value?.length || 0}}/50</mat-hint>
+                                <!--MSJ ERROR TITULO-->
+                  <mat-error *ngIf="title.errors && (title.dirty || title.touched)">
+                      <span *ngIf="title.errors.required">Título no puede esttar vacío</span>
+                    </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -64,7 +70,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>      
-                                <input matInput placeholder="Nombre" type="text" name="nombre" [(ngModel)]="about.nombre">
+                                <input matInput placeholder="Nombre" #name="ngModel" type="text" name="nombre" required maxlength="50"
+                                [(ngModel)]="about.nombre" #inpu>
+                                <mat-hint align="end">{{inpu.value?.length || 0}}/50</mat-hint>
+                              <!--MSJ ERROR NOMBRE-->
+                              <mat-error *ngIf="name.errors && (name.dirty || name.touched)">
+                                <span *ngIf="name.errors.required">Nombre no puede estar vacío</span>
+                              </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -72,7 +84,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>
-                                <textarea matInput placeholder="Experiencia" rows="3" name="experiencia" [(ngModel)]="about.experiencia"></textarea>
+                                <textarea matInput placeholder="Experiencia" rows="3" #exp="ngModel" name="experiencia" required maxlength="256"
+                                [(ngModel)]="about.experiencia" #inp></textarea>
+                                <mat-hint align="end">{{inp.value?.length || 0}}/256</mat-hint>
+                              <!--MSJ ERROR EXPERIENCIA-->
+                              <mat-error *ngIf="exp.errors && (exp.dirty || exp.touched)">
+                                <span *ngIf="exp.errors.required">Este campo no puede estar vacío</span>
+                              </mat-error>
                               </mat-form-field>
                         </div>
                     </div>
@@ -80,7 +98,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-form-field>
-                                <textarea matInput placeholder="Servicios" rows="3" name="servicios" [(ngModel)]="about.servicios"></textarea>
+                                <textarea matInput placeholder="Servicios" rows="3" name="servicios" #serv="ngModel" required maxlength="256"
+                                [(ngModel)]="about.servicios" #in></textarea>
+                                <mat-hint align="end">{{in.value?.length || 0}}/256</mat-hint>
+                              <!--MSJ ERROR SERVI-->
+                              <mat-error *ngIf="serv.errors && (serv.dirty || serv.touched)">
+                                <span *ngIf="serv.errors.required">Este campo no puede estar vacío</span>
+                              </mat-error>
                               </mat-form-field>
                         </div>
                     </div>
@@ -89,7 +113,7 @@
                       <div class="col-md-12">
                           <button mat-button color="warn" (click)="onClick()" type="button">
                               <mat-icon>file_upload</mat-icon>
-                              {{text}} ({{files.length}})
+                              {{text}} ({{files.length}}) (requerido)*
                             </button>
                             <br/>
                             <ul>
@@ -119,7 +143,7 @@
             <div class="modal-footer">
                 
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary" [disabled]="btnUpdate" >Actualizar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="form.invalid" >Actualizar</button>
               
                 
             </div>

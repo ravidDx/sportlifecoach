@@ -8,5 +8,6 @@ export interface Dieta{
     ingredientes:any;
 	preparacion:any;
 	imagen:any;
+	estado:any;
 }
 

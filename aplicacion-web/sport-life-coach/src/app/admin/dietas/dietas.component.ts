@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { Subscription ,  of } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { catchError, last, map, tap } from 'rxjs/operators';
 
-import {Dieta} from '../../interfaces/dieta.interface';
+import { Dieta } from '../../interfaces/dieta.interface';
 
 /*sERVICIOS */
-import {CategoriaService} from '../../services/categoria.service';
-import {DietaService} from '../../services/dieta.service';
-import {ToasterService} from '../../services/toaster.service';
+import { CategoriaService } from '../../services/categoria.service';
+import { DietaService } from '../../services/dieta.service';
+import { ToasterService } from '../../services/toaster.service';
 
-declare var  $: any;
+declare var $: any;
 
 
 @Component({
@@ -29,183 +29,185 @@ declare var  $: any;
 })
 export class DietasComponent implements OnInit {
 
-    /** Link text */
-    @Input() text = 'Cargar imagen';
-    /** Name used in form which will be sent in HTTP request. */
-    @Input() param = 'file';
-    /** Target URL for file uploading. */
-    @Input() target = 'https://file.io';
-    /** File extension that accepted, same as 'accept' of <input type="file" />. By the default, it's set to 'image/*'. */
-    @Input() accept = 'image/*';
-    /** Allow you to add handler after its completion. Bubble up response text from remote. */
-    @Output() complete = new EventEmitter<string>();
-  
-    files: Array<FileUploadModel> = [];
+  /** Link text */
+  @Input() text = 'Cargar imagen';
+  /** Name used in form which will be sent in HTTP request. */
+  @Input() param = 'file';
+  /** Target URL for file uploading. */
+  @Input() target = 'https://file.io';
+  /** File extension that accepted, same as 'accept' of <input type="file" />. By the default, it's set to 'image/*'. */
+  @Input() accept = 'image/*';
+  /** Allow you to add handler after its completion. Bubble up response text from remote. */
+  @Output() complete = new EventEmitter<string>();
+
+  files: Array<FileUploadModel> = [];
 
 
-    btnSave:boolean = false;
+  btnSave: boolean = false;
 
-  tiposDieta= [
-    {id:1, name:'bajo en calorias'},
-    {id:2, name:'bajo en proteinas'},
-    {id:3, name:'otros'}
+  tiposDieta = [
+    { id: 1, name: 'bajo en calorias' },
+    { id: 2, name: 'bajo en proteinas' },
+    { id: 3, name: 'otros' }
   ]
 
-  
-  itemsIngredientes =[
-    {id:1, value:''}
+
+  itemsIngredientes = [
+    { id: 1, value: '' }
   ]
 
-  itemsPreparacion =[
-    {id:1, value:''}
+  itemsPreparacion = [
+    { id: 1, value: '' }
   ]
 
-  dieta:Dieta = {
-    tipo:"",
-    titulo:"",
-    objetivo:"",
-    tiempo:"",
-    dificultad:"",
-	  porciones:"",
-    ingredientes:[],
-    preparacion:[],
-    imagen:''
+  dieta: Dieta = {
+    tipo: "",
+    titulo: "",
+    objetivo: "",
+    tiempo: "",
+    dificultad: "",
+    porciones: "",
+    ingredientes: [],
+    preparacion: [],
+    imagen: '',
+    estado: ''
   }
 
-  dietaEdit:Dieta = {
-    tipo:"",
-    titulo:"",
-    objetivo:"",
-    tiempo:"",
-    dificultad:"",
-	  porciones:"",
-    ingredientes:[],
-    preparacion:[],
-    imagen:''
+  dietaEdit: Dieta = {
+    tipo: "",
+    titulo: "",
+    objetivo: "",
+    tiempo: "",
+    dificultad: "",
+    porciones: "",
+    ingredientes: [],
+    preparacion: [],
+    imagen: '',
+    estado: ''
   }
 
-  dietas:Dieta[]=[];
-  dietasCopy:Dieta[]=[];
+  dietas: Dieta[] = [];
+  dietasCopy: Dieta[] = [];
 
-  tiposDietas:any = []
-  tiposTiempo=['15 min','30 min','45 min','60 min','1h 15min','1h 30min','1h 45min']
-  tiposDificultad=['baja','media','alta']
+  tiposDietas: any = []
+  tiposTiempo = ['15 min', '30 min', '45 min', '60 min', '1h 15min', '1h 30min', '1h 45min']
+  tiposDificultad = ['baja', 'media', 'alta']
 
-  load=false;
-  indiceDelete:any;
-  eventData:any;
-  loadTrash:any;
-  trash:any;
+  load = false;
+  indiceDelete: any;
+  eventData: any;
+  loadTrash: any;
+  trash: any;
 
-  new:boolean = true;
+  new: boolean = true;
 
   constructor(private _http: HttpClient,
-              private _dietaService:DietaService,
-              private _categoriaService:CategoriaService,
-              private _toasterService:ToasterService) 
-  { 
+    private _dietaService: DietaService,
+    private _categoriaService: CategoriaService,
+    private _toasterService: ToasterService) {
     this.listar();
- 
+
   }
 
   ngOnInit() {
   }
 
-  
 
 
-  guardar(){
-    this.btnSave=true;
-    if(this.new==true){
-      
+
+  guardar() {
+    this.btnSave = true;
+    if (this.new == true) {
+
       const id = Math.random().toString(36).substring(2);
       this.dieta.ingredientes = this.itemsIngredientes;
       this.dieta.preparacion = this.itemsPreparacion;
-      this._dietaService.onUpload(this.files[0].data,id);
+      this.dieta.estado = 'Activo';
+      this._dietaService.onUpload(this.files[0].data, id);
       this.dieta.imagen = id;
-      
+
       this.nuevaDieta();
 
-    }else{
+    } else {
 
       this.dietaEdit.ingredientes = this.itemsIngredientes;
       this.dietaEdit.preparacion = this.itemsPreparacion;
       this.dietaEdit.imagen = this.dietaEdit['imagenId']
 
 
-      if(this.files.length ==0){
-    
-        this.editarDieta();
-        
-      }else{
-         
-           var _this = this;
-           const id = Math.random().toString(36).substring(2);
-       
-           _this._dietaService.onUpload(this.files[0].data,id);
-           _this.dietaEdit.imagen = id;
-           console.log(this.dieta);
-     
-          this.editarDieta();
+      if (this.files.length == 0) {
 
-        
+        this.editarDieta();
+
+      } else {
+
+        var _this = this;
+        const id = Math.random().toString(36).substring(2);
+
+        _this._dietaService.onUpload(this.files[0].data, id);
+        _this.dietaEdit.imagen = id;
+        console.log(this.dieta);
+
+        this.editarDieta();
+
+
       }
 
-      
+
 
     }
-    
+
 
   }
 
-  nuevaDieta(){
+  nuevaDieta() {
     this._dietaService.nuevaDieta(this.dieta).subscribe(
-      data=>{
-        this.btnSave=false;
+      data => {
+        this.btnSave = false;
         this.clearForm();
         this.closeModal();
-        this._toasterService.Success('Dieta guardado OK !!');
+        this._toasterService.Success('Receta guardada OK !!');
         this.listar();
         this.files = [];
 
       },
-      error=>{
-        this.btnSave=false;
+      error => {
+        this.btnSave = false;
         console.log('ERROR');
         this._toasterService.Error('Error al guardar el dato !!');
         console.log(error);
-      
+
       }
 
     );
   }
 
 
-  
-  editarDieta(){
+
+  editarDieta() {
     delete this.dietaEdit['imagenId'];
-    this._dietaService.editarDieta(this.dietaEdit,this.dietaEdit["_id"]).subscribe(
-      data=>{
-        this.btnSave=false;
-        this._toasterService.Success("Dieta editado OK !!");
+    this._dietaService.editarDieta(this.dietaEdit, this.dietaEdit["_id"]).subscribe(
+      data => {
+        this.btnSave = false;
+        this._toasterService.Success("Receta editada OK !!");
         this.closeModal();
         this.clearForm();
         this.listar();
 
       },
-      error=>{
-        this.btnSave=false;
+      error => {
+        this.btnSave = false;
         console.log(error);
         this._toasterService.Error('Error al actualizar el dato !!');
       }
-      
+
     );
 
   }
 
 
 
-  
+
   listar(){
     let _this = this;
     this._dietaService.consultarDietas()
@@ -241,151 +243,153 @@ export class DietasComponent implements OnInit {
       );
     }
 
+  
 
-    getCategoriasDietas(){
-      this.tiposDietas=[];
-      this._categoriaService.getCategoriasDieta()
+
+  getCategoriasDietas() {
+    this.tiposDietas = [];
+    this._categoriaService.getCategoriasDieta()
       .subscribe(
-        data=>{
+        data => {
 
-          for(let key$ in data){
+          for (let key$ in data) {
             let catgNew = data[key$];
-            catgNew['id']=key$;
-            catgNew['longitud']=0;
-            
-              for(let pos in this.dietasCopy){
-                let obj = this.dietasCopy[pos];
-                if(obj['tipo'] == catgNew['nombre']  ){
-                  catgNew['longitud'] = catgNew['longitud'] + 1;
-                }      
+            catgNew['id'] = key$;
+            catgNew['longitud'] = 0;
+
+            for (let pos in this.dietasCopy) {
+              let obj = this.dietasCopy[pos];
+              if (obj['tipo'] == catgNew['nombre']) {
+                catgNew['longitud'] = catgNew['longitud'] + 1;
               }
-    
-              this.tiposDietas.push(catgNew); 
+            }
+
+            this.tiposDietas.push(catgNew);
           }
 
         },
-        error=>{
+        error => {
           console.log(error);
         }
-  
+
       );
-  
-      //console.log(this.tiposEntrenamiento)
+
+    //console.log(this.tiposEntrenamiento)
+  }
+
+  selectTipo(tipo: any) {
+    this.listar_por_tipo(tipo);
+  }
+
+  listar_por_tipo(tipo: any) {
+
+    if (tipo == 'todos') {
+
+      this.dietas = this.dietasCopy;
+
+    } else {
+
+      var _this = this;
+      this.dietas = [];
+      this.dietasCopy.forEach(function (item, indice, array) {
+        if (tipo == item.tipo) {
+          item['posicion'] = indice;
+          _this.dietas.push(item);
+
+        }
+
+      });
+
     }
 
-    selectTipo(tipo:any){
-     this.listar_por_tipo(tipo);
-    }
 
-    listar_por_tipo(tipo:any){
-    
-      if(tipo == 'todos'){
+  }
 
-        this.dietas=this.dietasCopy;
-        
-      }else{
-  
-          var _this = this;
-          this.dietas=[];
-          this.dietasCopy.forEach( function(item, indice, array) {
-            if(tipo == item.tipo){
-              item['posicion']=indice;
-            _this.dietas.push(item);
-            
-            }
-      
-          });
-  
-      }
-  
-     
-    }
+  clearForm() {
+    this.dieta.tipo = "";
+    this.dieta.titulo = "";
+    this.dieta.objetivo = "";
+    this.dieta.imagen = "";
+    this.dieta.dificultad = "";
+    this.dieta.tiempo = "";
+    this.dieta.porciones = "";
+    this.dieta.ingredientes = [];
+    this.dieta.preparacion = [];
+    this.itemsIngredientes = [{ id: 1, value: '' }];
+    this.itemsPreparacion = [{ id: 1, value: '' }];
+  }
 
-    clearForm(){
-      this.dieta.tipo="";
-      this.dieta.titulo="";
-      this.dieta.objetivo="";
-      this.dieta.imagen = "";
-      this.dieta.dificultad = "";
-      this.dieta.tiempo = "";
-      this.dieta.porciones = "";
-      this.dieta.ingredientes=[];
-      this.dieta.preparacion=[];
-      this.itemsIngredientes=[{id:1, value:''}];
-      this.itemsPreparacion=[{id:1, value:''}];
-    }
-
-  closeModal(){
+  closeModal() {
     $('#dataModal').modal('hide');
   }
 
 
-  newModal(){
+  newModal() {
     this.new = true;
-    this.itemsIngredientes=[{id:1, value:''}];
-    this.itemsPreparacion=[{id:1, value:''}];
+    this.itemsIngredientes = [{ id: 1, value: '' }];
+    this.itemsPreparacion = [{ id: 1, value: '' }];
   }
 
 
-  addIngrediente(){
+  addIngrediente() {
 
-    let key = (this.itemsIngredientes.length)+1;
-    this.itemsIngredientes.push({id:key, value:''});
-  }
-  
-  addPreparacion(){
-
-    let key = (this.itemsPreparacion.length)+1;
-    this.itemsPreparacion.push({id:key, value:''});
+    let key = (this.itemsIngredientes.length) + 1;
+    this.itemsIngredientes.push({ id: key, value: '' });
   }
 
-  deletedIngrediente(){
+  addPreparacion() {
+
+    let key = (this.itemsPreparacion.length) + 1;
+    this.itemsPreparacion.push({ id: key, value: '' });
+  }
+
+  deletedIngrediente() {
     this.itemsIngredientes.pop();
-    
-  
+
+
   }
 
-  deletedPreparacion(){
+  deletedPreparacion() {
     this.itemsPreparacion.pop();
 
   }
 
-  select(event:any){
-    this.dieta.tipo=event;
+  select(event: any) {
+    this.dieta.tipo = event;
   }
 
 
-  editModal(dieta:Dieta){
-    this.itemsIngredientes=[];
-    this.itemsIngredientes=[];
-  
-    this.new=false;
-    this.dietaEdit=dieta;
-    this.itemsIngredientes=dieta.ingredientes;
-    this.itemsPreparacion=dieta.preparacion;
+  editModal(dieta: Dieta) {
+    this.itemsIngredientes = [];
+    this.itemsIngredientes = [];
+
+    this.new = false;
+    this.dietaEdit = dieta;
+    this.itemsIngredientes = dieta.ingredientes;
+    this.itemsPreparacion = dieta.preparacion;
     //this.dieta.ingredientes = this.itemsIngredientes;
   }
 
-  cargarId(item:any, event:any){
+  cargarId(item: any, event: any) {
     this.indiceDelete = item
     this.eventData = event;
     //this.posicion = posicion;
   }
 
 
-  eliminar(){
+  eliminar() {
     this.loadingTrash();
 
-    
+
     this._dietaService.eliminarDieta(this.indiceDelete).subscribe(
-      data=>{
-       
-        this._toasterService.Success("Ejercicio eliminado OK !!"); 
+      data => {
+
+        this._toasterService.Success("Receta dada de baja OK !!");
         this.loadTrash.hide();
-        this.trash.show(); 
+        this.trash.show();
         this.listar();
       },
-      error=>{
+      error => {
         console.log('ERROR');
         console.log(error);
         this.loadTrash.hide();
@@ -393,17 +397,17 @@ export class DietasComponent implements OnInit {
       }
     );
 
-   
+
   }
 
 
-  loadingTrash(){
-   
+  loadingTrash() {
+
     //this.habilitar=false;
- 
+
     this.trash = $(this.eventData.target).parent().find(`#${this.indiceDelete}`).hide();
     this.loadTrash = $(this.eventData.target).parent().find('img').show();
-    
+
     this.trash.hide();
     this.loadTrash.show();
   }
@@ -436,7 +440,7 @@ export class DietasComponent implements OnInit {
   }
 
   private uploadFile(file: FileUploadModel) {
-  
+
     const fd = new FormData();
     fd.append(this.param, file.data);
 
@@ -447,7 +451,7 @@ export class DietasComponent implements OnInit {
     file.inProgress = true;
     file.sub = this._http.request(req).pipe(
       map(event => {
-      
+
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
@@ -459,20 +463,20 @@ export class DietasComponent implements OnInit {
       tap(message => { }),
       last(),
       catchError((error: HttpErrorResponse) => {
-        
+
         console.log('catch error');
         file.inProgress = false;
         file.canRetry = true;
         return of(`${file.data.name} upload failed.`);
       })
     ).subscribe(
-      
+
       (event: any) => {
-        
-        
+
+
         if (typeof (event) === 'object') {
-          
-          
+
+
           //this.removeFileFromArray(file);
           //this.complete.emit(event.body);
         }
@@ -492,7 +496,7 @@ export class DietasComponent implements OnInit {
   }
 
   private removeFileFromArray(file: FileUploadModel) {
-    
+
     const index = this.files.indexOf(file);
     if (index > -1) {
       this.files.splice(index, 1);
@@ -500,8 +504,8 @@ export class DietasComponent implements OnInit {
     console.log(this.files);
   }
 
-  private uploadFiletoArray(){
-      
+  private uploadFiletoArray() {
+
     //this._entrenamientoService.onUpload(file.data);
   }
 

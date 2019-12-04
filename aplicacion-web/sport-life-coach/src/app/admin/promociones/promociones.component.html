@@ -87,16 +87,25 @@
                     <div class="col-md-12">
                           <mat-form-field *ngIf="new == true">
                             <mat-label>Tipo de promocion</mat-label>
-                            <mat-select disableRipple  name="tipo" [(ngModel)]="promocion.tipo" >
-                              <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo.name">{{tipo.name}}</mat-option>
-                            </mat-select>
+                            <mat-select disableRipple  name="tipo" [(ngModel)]="promocion.tipo"  required #type="ngModel">
+                                <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo.name">{{tipo.name}}</mat-option>
+                              </mat-select>
+                              <!--MSJ ERROR TIPO PROMO-->
+                              <mat-error *ngIf="type.errors && (type.dirty || type.touched)">
+                                <span *ngIf="type.errors.required">Este campo no puede estar vacío</span>
+                              </mat-error>
                           </mat-form-field>
 
                           <mat-form-field *ngIf="new == false">
                               <mat-label>Tipo de promocion</mat-label>
-                              <mat-select disableRipple name="tipo" [(ngModel)]="promocionEdit.tipo">
-                                <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo.name">{{tipo.name}}</mat-option>
-                              </mat-select>
+                              <mat-select disableRipple name="tipo" [(ngModel)]="promocionEdit.tipo"
+                              required #type="ngModel">
+                              <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo.name">{{tipo.name}}</mat-option>
+                            </mat-select>
+                            <!--MSJ ERROR TIPO PROMO-->
+                            <mat-error *ngIf="type.errors && (type.dirty || type.touched)">
+                              <span *ngIf="type.errors.required">Este campo no puede estar vacío</span>
+                            </mat-error>
                           </mat-form-field>
                     </div>
                   </div>
@@ -104,10 +113,22 @@
                   <div class="row">
                       <div class="col-md-12">
                           <mat-form-field  *ngIf="new == true">
-                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="promocion.titulo">
+                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="promocion.titulo"
+                              #title="ngModel" required minlength="3">
+                  <!--MSJ ERROR TITULO-->
+                  <mat-error *ngIf="title.errors && (title.dirty || title.touched)">
+                    <span *ngIf="title.errors.required">Campo no puede estar vacío</span>
+                    <span *ngIf="title.errors.minlength">Nombre debe tener al menos 3 caracteres</span>
+                  </mat-error>
                           </mat-form-field>
                           <mat-form-field  *ngIf="new == false">
-                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="promocionEdit.titulo">
+                              <input matInput placeholder="Titulo" type="text" name="titulo" [(ngModel)]="promocionEdit.titulo"
+                              #title="ngModel" required minlength="3">
+                  <!--MSJ ERROR TITULO-->
+                  <mat-error *ngIf="title.errors && (title.dirty || title.touched)">
+                    <span *ngIf="title.errors.required">Campo no puede estar vacío</span>
+                    <span *ngIf="title.errors.minlength">Nombre debe tener al menos 3 caracteres</span>
+                  </mat-error>
                           </mat-form-field>
                       </div>
                   </div>
@@ -115,10 +136,24 @@
                   <div class="row">
                       <div class="col-md-12">
                           <mat-form-field *ngIf="new == true">
-                              <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="promocion.objetivo"></textarea>
+                              <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="promocion.objetivo"
+                              #detail="ngModel" required maxlength="256" #input></textarea>
+                              <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
+                              <!--MSJ ERROR OBJETIVO-->
+                            <mat-error *ngIf="detail.errors && (detail.dirty || detail.touched)">
+                              <span *ngIf="detail.errors.required">Este campo no puede estar vacío</span>
+ 
+                            </mat-error>
                           </mat-form-field>
                           <mat-form-field *ngIf="new == false">
-                              <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="promocionEdit.objetivo"></textarea>
+                              <textarea matInput placeholder="Objetivo" rows="3" name="objetivo" [(ngModel)]="promocionEdit.objetivo"
+                              #detail="ngModel" required maxlength="256" #input></textarea>
+                              <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
+                              <!--MSJ ERROR OBJETIVO-->
+                            <mat-error *ngIf="detail.errors && (detail.dirty || detail.touched)">
+                              <span *ngIf="detail.errors.required">Este campo no puede estar vacío</span>
+ 
+                            </mat-error>
                           </mat-form-field>
                       </div>
                   </div>
@@ -127,7 +162,7 @@
                     <div class="col-md-12">
                         <button mat-button color="warn" (click)="onClick()" type="button">
                             <mat-icon>file_upload</mat-icon>
-                            {{text}} ({{files.length}})
+                            {{text}} ({{files.length}}) (requerido)*
                           </button>
                           <br/>
                           <ul>
@@ -162,7 +197,7 @@
           
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="submit" *ngIf="new == true"  class="btn btn-primary" [disabled]=btnSave >Guardar</button>
+            <button type="submit" *ngIf="new == true"  class="btn btn-primary" [disabled]='form.invalid' >Guardar</button>
             <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]=btnSave >Editar</button>     
           </div>
         </form>

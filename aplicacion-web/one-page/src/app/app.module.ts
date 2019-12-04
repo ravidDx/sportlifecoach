@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 
 
 /*FIREBASE */
@@ -34,7 +34,7 @@ import {ServiceService} from './services/service.service';
     BrowserModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    HttpModule,HttpClientModule,
+    HttpModule, HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [ServiceService],

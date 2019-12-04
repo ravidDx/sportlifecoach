@@ -10,6 +10,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 /*INTERFACES */
 import {Service} from '../models/service';
 import {Portafolio} from '../models/portafolio.interface';
+import {Contacto} from '../models/contacto.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class ServiceService {
   serviceUrl = this.url+"servicios.json";
   slidersUrl=this.url+'home.json';
   portafolioUrl=this.url+"portafolio.json";
+  contactosUrl=this.url+'contacto.json';
 
   servicesList:AngularFireList<Service>;
   //servicesList;
@@ -48,6 +50,12 @@ export class ServiceService {
   getServicesUrl(){
     return this._http.get(this.serviceUrl);  
   }
+
+  getContactos(){
+    return this._http.get<Contacto[]>(this.contactosUrl)
+  }
+
+
 
 
   onUpload(data:any,id:any){

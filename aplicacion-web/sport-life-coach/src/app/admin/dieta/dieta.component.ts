@@ -23,7 +23,8 @@ export class DietaComponent implements OnInit {
     dificultad:"",
 	  porciones:"",
     ingredientes:[],
-    preparacion:[]
+    preparacion:[],
+    estado:''
   }
 
 

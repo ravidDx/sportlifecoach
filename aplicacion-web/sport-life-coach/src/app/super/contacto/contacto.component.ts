@@ -70,7 +70,7 @@ export class ContactoComponent implements OnInit {
           data=>{
             console.log(data);
             this.closeModal();
-            this.toasterService.Info("Perfil editado OK !!");
+            this.toasterService.Success("Contacto editado OK !!");
           },
           error=>{
             console.log(error);

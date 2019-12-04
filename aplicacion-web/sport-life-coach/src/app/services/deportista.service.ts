@@ -44,7 +44,7 @@ nuevoDeportista(nuevo:Deportista):Observable<Deportista>{
   }
 
   
-  editarDeportista(deportista:Deportista,indice:string){  
+  editarDeportista(deportista:Deportista, indice:string){  
     let url =`${this.deportistaUrl}/${indice}.json`;
   	return this._http.put<Deportista>(url,deportista);
   }

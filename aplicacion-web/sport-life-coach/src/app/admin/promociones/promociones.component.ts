@@ -258,7 +258,7 @@ export class PromocionesComponent implements OnInit {
       data=>{
         console.log(data)
         this.btnSave=false;
-        this._toasterService.Success("Promocion eliminado OK !!"); 
+        this._toasterService.Success("Promocion dada de baja  OK !!"); 
         this.loadTrash.hide();
         this.trash.show(); 
         this.listar();

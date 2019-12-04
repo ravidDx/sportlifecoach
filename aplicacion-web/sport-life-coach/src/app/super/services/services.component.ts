@@ -205,7 +205,7 @@ export class ServicesComponent implements OnInit {
           data=>{
             console.log(data);
             this.closeModal();
-            this.toasterService.Info("Servicio eliminado OK !!");
+            this.toasterService.Success("Servicio eliminado OK !!");
             
           },
           error=>{

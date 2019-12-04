@@ -101,6 +101,10 @@ export class DeportistasComponent implements OnInit {
 
   favoriteSeason: string; 
  
+  /*LIMITE DE FECHA */
+  minDate = new Date(1920, 0, 1);
+  maxDate = new Date(2001, 0, 1);
+
   constructor(private _deportistaService:DeportistaService,
               private _evaluacionService:EvaluacionService,
               public dialog: MatDialog,
@@ -117,6 +121,10 @@ export class DeportistasComponent implements OnInit {
   }
 
   
+  formatLabel(value: number) {
+    return value;
+  }
+
   guardar(){
   
 
@@ -131,7 +139,10 @@ export class DeportistasComponent implements OnInit {
         data=>{
           
           var obj = Object.assign({},this.deportista);
+          console.log(obj,'objeto');
           obj['_id']=data['name'];
+          console.log(obj['_id'],'objeto');
+          console.log(data['name'],'data');
 
           //Guardar credenciales email y pass en firebase
           this.guardarAuthUser(obj.email,obj.email);    
@@ -157,7 +168,7 @@ export class DeportistasComponent implements OnInit {
 
     }else if(this.new==false){
       this.disabledButton(true);
-      
+      //console.log(this.deportistaEdit["_id"],'verificar');
       this._deportistaService.editarDeportista(this.deportistaEdit,this.deportistaEdit["_id"]).subscribe(
         data=>{
           console.log(data);
@@ -321,6 +332,7 @@ export class DeportistasComponent implements OnInit {
     
     this.new=false;
     this.deportistaEdit = Object.assign({},deportista);
+    //console.log(this.deportistaEdit,'taty')
     
   }
 
