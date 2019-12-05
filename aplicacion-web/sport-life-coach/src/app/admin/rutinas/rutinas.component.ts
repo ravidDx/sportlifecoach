@@ -65,6 +65,7 @@ export class RutinasComponent implements OnInit {
   rutinas: Rutina[] = [];
 
   listaEjercicios: any[] = [];
+  
   listaEjerciciosEdit: any[] = [];
   listEjerRutina: any[] = [];
 
@@ -94,6 +95,10 @@ export class RutinasComponent implements OnInit {
 
       console.log(this.rutina);
     } else {
+
+      console.log(this.rutinaEdit)
+
+      /*
       this._rutinaService.editarRutina(this.rutinaEdit, this.rutinaEdit['_id']).subscribe(
         data => {
           console.log(data, 'modificar taty')
@@ -104,6 +109,8 @@ export class RutinasComponent implements OnInit {
         error => {
           console.log(error);
         });
+
+        */
     }
 
 
@@ -218,6 +225,28 @@ export class RutinasComponent implements OnInit {
   }
 
 
+  addEjercicioEdit(event: any) {
+    //console.log(this.listaEjercicios);
+    //this.listEjerRutina = [];
+
+    //this.entrenamientos=[];
+    /*
+    for (let $key in this.listaEjerciciosEdit) {
+
+      let data: any = {
+        ejercicio: this.listaEjerciciosEdit[$key],
+        series: '',
+        repeticiones: '',
+        descanso: ''
+      }
+      this.listEjerRutinaEdit.push(data);
+    }*/
+
+
+
+  }
+
+
   //Obtencion de fecha
   getFechaActual() {
     var hoy = new Date();
@@ -270,17 +299,18 @@ export class RutinasComponent implements OnInit {
 
   editModal(rutina: Rutina) {
     this.new = false;
+    console.log('00000000000000000000000000000000000000000000000000000000')
     console.log(this.new);
 
     this.listaEjerciciosEdit = [];
     this.rutinaEdit = rutina;
-    this.listaEjercicios = this.rutinaEdit['ejercicios'];
+    this.listaEjerciciosEdit = this.rutinaEdit['ejercicios'];
 
 
-    this.listEjerRutina = this.rutinaEdit.ejercicios;
+    this.listEjerRutinaEdit = this.rutinaEdit.ejercicios;
 
-    console.log(this.listaEjercicios);
-    console.log(this.rutinaEdit);
+    console.log(this.listaEjerciciosEdit);
+    //console.log(this.rutinaEdit);
 
     //this.itemsInstrucciones=entrenamiento.instruccion;
 
