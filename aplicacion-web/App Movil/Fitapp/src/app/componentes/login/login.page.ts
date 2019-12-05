@@ -204,7 +204,7 @@ export class LoginPage implements OnInit {
     if(rol==='Afiliado'){
       console.log('afil');
       //this._router.navigate(['/sadmin/inicio']);
-      this.router.navigate(['afiliado/tabs/home']);
+      this.router.navigate(['afiliado/tabs/recetas']);
       //this.router.navigate(['/tabs/home']);
     }else if(rol==='no afiliado'){
       //this._router.navigate(['/admin/dashboard']);
