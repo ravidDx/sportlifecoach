@@ -326,7 +326,7 @@ export class EntrenamientosComponent implements OnInit {
     this.loadingTrash();
     let title="";
 
-    if(this.planEntrenamientoEdit.estado == 'Activo'){
+    if(this.planEntrenamientoEdit.estado === 'Activo'){
       this.planEntrenamientoEdit.estado = 'Inactivo';
       title = 'Plan de entrenamiento dado de baja OK !!';
     }else{

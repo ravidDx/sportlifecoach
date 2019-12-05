@@ -23,10 +23,14 @@
                         <br>
                         <!-- DATA -->
 
-                        <mat-chip-list aria-label="Fish selection">
+                        <!--<mat-chip-list aria-label="Fish selection">
                             <mat-chip color="accent" selected>Promocion de precio</mat-chip>
                             <mat-chip color="accent" >Promocion de regalos</mat-chip>
-                        </mat-chip-list>
+                        </mat-chip-list>-->
+
+                        <span *ngFor="let tipo of tiposPromocion" matBadge="{{tipo.longitud}}" class="spnaBadge">
+                          <mat-chip color="basic" selected (click)="selectTipo(tipo.name)">{{tipo.name}}</mat-chip>
+                        </span>
 
                         <hr>
 

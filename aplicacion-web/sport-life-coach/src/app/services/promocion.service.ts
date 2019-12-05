@@ -13,35 +13,36 @@ import {AngularFireStorage} from '@angular/fire/storage';
 })
 export class PromocionService {
 
-  url = window['urlApi'];
+  url = window['urlFirebase'];
 
-  promocionesUrl=this.url+":8080/api/promociones";
-  promocionUrl=this.url+":8080/api/promocion";
+  promocionesUrl=this.url+"promociones.json";
+  promocionUrl=this.url+"promociones";
 
   constructor(private _http:HttpClient, 
               private storage:AngularFireStorage) { }
 
   nuevaPromocion(nuevo:Promocion):Observable<Promocion>{
-    return this._http.post<Promocion>(this.promocionUrl,nuevo);
+    return this._http.post<Promocion>(this.promocionesUrl,nuevo);
   }
+
 
   consultarPromociones():Observable<Promocion[]>{
   	return this._http.get<Promocion[]>(this.promocionesUrl);
   }
 
   editarPromocion(promocion:Promocion,indice:string){
-  	let url =`${this.promocionUrl}/${indice}`;
+  	let url =`${this.promocionUrl}/${indice}.json`;
   	return this._http.put<Promocion>(url,promocion);
   }
 
   eliminarPromocion(indice:string){
-    let url =`${this.promocionUrl}/${indice}`;
+    let url =`${this.promocionUrl}/${indice}.json`;
     console.log(url)
   	return this._http.delete(url);
   }
 
   verPromocion(indice:string){
-  	let url =`${this.promocionUrl}/${indice}`;
+  	let url =`${this.promocionUrl}/${indice}.json`;
   	return this._http.get<Promocion>(url);
   }
 

@@ -45,21 +45,22 @@ export class PromocionesComponent implements OnInit {
     {id:2, name:'promocion de regalos'}
   ]
 
-  promocion:Promocion = {
+  promocion:any = {
     tipo:"",
     titulo:"",
     objetivo:"",
     imagen:""
   }
 
-  promocionEdit:Promocion = {
+  promocionEdit:any = {
     tipo:"",
     titulo:"",
     objetivo:"",
     imagen:""
   }
 
-  promociones:Promocion[]=[];
+  promociones:any[]=[];
+  promocionesCopy: any[] = [];
 
   url:any;
 
@@ -89,7 +90,6 @@ export class PromocionesComponent implements OnInit {
 
     this.btnSave=true;
     if(this.new==true ){
-      
       this.nuevaPromocion();
 
     }else{
@@ -124,6 +124,7 @@ export class PromocionesComponent implements OnInit {
   nuevaPromocion(){
     var _this = this;
     const id = Math.random().toString(36).substring(2);
+     // this.promocion.estado = 'Activo';
 
     _this._promocionService.onUpload(this.files[0].data,id);
     _this.promocion.imagen = id;
@@ -137,14 +138,12 @@ export class PromocionesComponent implements OnInit {
         this.clearForm();
         this.closeModal();
         this.listar();
-       
-
       },
       error=>{
         this.btnSave=false;
         console.log('ERROR');
         console.log(error);
-        this._toasterService.Error('Error al actualizar el dato !!');
+        this._toasterService.Error('Error al guardar el dato !!');
       
       }
 
@@ -181,24 +180,18 @@ export class PromocionesComponent implements OnInit {
     this._promocionService.consultarPromociones()
       .subscribe(
         data=>{
-          data["promociones"].forEach( function(item, indice, array) {
-            item['imagenId']=item.imagen;
-              _this._promocionService.downloadUrl(item.imagen).subscribe(
-                data=>{
-                  item.imagen=data;         
-                },
-                error=>{
-                  console.log('ERROR');
-                  console.log(error);
-                }
-              );
+          let notificaciones=[];
+          for(let key$ in data){
+	  				let notificacion = data[key$];
+	  				notificacion['_id']=key$;
+            notificaciones.push(notificacion);
+            this.getUrlsImg(notificacion);
+          }
 
-              item.imagen = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-           
-          });
+          this.promocionesCopy = Object.assign({},notificaciones);
+          console.log(this.promocionesCopy)
 
-          this.promociones = data["promociones"];
-          console.log(this.promociones)
+          
 
         },
         error=>{
@@ -208,94 +201,63 @@ export class PromocionesComponent implements OnInit {
       );
     }
 
-
-  clearForm(){
-      this.promocion.tipo="";
-      this.promocion.titulo="";
-      this.promocion.objetivo="";
-      this.promocion.imagen = "";
-      this.files =[]
-    }
-
-  closeModal(){
-    $('#dataModal').modal('hide');
-  }
-
-
-  
-  newModal(){
-    this.new = true;
-    this.text= 'Cargar imagen';
-  }
-  
-
-
-  select(event:any){
-    this.promocion.tipo=event;
-    console.log(event);
-  }
-
-
-  editModal(promocion:Promocion){
-    this.new=false;
-    this.text= 'Actualizar imagen';
-    this.promocionEdit=promocion;
-    
-  }
-
-  cargarId(item:any, event:any, posicion:any){
-    this.indiceDelete = item
-    this.eventData = event;
-  }
-
-
-  eliminar(){
-    this.loadingTrash();
-    this.btnSave=true;
-    console.log(this.indiceDelete)
-    
-    this._promocionService.eliminarPromocion(this.indiceDelete).subscribe(
+//Devuelve la url de la imagen
+  getUrlsImg(promocion:any){
+    promocion['idImg']=promocion['imagen'];
+    this._promocionService.downloadUrl(promocion['imagen']).subscribe(
       data=>{
-        console.log(data)
-        this.btnSave=false;
-        this._toasterService.Success("Promocion dada de baja  OK !!"); 
-        this.loadTrash.hide();
-        this.trash.show(); 
-        this.listar();
-        //this.clearForm();
-
+        promocion['imagen']=data;   
+          
       },
       error=>{
         console.log('ERROR');
-        this.btnSave=false;
-        this._toasterService.Error("No se pudo eliminar correctamente !!");
         console.log(error);
-        this.loadTrash.hide();
-        this.trash.show();
-
+        
       }
     );
 
-   
+    promocion['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+
+
+}
+
+
+selectTipo(tipo: any) {
+    this.listar_por_tipo(tipo);
+}
+
+
+listar_por_tipo(tipo: any) {
+
+    console.log(tipo)
+
+    if (tipo == 'todos') {
+      
+      this.promociones = this.promocionesCopy;
+
+    } else {
+
+      
+      this.promociones = [];
+
+      for (let key$ in this.promocionesCopy) {
+        let promocion =  this.promocionesCopy[key$];
+        if (tipo === promocion.tipo) {
+          
+          this.promociones.push(promocion);
+
+        }
+
+      }
+
+
+
+    }
+
+
   }
 
-
-  loadingTrash(){
-    //this.habilitar=false;
- 
-    this.trash = $(this.eventData.target).parent().find(`#${this.indiceDelete}`).hide();
-    this.loadTrash = $(this.eventData.target).parent().find('img').show();
-    
-    this.trash.hide();
-    this.loadTrash.show();
-  }
-
-
-
-
-
-
-  onClick() {
+   onClick() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = () => {
       for (let index = 0; index < fileUpload.files.length; index++) {
@@ -322,7 +284,7 @@ export class PromocionesComponent implements OnInit {
   }
 
   private uploadFile(file: FileUploadModel) {
-  
+
     const fd = new FormData();
     fd.append(this.param, file.data);
 
@@ -333,7 +295,7 @@ export class PromocionesComponent implements OnInit {
     file.inProgress = true;
     file.sub = this._http.request(req).pipe(
       map(event => {
-        console.log("map");
+
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
@@ -345,20 +307,20 @@ export class PromocionesComponent implements OnInit {
       tap(message => { }),
       last(),
       catchError((error: HttpErrorResponse) => {
-        
+
         console.log('catch error');
         file.inProgress = false;
         file.canRetry = true;
         return of(`${file.data.name} upload failed.`);
       })
     ).subscribe(
-      
+
       (event: any) => {
-        
-        console.log(event);
+
+
         if (typeof (event) === 'object') {
-          console.log(this.files)
-          
+
+
           //this.removeFileFromArray(file);
           //this.complete.emit(event.body);
         }
@@ -378,7 +340,7 @@ export class PromocionesComponent implements OnInit {
   }
 
   private removeFileFromArray(file: FileUploadModel) {
-    
+
     const index = this.files.indexOf(file);
     if (index > -1) {
       this.files.splice(index, 1);
@@ -386,44 +348,29 @@ export class PromocionesComponent implements OnInit {
     console.log(this.files);
   }
 
-  private uploadFiletoArray(){
-      
+  private uploadFiletoArray() {
+
     //this._entrenamientoService.onUpload(file.data);
   }
 
-  getDownload(url:any, indice:any){
-
-    let res;
-  
-    this._promocionService.downloadUrl(url).subscribe(
-      data=>{
-        this.promociones
-        res= data;
-        console.log('-----------------------------');
-        console.log(res);
-
-       
-        //return res;
-      },
-      error=>{
-        console.log('ERROR');
-        console.log(error);
-        res= 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
-        //return res;
-      }
-  
-    );
-
-    return 'asd ';
-  
-   
+   newModal() {
+    this.new = true;
   }
 
+  closeModal() {
+    $('#dataModal').modal('hide');
+  }
 
+   clearForm() {
+    this.promocion.tipo = "";
+    this.promocion.titulo = "";
+    this.promocion.objetivo = "";
+    this.promocion.imagen = "";
+  }
 }
 
 
-export class FileUploadModel {
+ export class FileUploadModel {
   data: File;
   state: string;
   inProgress: boolean;
@@ -431,5 +378,10 @@ export class FileUploadModel {
   canRetry: boolean;
   canCancel: boolean;
   sub?: Subscription;
-}
+} 
+  
+
+
+
+
 

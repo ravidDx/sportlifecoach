@@ -25,6 +25,8 @@ export class EntrenamientoComponent implements OnInit {
     progreso:'',
   }
 
+    color=['warning','success','danger', 'info', 'primary', 'secondary'];
+
   estado='Activo';
 
   entrenamiento:any=[];
@@ -65,6 +67,8 @@ export class EntrenamientoComponent implements OnInit {
     }
   ]
 
+  plan: any =[];
+
 
   constructor(private _planEntrenamientoService:PlanEntrenamientoService, private _activeRoute:ActivatedRoute) { 
     
@@ -81,7 +85,7 @@ export class EntrenamientoComponent implements OnInit {
            
             for(let key$ in this.planEntrenamiento.rutinas){
               let rutina = this.planEntrenamiento.rutinas[key$]
-              console.log(rutina)
+              console.log(rutina, 'sera')
               
               this.totalSemanasEntrenamiento(rutina);
             }  
@@ -112,10 +116,11 @@ export class EntrenamientoComponent implements OnInit {
 
              }
             */
-             console.log(this.entrenamiento)
+             console.log(this.entrenamiento);
+             console.log(this.planEntrenamiento.rutinas, 'este es');
 
+            
           
-
           },
           error=>{
             console.log(error);
