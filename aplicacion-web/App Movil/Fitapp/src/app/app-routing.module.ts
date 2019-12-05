@@ -23,7 +23,12 @@ const routes: Routes = [
   { path: 'home', loadChildren: './afiliado/home/home.module#HomePageModule' },
   { path: 'entrenamientos', loadChildren: './afiliado/entrenamientos/entrenamientos.module#EntrenamientosPageModule' },
   { path: 'rutina/:id', loadChildren: './afiliado/rutina/rutina.module#RutinaPageModule' },
+
   { path: 'ejercicio-personal/:id', loadChildren: './afiliado/ejercicio-personal/ejercicio-personal.module#EjercicioPersonalPageModule' },
+
+  { path: 'recetas', loadChildren: './afiliado/recetas/recetas.module#RecetasPageModule' },
+  { path: 'receta/:id', loadChildren: './afiliado/receta/receta.module#RecetaPageModule' },
+
 
 
 
