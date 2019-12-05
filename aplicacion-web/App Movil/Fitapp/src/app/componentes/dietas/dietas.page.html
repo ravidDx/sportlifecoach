@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content padding class="card-background-page">
-  <ion-list>
+  <ion-list class="ion-no-padding">
     <ion-item-divider class="ion-no-padding">
       <ion-label color="light" class="title">
         RECETAS DEL DÍA
@@ -20,16 +20,16 @@
     </ion-item-divider>
 
     <ion-list *ngFor="let item of tiposDieta">
-        <ion-item-divider>
-            <ion-label color="dark" text-uppercase>
-              {{item.nombre}}
-            </ion-label>
+        <ion-item-divider class="ion-no-padding">
+          <ion-chip color="light">
+            <ion-label color="danger"> {{item.nombre | uppercase}}</ion-label>
+          </ion-chip>
         </ion-item-divider>
         <ion-slides [options]="sliderConfig">
             <ion-slide *ngFor="let dieta of item.dietas" (click)="viewItem(dieta)" >
               <ion-card>
                 <ion-card-header>
-                    <ion-card-subtitle color="dark">{{dieta.titulo}}</ion-card-subtitle>
+                    <ion-card-subtitle class="ion-padding-bottom" color="dark">{{dieta.titulo | uppercase}}</ion-card-subtitle>
                     <ion-card-content no-padding>
                         <img class="imgs" [src]="dieta.imagen" />
                         <!--<img class="imgs" src="https://www.todosacomer.net/wp-content/uploads/2017/09/ensaladaquinoa1.jpg" />-->
