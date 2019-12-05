@@ -49,54 +49,62 @@ export class DietasPage implements OnInit {
               private _categoriaService:CategoriasService,
               private _router:Router) { 
 
-      this.getDietas();
+      this.listar();
   }
 
   ngOnInit() {
   }
 
-
-  //Metodo listar dietas
-  getDietas(){
-    console.log('get Dietas')
-    var _this = this;
+  listar(){
+    let _this = this;
     this._dietaService.consultarDietas()
       .subscribe(
         data=>{
+
           
-          data["dietas"].forEach( function(item, indice, array) {
-            _this._storageService.downloadUrlDieta(item.imagen).subscribe(
-              data=>{
-                item.imagen=data;         
-              },
-              error=>{
-                console.log('ERROR');
-                
-              }
-              
-            );
 
-            //item.imagen = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+          let dietas=[];
+          for(let key$ in data){
+	  				let dieta = data[key$];
+	  				dieta['_id']=key$;
+            dietas.push(dieta);
+            this.getUrlsImg(dieta);
+          }
 
-            
-          });
+          this.dietasCopy = Object.assign({},dietas);
 
-        this.dietas = data["dietas"];
-        this.dietasCopy = data["dietas"];
+          console.log(this.dietasCopy)
 
-        this.getCategoriasDieta();
-        
-        console.log(this.dietasCopy)
+          this.getCategoriasDieta();
 
-      },
+        },
         error=>{
           console.log(error);
         }
 
       );
+    }
 
-  }
 
+     
+      //Devuelve la url de la imagen
+      getUrlsImg(dieta:any){
+        dieta['idImg']=dieta['imagen'];
+        this._storageService.downloadUrlDieta(dieta['imagen']).subscribe(
+          data=>{
+            dieta['imagen']=data;   
+              
+          },
+          error=>{
+            console.log('ERROR');
+            console.log(error);
+            
+          }
+        );
+  
+        dieta['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+  
+    }
 
   getCategoriasDieta(){
     this.tiposDieta=[];

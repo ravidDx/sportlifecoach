@@ -22,8 +22,11 @@ export class DietasService {
   }
 
   consultarDieta(indice:string){
-  	let url =`${this.dietaUrl}/${indice}`;
+  	let url =`${this.dietaUrl}/${indice}.json`;
   	return this._http.get<Dieta>(url);
   }
+
+
+  
 
 }

@@ -20,7 +20,7 @@ export class StorageService {
   downloadUrlDieta(id:any){
     const filePath = `uploads/dieta_${id}`;
     const imgRef = this._storage.ref(filePath);
-
+    console.log(id)
     return imgRef.getDownloadURL();
   }
 

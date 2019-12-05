@@ -45,24 +45,13 @@ export class DietaPage implements OnInit {
         .subscribe(
           data=>{
             //console.log(data['entrenamiento'])
-            this.dieta = data['dieta'];
+            this.dieta = data;
             
-              let idImg = this.dieta.imagen;
-  
-              _this._storageService.downloadUrlDieta(idImg).subscribe(
-                data=>{
-                  _this.dieta.imagen= data;
-                  
-                },
-                error=>{
-                  console.log('ERROR');
-                  
-                }
-                
-              );
+            this.getUrlsImg(this.dieta);
   
             console.log(this.dieta);
-  
+
+          
   
           },
           error=>{
@@ -72,6 +61,29 @@ export class DietaPage implements OnInit {
         );
   
     }
+
+
+    
+      //Devuelve la url de la imagen
+      getUrlsImg(dieta:any){
+        dieta['idImg']=dieta['imagen'];
+        this._storageService.downloadUrlDieta(dieta['imagen']).subscribe(
+          data=>{
+            dieta['imagen']=data;   
+              
+          },
+          error=>{
+            console.log('ERROR');
+            console.log(error);
+            
+          }
+        );
+  
+        dieta['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
+  
+    }
+
+
 
   
 
