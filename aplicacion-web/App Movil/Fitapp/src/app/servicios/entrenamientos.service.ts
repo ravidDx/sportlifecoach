@@ -32,6 +32,12 @@ export class EntrenamientosService {
   	return this._http.get<PlanEntrenamiento>(url);
   }
 
+  editarPlanEntrenamiento(planEntrenamiento:any,indice:string){
+    
+  	let url1 =`${this.planEntrenamientoUrl}/${indice}.json`;
+  	return this._http.put<any>(url1,planEntrenamiento);
+  }
+
      
 
 

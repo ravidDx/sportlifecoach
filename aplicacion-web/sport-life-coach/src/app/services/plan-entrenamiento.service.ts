@@ -28,7 +28,7 @@ export class PlanEntrenamientoService {
   }
 
   editarPlanEntrenamiento(planEntrenamiento:PlanEntrenamiento,indice:string){
-    
+  
   	let url =`${this.planEntrenamientoUrl}/${indice}.json`;
   	return this._http.put<PlanEntrenamiento>(url,planEntrenamiento);
   }

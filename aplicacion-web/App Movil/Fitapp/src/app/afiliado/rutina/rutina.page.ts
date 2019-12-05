@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ActivatedRoute } from '@angular/router';
 //Interfas
@@ -26,9 +27,11 @@ export class RutinaPage implements OnInit {
   }
 
 
+
   constructor(private _activateRute:ActivatedRoute,
     private _rutinaService:RutinasService,
-    private _storageService:StorageService) { }
+    private _storageService:StorageService,
+    private _router:Router) { }
 
     ngOnInit() {
       let id = this._activateRute.snapshot.paramMap.get('id');
@@ -45,9 +48,7 @@ export class RutinaPage implements OnInit {
             console.log(data);
             let rutina = data
             this.rutina =  rutina;
-            //this.getUrlsImg(ejercicio);
-            // console.log(this.ejercicio,'mi');
-  
+          
           },
           error=>{
             console.log(error);
@@ -56,6 +57,15 @@ export class RutinaPage implements OnInit {
         );
   
     }
+
+    viewEjercicio(item:any){
+
+      let id = item['ejercicio']['_id'];
+      this._router.navigate(['/ejercicio-personal', id ])
+    }
+
+   
+  
 
 
 

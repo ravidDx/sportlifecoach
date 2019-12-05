@@ -13,8 +13,8 @@
 
 <ion-content class="fondo">
 
-    <ion-card *ngFor="let item of planEntrenamiento.rutinas;let i = index" color="light" class="ion-margin ion-padding"  (click)="viewItem(item)"> 
-        <ion-card-header color="dark">
+    <ion-card *ngFor="let item of planEntrenamiento.rutinas;let i = index" color="light" class="ion-margin ion-padding"  > 
+        <ion-card-header color="dark" (click)="viewItem(item)">
           <ion-card-subtitle>{{item.rutina.titulo | uppercase}}</ion-card-subtitle>
           <ion-card-title>Rutina {{i +1 }}</ion-card-title>
         </ion-card-header>
@@ -46,11 +46,16 @@
                     </ion-chip>
                     <ion-note class="ion-padding-bottom" color="light">{{item2.ejercicio.titulo}}</ion-note>
                 <ion-item>-->
-                
 
                
         
             </ion-item-group>
+
+            
+            <ion-col>
+                <ion-button *ngIf="btn===false" [color]='color' (click)="editarProgreso()">{{text}}</ion-button>
+                <ion-button *ngIf="btn===true" [color]='color' (click)="nolisto()" disabled>{{text}}</ion-button>
+            </ion-col>
 
 
         </ion-card-content>

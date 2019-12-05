@@ -1,4 +1,4 @@
-  <ion-header class="fondo">
+<ion-header class="fondo">
     <ion-toolbar >
       <ion-title text-center class="title" >{{ejercicio.tipo}}</ion-title>
       <ion-buttons slot="start">
@@ -22,12 +22,12 @@
                 <ion-text color=light>{{ejercicio.dificultad}}</ion-text>
               </ion-col>
               <!--BOTON PARA PONER EN AFILIADO PARA EL SEGUIMIENTO-->
-              <!--
+              
               <ion-col>
                 <ion-button *ngIf="btn===false" [color]='color' (click)="listo()">{{text}}</ion-button>
                 <ion-button *ngIf="btn===true" [color]='color' (click)="nolisto()">{{text}}</ion-button>
               </ion-col>
-              -->
+              
             <!--*************-->
             </ion-row>
         </div>
