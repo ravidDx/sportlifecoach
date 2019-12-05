@@ -17,6 +17,7 @@ export class EntrenamientosService {
   planEntrenamientosUrl=this.url+'planEntrenamientos.json';
   planEntrenamientoUrl=this.url+'planEntrenamientos';
 
+
   
   constructor(private _http:HttpClient) { 
 
@@ -26,13 +27,14 @@ export class EntrenamientosService {
   	return this._http.get<PlanEntrenamiento[]>(this.planEntrenamientosUrl);
   }
 
-
+ 
   verPlanEntrenamiento(indice:string){
   	let url =`${this.planEntrenamientoUrl}/${indice}.json`;
   	return this._http.get<PlanEntrenamiento>(url);
   }
 
-     
+
+
 
 
 }

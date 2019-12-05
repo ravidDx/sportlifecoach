@@ -78,6 +78,15 @@ const routes: Routes = [
           }
         ]
       },
+       {
+        path: 'recetas',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../../afiliado/recetas/recetas.module').then(m => m.RecetasPageModule)
+          }
+        ]
+      },
 
 
       { path: '**',           redirectTo: '/slides'}, 

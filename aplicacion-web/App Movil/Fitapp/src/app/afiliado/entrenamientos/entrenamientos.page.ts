@@ -82,7 +82,7 @@ export class EntrenamientosPage implements OnInit {
     //console.log(item)
     var id =  item['rutina']['_id'];
     console.log(id);
-    this._router.navigate(['/rutina', id ])
+    this._router.navigate(['/rutina', id ]);
   }
 
 
