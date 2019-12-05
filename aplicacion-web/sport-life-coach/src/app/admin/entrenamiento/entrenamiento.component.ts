@@ -25,7 +25,10 @@ export class EntrenamientoComponent implements OnInit {
     progreso:'',
   }
 
-    color=['warning','success','danger', 'info', 'primary', 'secondary'];
+  data:any=[];
+  dias:any=[];
+
+ color=['warning','success','danger', 'info', 'primary', 'secondary'];
 
   estado='Activo';
 
@@ -146,7 +149,9 @@ export class EntrenamientoComponent implements OnInit {
         
           let obj = {
             semana: rutina.semanas[key$],
-            rutina:rutina.rutina.titulo
+            rutina:rutina.rutina.titulo,
+            ejercicios:rutina.rutina.ejercicios,
+            dias:rutina.dias
           }
           this.listSemanas.push(obj);
       }
@@ -157,5 +162,13 @@ export class EntrenamientoComponent implements OnInit {
 
 
     console.log(this.listSemanas);
+  }
+
+
+  viewRutina(item:any){
+    console.log(item),
+    this.data=item.ejercicios;
+    this.dias=item.dias;
+    console.log(this.dias)
   }
 }
