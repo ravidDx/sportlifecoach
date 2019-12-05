@@ -22,6 +22,8 @@ const routes: Routes = [
   { path: 'reset-password', loadChildren: './componentes/reset-password/reset-password.module#ResetPasswordPageModule' },
   { path: 'home', loadChildren: './afiliado/home/home.module#HomePageModule' },
   { path: 'entrenamientos', loadChildren: './afiliado/entrenamientos/entrenamientos.module#EntrenamientosPageModule' },
+  { path: 'rutina/:id', loadChildren: './afiliado/rutina/rutina.module#RutinaPageModule' },
+
 
   
 

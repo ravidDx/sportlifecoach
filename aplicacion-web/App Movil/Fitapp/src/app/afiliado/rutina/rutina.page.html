@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>rutina</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <ion-card-header class="space">
+        <ion-card-subtitle>{{rutina.titulo}}</ion-card-subtitle>
+        <ion-card-title>{{rutina.objetivo}}</ion-card-title>
+        <p>ejercicios: {{rutina['numEjers']}}</p>
+      </ion-card-header>
+
+      <ion-item-group *ngFor="let item of rutina.ejercicios; let i = index" >
+
+          <img [src]=item.ejercicio.imagen />
+
+          <ion-card-title>{{item.ejercicio.titulo}}</ion-card-title>  
+        <p> ser. {{item.series}}</p>
+          <p> rep. {{item.repeticiones}}</p>
+          <p> desc{{item.descanso}}</p>
+
+      </ion-item-group>
+
+
+
+</ion-content>

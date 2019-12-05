@@ -13,7 +13,7 @@
 
 <ion-content class="fondo">
 
-    <ion-card *ngFor="let item of planEntrenamiento.rutinas;let i = index" color="light" class="ion-margin ion-padding"> 
+    <ion-card *ngFor="let item of planEntrenamiento.rutinas;let i = index" color="light" class="ion-margin ion-padding"  (click)="viewItem(item)"> 
         <ion-card-header color="dark">
           <ion-card-subtitle>{{item.rutina.titulo | uppercase}}</ion-card-subtitle>
           <ion-card-title>Rutina {{i +1 }}</ion-card-title>

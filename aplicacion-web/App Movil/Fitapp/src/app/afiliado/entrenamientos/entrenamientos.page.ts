@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 //Interfas
 import {PlanEntrenamiento} from '../../interfaces/planEntrenamiento.interface';
@@ -24,19 +25,11 @@ export class EntrenamientosPage implements OnInit {
     progreso:'',
   }
 
-  planEntrenamientoEdit:PlanEntrenamiento = {
-    deportista:{},
-    rutinas:[],
-    duracion:"",
-    fechaCreacion:{},
-    estado:'',
-    progreso:'',
-  }
 
   planEntrenamientos:PlanEntrenamiento[]=[];
 
 
-  constructor(private _planEntrenamientoService:EntrenamientosService,) {
+  constructor(private _planEntrenamientoService:EntrenamientosService,private _router:Router) {
     this.email = localStorage.getItem('email');
 
     this.listar();
@@ -82,5 +75,16 @@ export class EntrenamientosPage implements OnInit {
       );
 
   }
+
+
+  
+  viewItem(item:any){
+    //console.log(item)
+    var id =  item['rutina']['_id'];
+    console.log(id);
+    this._router.navigate(['/rutina', id ])
+  }
+
+
 
 }

@@ -68,9 +68,7 @@ const routes: Routes = [
           }
          
         ]
-      },
-
-   
+      },  
       {
         path: 'entrenamientos',
         children: [
@@ -80,6 +78,7 @@ const routes: Routes = [
           }
         ]
       },
+
 
       { path: '**',           redirectTo: '/slides'}, 
 
