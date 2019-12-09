@@ -11,6 +11,8 @@ import { EntrenamientoService } from '../../services/entrenamiento.service';
 import { ToasterService } from '../../services/toaster.service';
 import { RutinaService } from '../../services/rutina.service';
 
+declare var  $: any;
+
 @Component({
   selector: 'app-rutinas',
   templateUrl: './rutinas.component.html',
@@ -30,8 +32,13 @@ export class RutinasComponent implements OnInit {
 
 
   new: boolean = true;
-  duracionList = ['10 min', '20 min', '30 min', '40 min', '50 min', '1 hora', '1 h 15 min', '1 h 30 min', '1 h 45 min']
-  descansoList = ["10´´", "20´´", "30´´", "40´´", "50´´", "60´´"]
+  duracionList = ['10 min', '20 min', '30 min', '40 min', '50 min', '1 hora', '1 h 15 min', '1 h 30 min', '1 h 45 min'];
+  descansoList = ["10´´", "20´´", "30´´", "40´´", "50´´", "60´´"];
+ 
+  repeticionesList = ['5','10','15','20','25','30','35','40'];
+  seriesList = ['1','2','3','4','5','6','7','8','9','10'];
+ 
+
   dificultadList: any = ['Principiante', 'Medio', 'Avanzado'];
 
   rutina: Rutina = {
@@ -72,6 +79,10 @@ export class RutinasComponent implements OnInit {
   listEjerRutinaEdit: any[] = [];
 
 
+  load=false;
+  btnDisabled = false;
+
+
   constructor(private _entrenamientoService: EntrenamientoService,
     private _rutinaService: RutinaService,
     private _toasterService: ToasterService) {
@@ -87,9 +98,13 @@ export class RutinasComponent implements OnInit {
 
   guardar() {
     if (this.new == true) {
+
+      this.disabledButton(true);
+
       this.rutina.estado = 'Activo';
       this.rutina.fechaCreacion = this.getFechaActual();
       this.rutina.ejercicios = this.listEjerRutina;
+
 
       this.nuevaRutina();
 
@@ -122,21 +137,34 @@ export class RutinasComponent implements OnInit {
     this._toasterService.Success(title);
   }
   closeModal() {
-    //$('#dataModal').modal('hide');
+    $('#dataModal').modal('hide');
   }
 
   //Metodo guardar entrenamiento
   nuevaRutina() {
     this._rutinaService.nuevaRutina(this.rutina).subscribe(
       data => {
-
         this._toasterService.Success('Rutina guardada OK !!');
 
+        var obj = Object.assign({},this.rutina);
+        obj['_id']=data['name'];
+        obj['numEjers'] = this.rutina.ejercicios.length;
+
+        this.dataSource.data = this.dataSource.data.concat(obj);
+        this.clearForm();
+        this.closeModal();
+
+        this.disabledButton(false);
+
+        
       },
       error => {
         console.log('ERROR');
         this._toasterService.Error(' Error al guardar !!');
         console.log(error);
+
+        this.disabledBtn(false);
+        this.loading(false);
 
 
       }
@@ -299,17 +327,16 @@ export class RutinasComponent implements OnInit {
 
   editModal(rutina: Rutina) {
     this.new = false;
-    console.log('00000000000000000000000000000000000000000000000000000000')
-    console.log(this.new);
-
+    
     this.listaEjerciciosEdit = [];
     this.rutinaEdit = rutina;
-    this.listaEjerciciosEdit = this.rutinaEdit['ejercicios'];
-
-
+  
     this.listEjerRutinaEdit = this.rutinaEdit.ejercicios;
 
-    console.log(this.listaEjerciciosEdit);
+    
+    console.log(this.rutinaEdit);
+    console.log(this.listEjerRutinaEdit);
+
     //console.log(this.rutinaEdit);
 
     //this.itemsInstrucciones=entrenamiento.instruccion;
@@ -367,5 +394,34 @@ export class RutinasComponent implements OnInit {
     this.trash.hide();
     this.loadTrash.show();
   }
+
+
+  clearForm(){
+    this.rutina.titulo= "";
+    this.rutina.objetivo= "";
+    this.rutina.ejercicios= [];
+    this.rutina.duracion= "";
+    this.rutina.dificultad= '';
+    this.rutina.fechaCreacion= {};
+    this.rutina.estado= '';
+    this.listEjerRutina = [];
+    this.listaEjercicios=[];
+
+  }
+
+
+  disabledButton(valor:boolean){
+    this.disabledBtn(valor);
+    this.loading(valor);
+  }
+
+  disabledBtn(access:boolean){
+    this.btnDisabled = access;
+  }
+
+  loading(load:boolean){
+    this.load = load;
+  }
+
 
 }

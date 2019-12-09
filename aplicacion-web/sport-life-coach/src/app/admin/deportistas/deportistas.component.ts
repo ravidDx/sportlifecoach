@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {MatPaginator, MatTableDataSource, MatTable} from '@angular/material';
 
+import {coerceNumberProperty} from '@angular/cdk/coercion';
+
 import { Subject } from 'rxjs/Subject';
 
 import {Router} from '@angular/router';
@@ -37,8 +39,22 @@ export class DeportistasComponent implements OnInit {
 
   titleConfirm='';
 
+  
+
   displayedColumns: string[] = ['position','nombre','apellido', 'email', 'telefono', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<Deportista>();
+
+
+  maxPeso = 150;
+  minPeso = 30;
+  thumbLabelPeso = true;
+  valuePeso = 55;
+
+  maxAltura = 200;
+  minAltura = 130;
+  thumbLabelAltura = true;
+  valueAltura = 170;
+
   
   habilitar:boolean=true;
   new:boolean;
@@ -521,6 +537,12 @@ export class DeportistasComponent implements OnInit {
     imc =  imc.toFixed(2);
     return imc;
   }
+
+
+
+
+ 
+  
 
 
 

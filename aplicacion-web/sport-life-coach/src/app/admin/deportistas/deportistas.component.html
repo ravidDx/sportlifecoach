@@ -14,6 +14,7 @@
               </button>
             </div>
 
+
             <br>
             <!-- DATA TABLE -->
 
@@ -32,7 +33,6 @@
                   <td mat-cell *matCellDef="let element; let i = index">
                     {{(dataSource.filteredData.indexOf(element)) + 1}}</td>
                 </ng-container>
-
 
                 <!-- Nombre Column -->
                 <ng-container matColumnDef="nombre">
@@ -125,7 +125,7 @@
 <!-- FORMULARIO MODAL -->
 <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
@@ -251,50 +251,109 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
-              <!--<mat-slider class="example-margin" max="200" min="30" step="1" thumbLabel tickInterval="1">
-              </mat-slider>-->
 
-              <mat-form-field class="example-full-width" *ngIf="new == true">
-                <input matInput placeholder="Peso (kg)" type="number" name="peso" [(ngModel)]="deportista.peso"
-                #weight="ngModel" required min="30" max="200">
-                <!--MSJ ERROR PESO-->
-                <mat-error *ngIf="weight.errors && (weight.dirty || weight.touched)">
-                  <span *ngIf="weight.errors.required">Campo no puede estar vacío</span>
-                  <span *ngIf="weight.errors.min">Peso debe tener valores entre 30kg y 200kg</span>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="example-full-width" *ngIf="new == false">
-                <input matInput placeholder="Peso (kg)" type="number" name="peso" [(ngModel)]="deportistaEdit.peso"
-                #peso="ngModel" required min="30" max="200">
-                <!--MSJ ERROR PESO-->
-                <mat-error *ngIf="peso.errors && (peso.dirty || peso.touched)">
-                  <span *ngIf="peso.errors.required">Campo no puede estar vacío</span>
-                  <span *ngIf="peso.errors.min">Peso debe tener valores entre 30kg y 200kg</span>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-              <mat-form-field class="example-full-width" *ngIf="new == true">
-                <input matInput placeholder="Altura (cm)" type="number" name="altura" [(ngModel)]="deportista.altura"
-                #alt="ngModel" required min="130" max="220">
-                <!--MSJ ERROR ALTURA-->
-                <mat-error *ngIf="alt.errors && (alt.dirty || alt.touched)">
-                  <span *ngIf="alt.errors.required">Campo no puede estar vacío</span>
-                  <span *ngIf="alt.errors.min || alt.errors.max">Peso debe tener valores entre 130cm y 220cm</span>
-                </mat-error>
-              </mat-form-field>
+            
+              <div class="col-md-4">
 
-              <mat-form-field class="example-full-width" *ngIf="new == false">
-                <input matInput placeholder="Altura (cm)" type="number" name="altura" [(ngModel)]="deportistaEdit.altura"
-                #alt="ngModel" required min="130" max="220">
-                <!--MSJ ERROR ALTURA-->
-                <mat-error *ngIf="alt.errors && (alt.dirty || alt.touched)">
-                  <span *ngIf="alt.errors.required">Campo no puede estar vacío</span>
-                  <span *ngIf="alt.errors.min || alt.errors.max">Peso debe tener valores entre 130cm y 220cm</span>
-                </mat-error>
-              </mat-form-field>
+                  <mat-slider  *ngIf="new == true"
+                    name='pes'
+                    [max]="maxPeso"
+                    [min]="minPeso"
+                    [thumbLabel]="thumbLabelPeso"
+                    [(ngModel)]="deportista.peso"
+            
+                    >
+                 </mat-slider>
+  
+                 <mat-slider  *ngIf="new == false"
+                 name='pes'
+                 [max]="maxPeso"
+                 [min]="minPeso"
+                 [thumbLabel]="thumbLabelPeso"
+                 [(ngModel)]="deportistaEdit.peso"
+         
+                 >
+              </mat-slider>
+  
+              </div>
+                    
+              
+            <div class="col-md-2">
+
+              
+              
+                <mat-form-field class="example-full-width" *ngIf="new == true">
+                    <input matInput placeholder="Peso" type="number" name="peso" [(ngModel)]="deportista.peso"
+                    #weight="ngModel" required min="30" max="200" disabled>
+                    <span matSuffix>kg</span>
+                    
+                    <mat-error *ngIf="weight.errors && (weight.dirty || weight.touched)">
+                      <span *ngIf="weight.errors.required">Campo no puede estar vacío</span>
+                      <span *ngIf="weight.errors.min">Peso debe tener valores entre 30kg y 200kg</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" *ngIf="new == false">
+                    <input matInput placeholder="Peso" type="number" name="peso" [(ngModel)]="deportistaEdit.peso"
+                    #peso="ngModel" required min="30" max="200" disabled>
+                    <span matSuffix>kg</span>
+                    
+                    <mat-error *ngIf="peso.errors && (peso.dirty || peso.touched)">
+                      <span *ngIf="peso.errors.required">Campo no puede estar vacío</span>
+                      <span *ngIf="peso.errors.min">Peso debe tener valores entre 30kg y 200kg</span>
+                    </mat-error>
+                </mat-form-field>
+                
             </div>
+
+                
+            <div class="col-md-4">
+
+                <mat-slider *ngIf="new == true"
+                  name='alt'
+                  [max]="maxAltura"
+                  [min]="minAltura"
+                  [thumbLabel]="thumbLabelAltura"
+                  [(ngModel)]="deportista.altura"
+                  >
+                </mat-slider>
+
+                <mat-slider *ngIf="new == false"
+                  name='alt'
+                  [max]="maxAltura"
+                  [min]="minAltura"
+                  [thumbLabel]="thumbLabelAltura"
+                  [(ngModel)]="deportistaEdit.altura"
+                  >
+                </mat-slider>
+  
+            </div>
+            
+            <div class="col-md-2">
+                <mat-form-field class="example-full-width" *ngIf="new == true">
+                  <input matInput placeholder="Altura" type="number" name="altura" [(ngModel)]="deportista.altura"
+                  #alt="ngModel" required min="130" max="220" disabled>
+                  <span matSuffix>cm</span>
+                  <!--MSJ ERROR ALTURA-->
+                  <mat-error *ngIf="alt.errors && (alt.dirty || alt.touched)">
+                    <span *ngIf="alt.errors.required">Campo no puede estar vacío</span>
+                    <span *ngIf="alt.errors.min || alt.errors.max">Peso debe tener valores entre 130cm y 220cm</span>
+                  </mat-error>
+                </mat-form-field>
+  
+                <mat-form-field class="example-full-width" *ngIf="new == false">
+                  <input matInput placeholder="Altura" type="number" name="altura" [(ngModel)]="deportistaEdit.altura"
+                  #alt="ngModel" required min="130" max="220" disabled>
+                  <span matSuffix>cm</span>
+                  <!--MSJ ERROR ALTURA-->
+                  <mat-error *ngIf="alt.errors && (alt.dirty || alt.touched)">
+                    <span *ngIf="alt.errors.required">Campo no puede estar vacío</span>
+                    <span *ngIf="alt.errors.min || alt.errors.max">Peso debe tener valores entre 130cm y 220cm</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+
+
+
           </div>
 
           <div class="row section-radio">

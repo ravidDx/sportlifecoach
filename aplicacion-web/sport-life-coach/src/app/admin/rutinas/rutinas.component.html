@@ -13,6 +13,8 @@
                 data-target="#dataModal">
                 <i class="fas fa-plus-circle"></i> Añadir
               </button>
+
+              
               <!--
                           <button mat-raised-button class="btn btn-info ml-auto" (click)="getDownload()" data-toggle="modal" data-target="#dataModal">
                               <i class="fas fa-plus-circle"></i> get
@@ -52,7 +54,7 @@
                 <!-- Num Ejercis Column -->
                 <ng-container matColumnDef="numEjers">
                   <th mat-header-cell *matHeaderCellDef class="text-center"> # Ejercicios </th>
-                  <td mat-cell *matCellDef="let element"> {{element.numEjers}}</td>
+                  <td mat-cell *matCellDef="let element"> <span class='spanNum'>{{element.numEjers}}</span></td>
                 </ng-container>
 
                 <!-- Duracion Column -->
@@ -247,6 +249,7 @@
                 </mat-form-field>
               </div>
             </div>
+            
 
             <div class="row" *ngIf="new == true">
               <div class="col-md-12">
@@ -284,6 +287,8 @@
               </div>
             </div>
 
+            
+
           <div *ngIf="new == true">
               <div class="row" *ngFor="let item of listEjerRutina">
                 <div class="col-md-2">
@@ -294,28 +299,29 @@
                   <p mat-line class="demo-2">{{item.ejercicio.titulo}} </p>
                 </div>
 
-
-
                 <div class="col-md-2">
                   <mat-form-field >
-                    <input matInput type="number" placeholder="Series" name="Series" [(ngModel)]="item.series" required
-                      min="1" max="10" #ser="ngModel">
+                      <mat-label>Series</mat-label>
+                      <mat-select disableRipple name="series" [(ngModel)]="item.series" #ruti="ngModel" required>
+                        <mat-option *ngFor="let serie of seriesList" [value]="serie">{{serie}}</mat-option>
+                      </mat-select>
                     <!--MSJ ERROR SERIES-->
-                    <mat-error *ngIf="ser.errors && (ser.dirty || ser.touched)">
-                      <span *ngIf="ser.errors.required">Este campo no puede estar vacío</span>
-                      <span *ngIf="ser.errors.min || ser.errors.max">Series solo puede valores entre 1 y 10</span>
+                    <mat-error *ngIf="ruti.errors && (ruti.dirty || ruti.touched)">
+                      <span *ngIf="ruti.errors.required">Este campo no puede estar vacío</span>
                     </mat-error>
                   </mat-form-field>
 
                 </div>
                 <div class="col-md-2">
                   <mat-form-field >
-                    <input matInput type="number" placeholder="Repeticiones" name="repeticiones"
-                      [(ngModel)]="item.repeticiones" #rep="ngModel" required min="1" max="10">
+                      <mat-label>repeticiones</mat-label>
+                      <mat-select disableRipple name="repeticiones" [(ngModel)]="item.repeticiones"  #ruti1="ngModel" required>
+                          <mat-option *ngFor="let repeticion of repeticionesList" [value]="repeticion">{{repeticion}}</mat-option>
+                       </mat-select>
+
                     <!--MSJ ERROR REPETICIONES-->
-                    <mat-error *ngIf="rep.errors && (rep.dirty || rep.touched)">
-                      <span *ngIf="rep.errors.required">Este campo no puede estar vacío</span>
-                      <span *ngIf="rep.errors.min || rep.errors.max">Repeticiones solo puede valores entre 1 y 10</span>
+                    <mat-error *ngIf="ruti1.errors && (ruti1.dirty || ruti1.touched)">
+                      <span *ngIf="ruti1.errors.required">Este campo no puede estar vacío</span>
                     </mat-error>
                   </mat-form-field>
          
@@ -323,12 +329,12 @@
                 <div class="col-md-2">
                   <mat-form-field >
                     <mat-label>Descanso</mat-label>
-                    <mat-select disableRipple name="descanso" [(ngModel)]="item.descanso" #rest="ngModel" required>
+                    <mat-select disableRipple name="descanso" [(ngModel)]="item.descanso" #ruti2="ngModel" required>
                       <mat-option *ngFor="let descanso of descansoList" [value]="descanso">{{descanso}}</mat-option>
                     </mat-select>
                     <!--MSJ ERROR DESCANSO-->
-                    <mat-error *ngIf="rest.errors && (rest.dirty || rest.touched)">
-                      <span *ngIf="rest.errors.required">Este campo no puede estar vacío</span>
+                    <mat-error *ngIf="ruti2.errors && (ruti2.dirty || ruti2.touched)">
+                      <span *ngIf="ruti2.errors.required">Este campo no puede estar vacío</span>
                     </mat-error>
                   </mat-form-field>
                
@@ -344,7 +350,7 @@
                 </div>
 
                 <div class="col-md-4">
-                  <p mat-line class="demo-2"> false {{item.ejercicio.titulo}} </p>
+                  <p mat-line class="demo-2"> {{item.ejercicio.titulo}} </p>
                 </div>
 
 
@@ -352,36 +358,40 @@
                 <div class="col-md-2">
 
                   <mat-form-field >
-                    <input matInput type="number" placeholder="Series" name="Series" [(ngModel)]="item.series" required
-                      min="1" max="10" #ser="ngModel">
-                    <!--MSJ ERROR SERIES-->
-                    <mat-error *ngIf="ser.errors && (ser.dirty || ser.touched)">
-                      <span *ngIf="ser.errors.required">Este campo no puede estar vacío</span>
-                      <span *ngIf="ser.errors.min || ser.errors.max">Series solo puede valores entre 1 y 10</span>
-                    </mat-error>
+                      <mat-label>Series</mat-label>
+                      <mat-select disableRipple name="series" [(ngModel)]="item.series" #ruti="ngModel" required>
+                          <mat-option *ngFor="let serie of seriesList" [value]="serie">{{serie}}</mat-option>
+                       </mat-select>
+                      <!--MSJ ERROR SERIES-->
+                      <mat-error *ngIf="ruti.errors && (ruti.dirty || ruti.touched)">
+                        <span *ngIf="ruti.errors.required">Este campo no puede estar vacío</span>
+                      </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
-               
+                  
                   <mat-form-field >
-                    <input matInput type="number" placeholder="Repeticiones" name="repeticiones"
-                      [(ngModel)]="item.repeticiones" #rep="ngModel" required min="1" max="10">
+                      <mat-label>Repeticiones</mat-label>
+                      <mat-select disableRipple name="repeticiones" [(ngModel)]="item.repeticiones"  #ruti1="ngModel" required>
+                          <mat-option *ngFor="let repeticion of repeticionesList" [value]="repeticion">{{repeticion}}</mat-option>
+                       </mat-select>
+
                     <!--MSJ ERROR REPETICIONES-->
-                    <mat-error *ngIf="rep.errors && (rep.dirty || rep.touched)">
-                      <span *ngIf="rep.errors.required">Este campo no puede estar vacío</span>
-                      <span *ngIf="rep.errors.min || rep.errors.max">Repeticiones solo puede valores entre 1 y 10</span>
+                    <mat-error *ngIf="ruti1.errors && (ruti1.dirty || ruti1.touched)">
+                      <span *ngIf="ruti1.errors.required">Este campo no puede estar vacío</span>
+                    
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
                   <mat-form-field >
                     <mat-label>Descanso</mat-label>
-                    <mat-select disableRipple name="descanso" [(ngModel)]="item.descanso" #rest="ngModel" required>
+                    <mat-select disableRipple name="descanso" [(ngModel)]="item.descanso" #ruti2="ngModel" required>
                       <mat-option *ngFor="let descanso of descansoList" [value]="descanso">{{descanso}}</mat-option>
                     </mat-select>
                     <!--MSJ ERROR DESCANSO-->
-                    <mat-error *ngIf="rest.errors && (rest.dirty || rest.touched)">
-                      <span *ngIf="rest.errors.required">Este campo no puede estar vacío</span>
+                    <mat-error *ngIf="ruti2.errors && (ruti2.dirty || ruti2.touched)">
+                      <span *ngIf="ruti2.errors.required">Este campo no puede estar vacío</span>
                     </mat-error>
                   </mat-form-field>
                  
@@ -400,8 +410,11 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 
-          <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
-          <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]="form.invalid">Editar</button>
+          <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]="form.invalid" [hidden]='btnDisabled'>Guardar</button>
+          <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]="form.invalid" [hidden]='btnDisabled'>Editar</button>
+          <button *ngIf="load == true" type="submit" class="btn btn-primary" [disabled]='true'>
+              <div class="loader"></div>
+          </button>
 
 
         </div>

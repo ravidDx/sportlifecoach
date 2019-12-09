@@ -255,11 +255,13 @@
               <div class="col-md-5">
                 <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == true">
                   <mat-icon>file_upload</mat-icon>
-                  {{text}} ({{files.length}}) (requerido)*
+                  {{text}} (.jpg .gif o .png) * 
+                  <p class='file_p' >tamaño máx. (5MB)</p>                 
                 </button>
                 <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == false">
                   <mat-icon>file_upload</mat-icon>
-                  Actualizar imagenes ({{files.length}})
+                  Actualizar imagen (.jpg .gif o .png)
+                  <p class='file_p' >tamaño máx. (5MB)</p>  
                 </button>
                 <br />
 
@@ -267,7 +269,7 @@
                   <a title="Cancel" (click)="cancelFileImg(0)">
                     <mat-icon style="position:fixed;">cancel</mat-icon>
                   </a>
-                  <img [src]="entrenamiento.imagen" class="card-img-modal" />
+                  <img [src]="entrenamiento.imagen" class="card-img-modal"  />
 
                 </div>
 
@@ -288,7 +290,7 @@
 
               <div class="col-md-7">
 
-                Instrucciones
+                Pasos de ejecucion (máx. 4 items)
                 <button mat-button color="primary" class='btn-add btn-ico' (click)="addInstruccion()" type="button"> <i
                     class="fas fa-plus-circle"></i> </button>
                 <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedInstruccion()" type="button"> <i
@@ -296,8 +298,9 @@
 
                 <mat-form-field class="add-item" *ngFor="let item of itemsInstrucciones; let i = index">
                   <span matPrefix>- &nbsp;</span>
-                  <input matInput type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" #inst="ngModel"
-                    required>
+                  
+                  <textarea matInput type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" #inst="ngModel"
+                    required> </textarea>
                   <!--MSJ ERROR INSTRUCCIONES-->
                   <mat-error *ngIf="inst.errors && (inst.dirty || inst.touched)">
                     <span *ngIf="inst.errors.required">Este campo no puede estar vacío</span>

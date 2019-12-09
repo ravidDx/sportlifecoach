@@ -43,6 +43,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { PreloadComponent } from '../../loading/preload/preload.component';
 
+/*
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { GestureConfig } from '@angular/material';
+*/
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -62,7 +67,8 @@ import {
   MatAutocompleteModule,
   MatRadioModule,
   MatBadgeModule,
-  MatCheckboxModule 
+  MatCheckboxModule,
+  MatSliderModule 
 } from '@angular/material';
 
 
@@ -91,6 +97,7 @@ import {
     MatRadioModule,
     MatBadgeModule,
     MatCheckboxModule,
+    MatSliderModule,
     HttpClientModule
   ],
   declarations: [

@@ -11,8 +11,8 @@
                         <div class="row row-1 animated fadeInRight">
 
 
-                            <div class="card-body">
-                                <h5 class="card-title" style="margin-bottom: 0px;"><strong>{{entrenamiento.titulo | uppercase}}</strong></h5>
+                            <div class="card-body" >
+                                <h5 class="card-title " style="margin-bottom: 0px;"><strong>{{entrenamiento.titulo | uppercase}}</strong></h5>
                                 
                                 <p *ngIf="entrenamiento.estado == 'Activo'" class="card-text subtitle-activo">{{entrenamiento.estado}}</p>
                                 <p *ngIf="entrenamiento.estado == 'Inactivo'" class="card-text subtitle-inactivo">{{entrenamiento.estado}}</p>

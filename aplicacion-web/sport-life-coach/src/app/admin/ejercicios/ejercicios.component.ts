@@ -485,6 +485,8 @@ export class EjerciciosComponent implements OnInit {
   newModal(){
     this.new = true;
     this.files=[];
+    this.itemsInstrucciones=[];
+    this.addInstruccion();
   }
   
 
@@ -523,6 +525,7 @@ export class EjerciciosComponent implements OnInit {
     this.entrenamiento.fechaCreacion=this.getFechaActual();
     this.files=[];
     this.itemsInstrucciones=[];
+    
   }
 
   
@@ -534,16 +537,21 @@ export class EjerciciosComponent implements OnInit {
 
   
   addInstruccion(){
-
+    
     let key = (this.itemsInstrucciones.length)+1;
-    this.itemsInstrucciones.push({id:key, value:''});
-
-    console.log(this.itemsInstrucciones)
+    if(key<=4){
+      this.itemsInstrucciones.push({id:key, value:''});
+    }
+    
   }
   
 
   deletedInstruccion(){
-    this.itemsInstrucciones.pop();
+    let key = this.itemsInstrucciones.length;
+    console.log(key>=1)
+    if(key>=2){
+      this.itemsInstrucciones.pop();
+    }
   }
 
 
@@ -572,12 +580,29 @@ export class EjerciciosComponent implements OnInit {
 
   onClick() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+
+    //console.log(fileUpload)
     fileUpload.onchange = () => {
-      for (let index = 0; index < fileUpload.files.length; index++) {
-        const file = fileUpload.files[index];
-        this.files[0]={ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true };
+      let typeFile = fileUpload.files[0].type; 
+      let sizeFile = fileUpload.files[0].size;
+    
+      if(typeFile === 'image/gif' || typeFile === 'image/jpeg' || typeFile === 'image/png'  ){
+        
+        if(sizeFile <= 5242880){
+      
+          for (let index = 0; index < fileUpload.files.length; index++) {
+            const file = fileUpload.files[index];
+        
+            
+            this.files[0]={ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true };
+          }
+          this.uploadFiles();
+        }
+
+      }else{
+        this._toasterService.Error('Tipo de archivo no valido!!');
       }
-      this.uploadFiles();
+      
     };
     fileUpload.click();
   }
@@ -598,7 +623,7 @@ export class EjerciciosComponent implements OnInit {
   }
 
   private uploadFile(file: FileUploadModel) {
-    console.log(file)
+  
     const fd = new FormData();
     fd.append(this.param, file.data);
 
@@ -648,6 +673,7 @@ export class EjerciciosComponent implements OnInit {
 
     this.files.forEach(file => {
       if (!file.inProgress) {
+        console.log(file.data.type)
         this.uploadFile(file);
       }
     });
@@ -701,21 +727,38 @@ export class EjerciciosComponent implements OnInit {
       public imagePath:any;
       
       onSelectFile(event:any,val:any) { // called each time file input changes
-        console.log(event)
-        if (event.target.files && event.target.files[0]) {
-          var reader = new FileReader();
-          this.imagePath = event.target.files;
-          reader.readAsDataURL(event.target.files[0]); // read file as data url
-          reader.onload = (event) => { // called once readAsDataURL is completed
-            if(val==0){
-              console.log(val);
-              this.entrenamiento.imagen = reader.result; //add source to image
-            }else{
-              this.entrenamientoEdit.imagen = reader.result; //add source to image
+        
+        let typeFile = event.target.files[0].type;
+        let sizeFile = event.target.files[0].size;
+
+ 
+
+        if(typeFile === 'image/gif' || typeFile === 'image/jpeg' || typeFile === 'image/png'  ){
+        
+          if(sizeFile <= 5242880){
+      
+            if (event.target.files && event.target.files[0]) {
+              var reader = new FileReader();
+              this.imagePath = event.target.files;
+              reader.readAsDataURL(event.target.files[0]); // read file as data url
+              reader.onload = (event) => { // called once readAsDataURL is completed
+                if(val==0){
+                  this.entrenamiento.imagen = reader.result; //add source to image
+                }else{
+                  this.entrenamientoEdit.imagen = reader.result; //add source to image
+                }
+                
+              }
             }
-            
+
+          }else{
+            this._toasterService.Error('La imagen sobrepasa el tamaño maximo !!');
           }
+
+
+
         }
+   
       }
 
       selectedFile = null;
