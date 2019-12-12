@@ -1,21 +1,47 @@
 ion-icon{
     font-size: 30px;
 }
+
 ion-toolbar {
     background-color:#0f0f0f;
 }
+
 .title{
     font-size:17px;
     color:white;
     font-weight: bolder;
 }
 
-
 .fondo {
-    --ion-background-color: #0f0f0f;
+    --ion-background-color:white;
 }
 
-.card-1{
-    background-color: beige;
-    color: black;
+
+
+.scrollable{
+    height: 200px;
+    border: 2px solid red;
+  }
+
+  #myFixZone {
+    height: 200px;
 }
+
+.container {
+    width: 100px;
+    background-color: green;
+    overflow: hidden; 
+    white-space: nowrap;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .scroll {
+      overflow: auto;
+    }
+  }
+
+
+
+
+

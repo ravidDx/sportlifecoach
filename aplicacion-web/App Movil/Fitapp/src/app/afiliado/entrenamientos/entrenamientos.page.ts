@@ -14,6 +14,15 @@ import {EntrenamientosService} from '../../servicios/entrenamientos.service';
 })
 export class EntrenamientosPage implements OnInit {
 
+
+  slideOpts = {
+    initialSlide: 0,
+    
+  };
+
+  
+
+
   email:string = '';
 
   planEntrenamiento:PlanEntrenamiento = {
@@ -29,6 +38,9 @@ export class EntrenamientosPage implements OnInit {
 
 
   planEntrenamientos:PlanEntrenamiento[]=[];
+
+
+  planEntrenamientoRamificado:any[]=[];
 
       // para el botón 
       color="danger";
@@ -106,6 +118,12 @@ export class EntrenamientosPage implements OnInit {
     this._router.navigate(['/rutina', id ]);
   }
 
+  viewEjercicio(item:any){
+
+    let id = item['ejercicio']['_id'];
+    this._router.navigate(['/ejercicio-personal', id ])
+  }
+
 
     listar(){
     
@@ -122,11 +140,10 @@ export class EntrenamientosPage implements OnInit {
                 //console.log('entro 1 vez');
                 planEntrenamiento['_id']=key$;
                 this.planEntrenamiento = planEntrenamiento;
+
+                this.getArrayPlanEntrenamiento();
                 break; //romper ciclo for
               }
-
-
-            
               
             }
           
@@ -172,6 +189,54 @@ export class EntrenamientosPage implements OnInit {
       this.color="danger";
       this.text="Sin terminar"
     }
+  }
+
+  getArrayPlanEntrenamiento(){
+
+    let rutinas = this.planEntrenamiento.rutinas;
+ 
+
+    for(let key$ in rutinas){
+      let data = rutinas[key$];
+      let rutina = data.rutina;
+      let dias = data.dias;
+      let semanas = data.semanas
+
+      let ejercicios = rutina.ejercicios
+
+      console.log(data);
+      console.log(rutina.titulo)
+      console.log(ejercicios)
+
+      for(let key1$ in semanas){
+        let semana = semanas[key1$];
+        console.log(semana)
+        for(let key2$ in dias){
+          let dia = dias[key2$];
+          console.log(dia);
+
+          let obj={
+            semana:semana,
+            dia:dia,
+            ejercicios:ejercicios,
+            terminado:false
+
+          }
+          this.planEntrenamientoRamificado.push(obj);
+
+
+        }//for3
+      }//for2
+
+    }//for 1
+
+
+    console.log(this.planEntrenamientoRamificado);
+    let numDiasEntrenamiento = this.planEntrenamientoRamificado.length;
+    let progresoPorDia = (100/numDiasEntrenamiento)
+    console.log(numDiasEntrenamiento);
+    console.log(progresoPorDia);
+
   }
 
 

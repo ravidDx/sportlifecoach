@@ -16,6 +16,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
 // para traer usuario de la base realtime
 import { AngularFireDatabase } from '@angular/fire/database';
 
+//
+import { DeportistasService } from './servicios/deportistas.service';
+
+import { Deportista } from './interfaces/deportista.interface';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -23,6 +28,25 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class AppComponent {
 
+  deportista: Deportista = {
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    fechaN: "",
+    peso: "",
+    altura: "",
+    foto: "",
+    genero: "",
+    objetivo: "",
+    observaciones: "",
+    rol: "",
+    fechaCreacion: {},
+    estado: '',
+  }
+
+  rol:any='';
+  email:any='';
   rootPage: any = SlidePage;
   showSplash = true; // <-- show animation
   public usuario: any = {}; // para llenar el usuario en caso que si existir un usuario logeado
@@ -35,7 +59,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    public router: Router, private AFauth: AngularFireAuth, private DBFire: AngularFireDatabase
+    public router: Router, private AFauth: AngularFireAuth, private DBFire: AngularFireDatabase,
+    private _deportistaService:DeportistasService
   ) {
     
     this.initializeApp();
@@ -53,25 +78,37 @@ export class AppComponent {
         // this.router.navigate(['/login']);
       } else {
         // console.log('dentro else app');
-        this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
-          this.usuario = us;
-        });
 
-        if (user.providerData[0].providerId === 'facebook.com') {
-          console.log('facebook');
-          this.provFb = true;
-          this.provGp = false;
-          this.provFi = false;
-        } else if (user.providerData[0].providerId === 'google.com') {
-          console.log('gmail');
-          this.provGp = true;
-          this.provFb = false;
-          this.provFi = false;
-        } else if (user.providerData[0].providerId === 'password') {
-          console.log('firebase');
-          this.provFi = true;
-          this.provGp = false;
-          this.provFb = false;
+        this.rol = localStorage.getItem('rol');
+        this.email = localStorage.getItem('email');
+     
+
+        if(this.rol === 'Afiliado'){
+          this.getDeportista();
+
+        }else{
+
+          this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
+            this.usuario = us;
+          });
+
+
+          if (user.providerData[0].providerId === 'facebook.com') {
+            console.log('facebook');
+            this.provFb = true;
+            this.provGp = false;
+            this.provFi = false;
+          } else if (user.providerData[0].providerId === 'google.com') {
+            console.log('gmail');
+            this.provGp = true;
+            this.provFb = false;
+            this.provFi = false;
+          } else if (user.providerData[0].providerId === 'password') {
+            console.log('firebase');
+            this.provFi = true;
+            this.provGp = false;
+            this.provFb = false;
+          }
         }
       }
     });
@@ -96,5 +133,34 @@ export class AppComponent {
 
   logoutGP() {
     this.authService.logOutGooglePlus();
+  }
+
+
+
+  getDeportista(){
+    this._deportistaService.consultarDesportistas()
+    .subscribe(
+      data=>{
+
+        for(let key$ in data){
+          let deportista = data[key$];
+          deportista['_id']=key$;
+
+          if(deportista.email === this.email){
+            this.deportista = deportista;
+            break;
+          }
+       
+        }
+
+        console.log(this.deportista)
+      
+               
+      },
+      error=>{
+        console.log(error);
+      }
+
+    );
   }
 }
