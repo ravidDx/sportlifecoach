@@ -87,9 +87,9 @@
                     <button mat-raised-button title="perfil" type="button"
                       [routerLink]="['/admin/entrenamiento',element._id ]" class="btn btn-sm btn-outline-success"
                       data-toggle="modal" data-target="#dataModal"><i class="fas fa-eye" id="iconEdit"></i></button>
-                    <button mat-raised-button title="editar" type="button" (click)="editModal(element)"
+                    <!--<button mat-raised-button title="editar" type="button" (click)="editModal(element)"
                       class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i
-                        class="fas fa-edit" id="iconEdit"></i></button>
+                        class="fas fa-edit" id="iconEdit"></i></button>-->
                     <button *ngIf="element.estado == 'Activo'" mat-raised-button title="dar de baja" type="button"
                       (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger"
                       data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock-open"

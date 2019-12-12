@@ -208,54 +208,54 @@ export class DietasComponent implements OnInit {
 
 
 
-  listar(){
+  listar() {
     let _this = this;
     this._dietaService.consultarDietas()
       .subscribe(
-        data=>{
+        data => {
 
-          let dietas=[];
-          for(let key$ in data){
-	  				let dieta = data[key$];
-	  				dieta['_id']=key$;
+          let dietas = [];
+          for (let key$ in data) {
+            let dieta = data[key$];
+            dieta['_id'] = key$;
             dietas.push(dieta);
             this.getUrlsImg(dieta);
           }
 
-          this.dietasCopy = Object.assign({},dietas);
+          this.dietasCopy = Object.assign({}, dietas);
 
           console.log(this.dietasCopy)
 
           this.getCategoriasDietas();
 
         },
-        error=>{
+        error => {
           console.log(error);
         }
 
       );
-    }
+  }
 
-  
+
   //Devuelve la url de la imagen
-  getUrlsImg(dieta:any){
-    dieta['idImg']=dieta['imagen'];
+  getUrlsImg(dieta: any) {
+    dieta['idImg'] = dieta['imagen'];
     this._dietaService.downloadUrl(dieta['imagen']).subscribe(
-      data=>{
-        dieta['imagen']=data;   
-          
+      data => {
+        dieta['imagen'] = data;
+
       },
-      error=>{
+      error => {
         console.log('ERROR');
         console.log(error);
-        
+
       }
     );
 
     dieta['imagen'] = 'http://www.leroymerlin.es/img/r25/32/3201/320102/forum_blanco/forum_blanco_sz4.jpg';
 
 
-}
+  }
 
   getCategoriasDietas() {
     this.tiposDietas = [];
@@ -299,18 +299,18 @@ export class DietasComponent implements OnInit {
     console.log(tipo)
 
     if (tipo == 'todos') {
-      
+
       this.dietas = this.dietasCopy;
 
     } else {
 
-      
+
       this.dietas = [];
 
       for (let key$ in this.dietasCopy) {
-        let dieta =  this.dietasCopy[key$];
+        let dieta = this.dietasCopy[key$];
         if (tipo === dieta.tipo) {
-          
+
           this.dietas.push(dieta);
 
         }
@@ -353,13 +353,17 @@ export class DietasComponent implements OnInit {
   addIngrediente() {
 
     let key = (this.itemsIngredientes.length) + 1;
-    this.itemsIngredientes.push({ id: key, value: '' });
+    if (key <= 10) {
+      this.itemsIngredientes.push({ id: key, value: '' });
+    }
   }
 
   addPreparacion() {
 
     let key = (this.itemsPreparacion.length) + 1;
+    if (key <= 10) {
     this.itemsPreparacion.push({ id: key, value: '' });
+    }
   }
 
   deletedIngrediente() {

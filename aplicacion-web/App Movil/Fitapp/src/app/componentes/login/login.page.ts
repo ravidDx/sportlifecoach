@@ -11,7 +11,6 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -86,7 +85,7 @@ export class LoginPage implements OnInit {
     this.authService.loginwithFacebook();
   }
 
-  loginGP() {
+  async loginGP() {
     this.authService.loginGoogle();
   }
 

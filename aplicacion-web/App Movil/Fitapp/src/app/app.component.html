@@ -30,13 +30,13 @@
         
       </ion-header>
       <ion-content>
-          <ion-list routerLink='/login'>
+          <!--<ion-list routerLink='/login'>
               <ion-menu-toggle auto-hide="false">
                 <ion-item  color="danger">
                     Cerrar Sesión L
                 </ion-item>
               </ion-menu-toggle>
-          </ion-list>
+          </ion-list>-->
         <ion-list *ngIf="provFb">
             <ion-menu-toggle auto-hide="false"  (click)="logoutFB()">
               <ion-item  color="danger">

@@ -57,3 +57,21 @@ ion-text{
     margin-left:40px;
     margin-right: 40px;
 }
+
+ion-img{
+    max-width: 45vw;
+    max-height: 45vh;
+    display:blok;
+    margin: 0 auto;
+}
+
+ion-icon {
+    font-size: 40px;
+}
+
+ion-avatar {
+    width:100% !important;  
+    height:100% !important;  
+    max-width: 100px !important;  //any size
+    max-height:100px !important; 
+}

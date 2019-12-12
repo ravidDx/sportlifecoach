@@ -160,7 +160,7 @@ export class ServicesComponent implements OnInit {
         .subscribe(
           data=>{
             this.closeModal();
-            this.toasterService.Success("Servicio editado OK !!");
+            this.toasterService.Success("Rutina editado OK !!");
             this.btnDisabled=false;
           },
           error=>{
@@ -180,7 +180,7 @@ export class ServicesComponent implements OnInit {
           data=>{
             console.log(data);
             this.closeModal();
-            this.toasterService.Success("Servicio guardado OK !!");
+            this.toasterService.Success("Rutina guardado OK !!");
             this.btnDisabled=false;
           },
           error=>{
@@ -205,7 +205,7 @@ export class ServicesComponent implements OnInit {
           data=>{
             console.log(data);
             this.closeModal();
-            this.toasterService.Success("Servicio eliminado OK !!");
+            this.toasterService.Success("Rutina dada de baja OK !!");
             
           },
           error=>{

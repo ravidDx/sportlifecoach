@@ -198,7 +198,7 @@
               <div class="col-md-4">
 
                 <mat-form-field *ngIf="new == true">
-                  <mat-label>Duracion</mat-label>
+                  <mat-label>Duracion en la Preparacion</mat-label>
                   <mat-select disableRipple name='tiempo' [(ngModel)]="dieta.tiempo"
                   required #time="ngModel">
                     <mat-option *ngFor="let tipo of tiposTiempo" [value]="tipo">{{tipo}}</mat-option>
@@ -250,7 +250,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                Ingredientes <button mat-button color="primary" class='btn-add btn-ico' (click)="addIngrediente()"
+                Ingredientes (máx. 10 items) <button mat-button color="primary" class='btn-add btn-ico' (click)="addIngrediente()"
                   type="button"> <i class="fas fa-plus-circle"></i> </button>
                 <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedIngrediente()" type="button"> <i
                     class="fas fa-minus-circle"></i> </button>
@@ -271,7 +271,7 @@
               </div>
 
               <div class="col-md-12">
-                Preparacion <button mat-button color="primary" class='btn-add btn-ico' (click)="addPreparacion()"
+                Preparacion (máx. 10 items)<button mat-button color="primary" class='btn-add btn-ico' (click)="addPreparacion()"
                   type="button"><i class="fas fa-plus-circle"></i> </button>
                 <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedPreparacion()" type="button"> <i
                     class="fas fa-minus-circle"></i> </button>

@@ -71,7 +71,7 @@
                 <div class="col-md-4">
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="facebook" type="text" name="facebook" [(ngModel)]="contacto.facebook"
-                      [disabled]="disabledForm" #fb="ngModel" required minlength="15" #input2>
+                      [disabled]="disabledForm" #fb="ngModel" required maxlength="15" #input2>
                     <mat-hint align="end">{{input2.value?.length || 0}}/15</mat-hint>
                     <mat-icon matSuffix *ngIf="new == true">mode_edit</mat-icon>
                     <!--MSJ ERROR FB-->
@@ -111,7 +111,7 @@
 
                   <mat-form-field class="example-full-width">
                     <textarea matInput placeholder="Experiencia" name="experiencia" [(ngModel)]="about.experiencia"
-                      [disabled]="disabledForm" #exp="ngModel" required minlength="256" #input5> </textarea>
+                      [disabled]="disabledForm" #exp="ngModel" required maxlength="256" #input5> </textarea>
                     <mat-hint align="end">{{input5.value?.length || 0}}/256</mat-hint>
                     <mat-icon matSuffix *ngIf="new == true">mode_edit</mat-icon>
                     <!--MSJ ERROR EXPERIENCIA-->
@@ -128,6 +128,10 @@
                     <mat-icon>file_upload</mat-icon>
                     {{text}} ({{files.length}}) (requerido)*
                   </button>
+                  <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == false">
+                      <mat-icon>file_upload</mat-icon>
+                      Actualizar imagen ({{files.length}})
+                    </button>
                   <br />
                   <ul>
                     <li *ngFor="let file of files" [@fadeInOut]="file.state">

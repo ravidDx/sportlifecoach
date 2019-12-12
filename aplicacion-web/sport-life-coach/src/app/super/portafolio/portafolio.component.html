@@ -95,10 +95,11 @@
 
                     <div class="row">
                       <div class="col-md-12">
-                          <button mat-button color="warn" (click)="onClick()" type="button">
-                              <mat-icon>file_upload</mat-icon>
-                              {{text}} ({{files.length}}) (requerido)*
-                            </button>
+                        <button mat-button color="warn" (click)="onClick()" type="button">
+                          <mat-icon>file_upload</mat-icon>
+                          {{text}} (.jpg .gif o .png)
+                          <p class='file_p'>tamaño máx. (5MB)</p>
+                        </button>
                             <br/>
                             <ul>
                               <li *ngFor="let file of files" [@fadeInOut]="file.state">

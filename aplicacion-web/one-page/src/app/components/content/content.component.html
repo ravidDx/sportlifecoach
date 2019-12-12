@@ -89,7 +89,7 @@
     <div class="container">
       <div class="row">
         <div class="sec-title text-center white wow animated fadeInDown">
-          <h2>ACERCA DE MI</h2>
+          <h2>ACERCA DE</h2>
         </div>
         <div id="about" class=" wow animated fadeInUp">
           <div class="testimonial-item text-center">
@@ -399,8 +399,8 @@
 
         <div class="col-md-6 contact-form ">
           <address class="contact-details">
-            <p><i class="fa fa-pencil"></i>Live Sport Center.<span>Parque la Carolina Av. de los Shyris, Quito  1777</span> 
-              <span>Quito - Ecuador</span></p><br>
+            <p><i class="fa fa-pencil"></i>Live Sport Center.<span>{{contacto.direccion}}</span> 
+              <span>{{contacto.ciudad}}</span></p><br>
           </address>
           <!--<form action="#" method="post">
               <div class="input-field">
@@ -421,8 +421,8 @@
 
         <div class="col-md-6 footer-social">
           <address class="contact-details">
-            <p><i class="fa fa-phone"></i>Phone: 0986598287 </p>
-            <p><i class="fa fa-envelope"></i>alberto18.ao@gmail.com</p>
+            <p><i class="fa fa-phone"></i>Phone: {{contacto.telefono}} </p>
+            <p><i class="fa fa-envelope"></i>{{contacto.email}}</p>
           </address>
         </div>
 

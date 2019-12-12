@@ -50,9 +50,12 @@ export class PersonalPage implements OnInit {
       { type: 'max', message: 'Altura contiene valores entre 130 y 220 cm' }
     ],
   };
+   /*credenciales*/
+   isInvalid:boolean = false;
+   isAccessInvalid:boolean = true;
   constructor(private userService: UsuariosService, private AFauth: AngularFireAuth,
     public router: Router, private formBuilder: FormBuilder, public toastController: ToastController,
-    public loadingController: LoadingController, private _userolesService:UserolesService) {
+    public loadingController: LoadingController, private _userolesService: UserolesService) {
     this.AFauth.authState.subscribe(usuario => {
       if (usuario.displayName) {
         const name = usuario.displayName.split(' ');
@@ -97,7 +100,8 @@ export class PersonalPage implements OnInit {
       this.userService.generic_register(auth, this.user).then(() => {
         this.OKToast();
         this.guardarUserRole(auth.email);
-        //this.router.navigate(['/tabs/home']);
+        this.getTipoUser();
+        // this.router.navigate(['/tabs/home']);
 
       });
     });
@@ -113,28 +117,78 @@ export class PersonalPage implements OnInit {
       animated: true
     });
     toast.present();
-  }
+  } 
 
-  
-  guardarUserRole(emaill:any){
+  guardarUserRole(emaill: any) {
 
-    let userole:any = {
-      email:emaill,
-      rol:'no afiliado'
+    let userole: any = {
+      email: emaill,
+      rol: 'no afiliado'
     }
     this._userolesService.newUserRole(userole).subscribe(
-      data=>{
+      data => {
         console.log(data);
-        this.router.navigate(['/tabs/home']);
-       // this.refresh(this.deportistaEdit)
+        // this.getTipoUser();
+        // this.router.navigate(['/registro/personal']);
+        // this.router.navigate(['/tabs/home']);
+        // this.refresh(this.deportistaEdit)
       },
-      error=>{
+      error => {
         console.log(error);
-        
+
       }
-      
+
     );
   }
 
- 
+  getTipoUser(){
+    let long=0;
+    this._userolesService.getTipoUser()
+      .snapshotChanges()
+      .subscribe(item =>{
+        item.forEach(element =>
+        {
+          long++;
+          let data = element.payload.toJSON();
+          if(data['email'] == this.email){
+            console.log(data['rol']);
+            this.isAccessInvalid=false;
+            localStorage.setItem('rol',data['rol']);
+            localStorage.setItem('email', this.email);
+            this.onLoginRedirect();
+          }
+
+          
+        });
+
+        if(item.length==long && this.isAccessInvalid==true){
+            let msg='No tiene Acceso al sistema';
+            //this.toasterService.Error(msg);
+             this.isInvalid=false;
+             console.log(msg)    
+        }
+          
+      })
+
+      
+
+  }
+
+  onLoginRedirect(){
+    console.log('onLoginRedirect');
+    const rol = localStorage.getItem('rol');
+
+    if(rol==='Afiliado'){
+      console.log('afil');
+      //this._router.navigate(['/sadmin/inicio']);
+      this.router.navigate(['afiliado/tabs/recetas']);
+      //this.router.navigate(['/tabs/home']);
+    }else if(rol==='no afiliado'){
+      //this._router.navigate(['/admin/dashboard']);
+      this.router.navigate(['/tabs/home']);
+      console.log('no afil');
+    }
+
+    //this.isInvalid=false;
+  }
 }

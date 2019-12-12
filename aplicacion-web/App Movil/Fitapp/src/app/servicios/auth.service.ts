@@ -17,8 +17,9 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
-import {map} from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { BehaviorSubject } from 'rxjs';
+import { UserolesService } from './useroles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class AuthService {
     private gplus: GooglePlus,
     private DBFire: AngularFireDatabase,
     public loadingController: LoadingController,
-    public toastController: ToastController) {
+    public toastController: ToastController, private _userolesService: UserolesService) {
   }
 
   // INICIO  Y CIERRE DE SESION
@@ -69,29 +70,35 @@ export class AuthService {
   }
 
 
-
-
-
-
-  loginwithFacebook() {
+  async loginwithFacebook() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      message: 'Espere porfavor ...'
+    });
+    this.presentLoading(loading);
     if (this.platform.is('cordova')) {
       this.fb.login(['email']).then(res => {
         firebase.auth().signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
           .then(suc => {
+            console.log('suc fb', suc);
+            loading.dismiss();
             // devuelve los datos de cierto usuario de acuerdo a su uid
             this.DBFire.object('usuarios/' + suc.user.uid).valueChanges().subscribe(
               s => {
                 if (s !== null) { // si existe lo lleva al home sino lo lleva al registro
                   this.router.navigate(['/tabs/home']);
                 } else {
+                  // this.guardarUserRole(suc.user.email);
                   this.router.navigate(['/registro/personal']);
                 }
               });
           }).catch(ns => {
             this.RS_Toast();
+            loading.dismiss();
           });
       }).catch((error) => {
         this.RS1_Toast();
+        loading.dismiss();
       });
     } /*else {
       console.log('dentro del else');
@@ -141,31 +148,42 @@ export class AuthService {
     toast.present();
   }
 
-  loginGoogle() {
+  async loginGoogle() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      message: 'Espere porfavor ...'
+    });
+    this.presentLoading(loading);
     if (this.platform.is('cordova')) {
       this.gplus.login({
-        scopes: 'profile email',
+        scopes: '',
         webClientId: '231674641543-hek1pi0mqerjv8b15j24ubldblh4iuug.apps.googleusercontent.com',
         offline: true
       }).then(res => {
+        loading.dismiss();
+        console.log('desde servicio res', res);
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(suc => {
+            console.log('suc gp', suc);
             // devuelve los datos de cierto usuario de acuerdo a su uid
             this.DBFire.object('usuarios/' + suc.user.uid).valueChanges().subscribe(
               s => {
                 if (s !== null) { // si existe lo lleva al home sino lo lleva al registro
                   this.router.navigate(['/tabs/home']);
                 } else {
+                  // this.guardarUserRole(suc.user.email);
                   this.router.navigate(['/registro/personal']);
                 }
               });
           }).catch(ns => {
             this.RS_Toast();
+            loading.dismiss();
           });
       }).catch((error) => {
         this.RS1_Toast();
+        loading.dismiss();
       });
-    } /*else {
+    }/*else {
       // this.webGoogleLogin();
       console.log('dentro del else');
       this.AFauth.auth
@@ -188,12 +206,17 @@ export class AuthService {
           alert('correo o contraseña incorrectos -error de firebase');
         });
     }*/
+
+  }
+
+  async presentLoading(loading) {
+    return await loading.present();
   }
 
   logOutOfFacebook() {
     this.AFauth.auth.signOut();
     if (this.platform.is('cordova')) {
-      this.fb.logout().then( suc => {
+      this.fb.logout().then(suc => {
         this.router.navigate(['/login']);
       });
     }
@@ -202,7 +225,7 @@ export class AuthService {
   logOutGooglePlus() {
     this.AFauth.auth.signOut();
     if (this.platform.is('cordova')) {
-      this.gplus.logout().then( suc => {
+      this.gplus.logout().then(suc => {
         this.router.navigate(['/login']);
       });
     }
@@ -254,6 +277,8 @@ export class AuthService {
     });
     toast.present();
   }
+
+ 
 
 
 }

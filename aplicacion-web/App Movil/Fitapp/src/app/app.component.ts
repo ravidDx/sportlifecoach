@@ -50,9 +50,10 @@ export class AppComponent {
       if (!user) {
         this.usuario.nombre = 'Nuevo Usuario';
         console.log(this.usuario.nombre);
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       } else {
         // console.log('dentro else app');
+        this.router.navigate(['/tabs/home']);
         this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
           this.usuario = us;
         });
