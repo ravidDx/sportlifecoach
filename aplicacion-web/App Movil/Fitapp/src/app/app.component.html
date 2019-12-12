@@ -54,8 +54,11 @@
         
       </ion-header>
       <ion-content>
-          <ion-list routerLink='/login'>
-              <ion-menu-toggle auto-hide="false" (click)="logout()">
+
+
+          <ion-list routerLink='/login' (click)="logout()">
+              <ion-menu-toggle auto-hide="false">
+
                 <ion-item  color="danger">
                     Cerrar Sesión L
                 </ion-item>

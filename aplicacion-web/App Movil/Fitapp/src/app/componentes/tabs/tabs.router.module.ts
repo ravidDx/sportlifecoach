@@ -89,7 +89,7 @@ const routes: Routes = [
       },
 
 
-      { path: '**',           redirectTo: '/slides'}, 
+      { path: '**',           redirectTo: '/slides'}
 
     ]
   }

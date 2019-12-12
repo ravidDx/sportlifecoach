@@ -23,7 +23,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/user-profile', title: 'Mi Perfil',  icon:'person', class: '',rol:'admin' },
     { path: '/admin/categorias', title: 'Categorias',  icon:'sort', class: '',rol:'admin' },
     { path: '/sadmin/inicio', title: 'Inicio',  icon:'home', class: '',rol:'super' },
-    { path: '/sadmin/about', title: 'Acerca de mí',  icon:'account_circle', class: '',rol:'super' },
+    { path: '/sadmin/about', title: 'Acerca de',  icon:'account_circle', class: '',rol:'super' },
     { path: '/sadmin/services', title: 'Servicios',  icon:'favorite', class: '',rol:'super' },
     { path: '/sadmin/portafolio', title: 'Portafolio',  icon:'work', class: '',rol:'super' },
     // { path: '/sadmin/posts', title: 'Posts',  icon:'event', class: '',rol:'super' },

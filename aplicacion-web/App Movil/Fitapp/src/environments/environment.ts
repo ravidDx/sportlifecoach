@@ -16,7 +16,6 @@ export const firebaseConfig = {
     appId: '1:231674641543:web:0606d3bd128c1c37c68c22'
 };
 
-
 /*export const firebaseConfig = {
   apiKey: 'AIzaSyBhL8lgiRFP9ulboiiX8FbS6baNOKhr5R8',
   authDomain: 'fblogin-75a75.firebaseapp.com',

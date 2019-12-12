@@ -109,6 +109,7 @@ export class GenderPage implements OnInit {
     this.user = this.regForm.value;
     this.presentLoadingWithOptions().then(() => {
       this.userService.registrar(this.user);
+
     });
 
   }
@@ -123,6 +124,8 @@ export class GenderPage implements OnInit {
     });
     return await loading.present();
   }
+
+  
 
 
 

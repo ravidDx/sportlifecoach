@@ -75,7 +75,7 @@ export class AppComponent {
       if (!user) {
         this.usuario.nombre = 'Nuevo Usuario';
         console.log(this.usuario.nombre);
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       } else {
         // console.log('dentro else app');
 
@@ -108,6 +108,29 @@ export class AppComponent {
             this.provFi = true;
             this.provGp = false;
             this.provFb = false;
+          }
+
+          this.router.navigate(['/tabs/home']);
+          this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
+            this.usuario = us;
+          });
+
+          if (user.providerData[0].providerId === 'facebook.com') {
+            console.log('facebook');
+            this.provFb = true;
+            this.provGp = false;
+            this.provFi = false;
+          } else if (user.providerData[0].providerId === 'google.com') {
+            console.log('gmail');
+            this.provGp = true;
+            this.provFb = false;
+            this.provFi = false;
+          } else if (user.providerData[0].providerId === 'password') {
+            console.log('firebase');
+            this.provFi = true;
+            this.provGp = false;
+            this.provFb = false;
+
           }
         }
       }

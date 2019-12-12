@@ -179,12 +179,29 @@ export class SlidersComponent implements OnInit {
   /* ----------------- METODOS UPLOAD -------------------*/
   onClick() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+
+    //console.log(fileUpload)
     fileUpload.onchange = () => {
-      for (let index = 0; index < fileUpload.files.length; index++) {
-        const file = fileUpload.files[index];
-        this.files.push({ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true });
+      let typeFile = fileUpload.files[0].type; 
+      let sizeFile = fileUpload.files[0].size;
+    
+      if(typeFile === 'image/gif' || typeFile === 'image/jpeg' || typeFile === 'image/png'  ){
+        
+        if(sizeFile <= 5242880){
+      
+          for (let index = 0; index < fileUpload.files.length; index++) {
+            const file = fileUpload.files[index];
+        
+            
+            this.files[0]={ data: file, state: 'in', inProgress: false, progress: 0, canRetry: false, canCancel: true };
+          }
+          this.uploadFiles();
+        }
+
+      }else{
+        this._toasterService.Error('Tipo de archivo no valido!!');
       }
-      this.uploadFiles();
+      
     };
     fileUpload.click();
   }
