@@ -42,6 +42,49 @@ ion-toolbar {
   }
 
 
+.span1{
+    color: azure;
+    font-family: cursive;
+    font-size: medium;
+}
+
+.span2{
+    display: flex;
+    font-family: monospace;
+    /* font-size: inherit; */
+    color: azure;
+}
 
 
+.span3{
+    color: #ff8c00;
+}
+
+.card-head{
+    background: #061c49;
+}
+
+:root {
+    --ion-color-orange: #f0690f;
+    --ion-color-orange-rgb: 240,105,15;
+    --ion-color-orange-contrast: #000000;
+    --ion-color-orange-contrast-rgb: 0,0,0;
+    --ion-color-orange-shade: #d35c0d;
+    --ion-color-orange-tint: #f27827;
+  }
+  
+  .ion-color-orange {
+    --ion-color-base: var(--ion-color-orange);
+    --ion-color-base-rgb: var(--ion-color-orange-rgb);
+    --ion-color-contrast: var(--ion-color-orange-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-orange-contrast-rgb);
+    --ion-color-shade: var(--ion-color-orange-shade);
+    --ion-color-tint: var(--ion-color-orange-tint);
+  }
+
+
+  .p1{
+    font-family: cursive;
+    font-size: small;
+  }
 
