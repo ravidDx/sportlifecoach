@@ -80,9 +80,15 @@
                       [routerLink]="['/admin/estadistica',element._id ]" class="btn btn-sm btn-outline-primary"><i
                         class="fas fa-chart-pie" id="iconEdit"></i></button>-->
 
-                    <button mat-raised-button title="editar" type="button" (click)="editModal(element)"
+                    <button *ngIf="element.estado == 'Activo'" mat-raised-button title="editar" type="button" (click)="editModal(element)"
                       class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i
                         class="fas fa-edit" id="iconEdit"></i></button>
+
+                      <button disabled *ngIf="element.estado == 'Inactivo'" mat-raised-button title="editar" type="button" (click)="editModal(element)"
+                      class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i
+                        class="fas fa-edit" id="iconEdit"></i></button>
+
+
                     <button *ngIf="element.estado == 'Activo'" mat-raised-button title="dar de baja" type="button"
                       (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger"
                       data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock-open"
@@ -327,7 +333,7 @@
                 </mat-slider>
   
             </div>
-            
+
             <div class="col-md-2">
                 <mat-form-field class="example-full-width" *ngIf="new == true">
                   <input matInput placeholder="Altura" type="number" name="altura" [(ngModel)]="deportista.altura"

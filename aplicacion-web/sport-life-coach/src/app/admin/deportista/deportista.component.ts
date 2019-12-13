@@ -85,18 +85,18 @@ export class DeportistaComponent implements OnInit {
 
     this._activeRoute.params.subscribe(
       params => {
-        console.log(params['_id']);
+        //console.log(params['_id']);
         this._deportistaService.verDeportista(params['_id']).subscribe(
           data => {
 
-            console.log(data)
+            //console.log(data)
 
             this.deportista = data;
             this.calcularEdad(this.deportista.fechaN)
             this.imc = this.calcularIMC(this.deportista.peso, this.deportista.altura);
             this.nivelPeso = this.calcularNivelpeso(this.imc);
             this.getSemiDonaChart();
-            console.log(this.imc)
+            //console.log(this.imc)
           },
           error => {
             console.log(error);
@@ -114,7 +114,7 @@ export class DeportistaComponent implements OnInit {
   evaluar() {
     this._deportistaService.editarDeportista(this.deportista, this.deportista['_id']).subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         this.evaluacion.edad = this.calcularEdad(data.fechaN).toString();
         this.evaluacion.imc = this.calcularIMC(data.peso, data.altura).toString();
         this.evaluacion.idDeportista = data['_id'];
@@ -122,7 +122,7 @@ export class DeportistaComponent implements OnInit {
 
         this._evaluacionService.nuevaEvaluacion(this.evaluacion).subscribe(
           data => {
-            console.log(data);
+            //console.log(data);
             // this.refresh(this.deportistaEdit)
           },
           error => {
@@ -131,7 +131,7 @@ export class DeportistaComponent implements OnInit {
         );
         this.closeModal();
         this.toasterService.Success("Evaluación guardada OK !!");
-        console.log(this.evaluacion)
+        //console.log(this.evaluacion)
 
       },
       error => {
@@ -147,10 +147,6 @@ export class DeportistaComponent implements OnInit {
 
     var fechaNace: any = new Date(FechaNacimiento);
     var fechaActual: any = new Date()
-
-    console.log(fechaActual)
-    console.log(fechaNace)
-
 
     var mes = fechaActual.getMonth() + 1;
     var dia = fechaActual.getDate();
@@ -204,7 +200,6 @@ export class DeportistaComponent implements OnInit {
     numPorcen1 = _thisP.imc;
     numPorcen2 = 40 - _thisP.imc;
 
-    console.log(colorNivelPeso);
 
     this.getPluginDonaChart();
 

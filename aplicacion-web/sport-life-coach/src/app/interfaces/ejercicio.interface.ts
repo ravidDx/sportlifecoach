@@ -7,5 +7,4 @@ export interface Ejercicio{
 	series:string;
 	repeticiones:string;
 	duracion:string;
-
 }

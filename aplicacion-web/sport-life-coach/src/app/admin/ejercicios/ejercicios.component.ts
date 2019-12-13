@@ -183,14 +183,14 @@ export class EjerciciosComponent implements OnInit {
 
     if(this.new==true){
 
-      this.btnSave=true; 
+      this.disabledButton(true);
+
+    
 
       this.entrenamiento.estado = 'Activo';
       this.entrenamiento.instruccion=this.itemsInstrucciones;
       
       const id = Math.random().toString(36).substring(2);
-
-      this.entrenamiento.imagen= id;
 
       let data = this.files[0].data;
       
@@ -199,12 +199,14 @@ export class EjerciciosComponent implements OnInit {
         data=>{
 
           if(data.bytesTransferred === data.totalBytes){
-            this.nuevoEntrenamiento();
+            this.nuevoEntrenamiento(id);
           }
           
         },
         error=>{
           console.log(error);
+          this.disabledBtn(false);
+          this.loading(false);
        
         }
 
@@ -212,7 +214,7 @@ export class EjerciciosComponent implements OnInit {
   
 
     }else{
-
+      this.disabledButton(true);
       if(this.files.length ==0){
         this.entrenamientoEdit.imagen = this.entrenamientoEdit['idImg'];
         delete this.entrenamientoEdit['idImg'];
@@ -243,7 +245,8 @@ export class EjerciciosComponent implements OnInit {
 
 
   //Metodo guardar entrenamiento
-  nuevoEntrenamiento(){
+  nuevoEntrenamiento(idImg:any){
+    this.entrenamiento.imagen= idImg;
     this._entrenamientoService.nuevoEntrenamiento(this.entrenamiento).subscribe(
       data=>{
         
@@ -253,6 +256,8 @@ export class EjerciciosComponent implements OnInit {
         this.clearForm();
         this.closeModal();
         this.listar();
+        this.disabledButton(false);
+
         
 
       },
@@ -260,7 +265,8 @@ export class EjerciciosComponent implements OnInit {
         console.log('ERROR');
         this._toasterService.Error(' Error al guardar !!');
         console.log(error);
-        this.btnSave=false;
+        this.disabledBtn(false);
+          this.loading(false);
       
       }
 
@@ -287,8 +293,6 @@ export class EjerciciosComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
 
           this.entrenamientosTodo = this.entrenamientos;
-
-          console.log(this.entrenamientos)
 
           this.getCategoriasEntrenamiento();
           
@@ -424,17 +428,17 @@ export class EjerciciosComponent implements OnInit {
     
     this._entrenamientoService.editarEntrenamiento(this.entrenamientoEdit,id).subscribe(
       data=>{
-        console.log(data);
+      
         this.closeModal();
         this._toasterService.Success("Ejercicio editado OK !!");
         this.listar();
-       // this.viewAlert("Deportista editado OK !!")
-        //this.disabledButton(false);
+    
+       this.disabledButton(false);
       },
       error=>{
         console.log(error);
         this._toasterService.Error("No se pudo editar correctamente!!");
-        //this.disabledButton(false);
+        this.disabledButton(false);
       }
       
     );
@@ -533,6 +537,18 @@ export class EjerciciosComponent implements OnInit {
     $('#dataModal').modal('hide');
   }
 
+  disabledButton(valor:boolean){
+    this.disabledBtn(valor);
+    this.loading(valor);
+  }
+
+  disabledBtn(access:boolean){
+    this.btnDisabled = access;
+  }
+
+  loading(load:boolean){
+    this.load = load;
+  }
 
 
   

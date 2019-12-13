@@ -10,6 +10,7 @@ import { Entrenamiento } from '../../interfaces/entrenamiento.interface';
 import { EntrenamientoService } from '../../services/entrenamiento.service';
 import { ToasterService } from '../../services/toaster.service';
 import { RutinaService } from '../../services/rutina.service';
+import { Ejercicio } from 'app/interfaces/ejercicio.interface';
 
 declare var  $: any;
 
@@ -32,12 +33,13 @@ export class RutinasComponent implements OnInit {
 
 
   new: boolean = true;
-  duracionList = ['10 min', '20 min', '30 min', '40 min', '50 min', '1 hora', '1 h 15 min', '1 h 30 min', '1 h 45 min'];
-  descansoList = ["10´´", "20´´", "30´´", "40´´", "50´´", "60´´"];
+  duracionList: any = ['10 min', '20 min', '30 min', '40 min', '50 min', '1 hora', '1 h 15 min', '1 h 30 min', '1 h 45 min'];
+  descansoList: any =["10´´", "20´´", "30´´", "40´´", "50´´", "60´´"];
  
-  repeticionesList = ['5','10','15','20','25','30','35','40'];
-  seriesList = ['1','2','3','4','5','6','7','8','9','10'];
- 
+  repeticionesList: any = ['5','10','15','20','25','30','35','40'];
+  seriesList: any = ['1','2','3','4','5','6','7','8','9','10'];
+  
+  seriesCopy:any=[];
 
   dificultadList: any = ['Principiante', 'Medio', 'Avanzado'];
 
@@ -76,7 +78,10 @@ export class RutinasComponent implements OnInit {
   listaEjerciciosEdit: any[] = [];
   listEjerRutina: any[] = [];
 
-  listEjerRutinaEdit: any[] = [];
+  listEjerRutinaEdit: Ejercicio[] = [];
+
+  listEjerRutinaEditNew: Ejercicio[] = [];
+  listaEjerciciosEditNew: any[] = [];
 
 
   load=false;
@@ -111,21 +116,33 @@ export class RutinasComponent implements OnInit {
       console.log(this.rutina);
     } else {
 
+      this.disabledButton(true);
+
+      
+      for (let $key in this.listEjerRutinaEditNew) {
+        
+        this.listEjerRutinaEdit.push(this.listEjerRutinaEditNew[$key])
+      }
+
+      this.listEjerRutinaEditNew=[]
+
+
       console.log(this.rutinaEdit)
 
-      /*
+      
       this._rutinaService.editarRutina(this.rutinaEdit, this.rutinaEdit['_id']).subscribe(
         data => {
-          console.log(data, 'modificar taty')
+      
           this.listar();
           this.closeModal();
           this.Success('Rutina editada OK !!');
+          this.disabledButton(false);
         },
         error => {
           console.log(error);
         });
 
-        */
+        
     }
 
 
@@ -206,6 +223,8 @@ export class RutinasComponent implements OnInit {
     this.new = true;
   }
 
+  selected = '5';
+
 
   //Metodo listar entrenamientos
   listarEjercicios() {
@@ -217,11 +236,18 @@ export class RutinasComponent implements OnInit {
           for (let key$ in data) {
             let entrenamiento = data[key$];
             entrenamiento['_id'] = key$;
-            this.entrenamientos.push(entrenamiento);
-            this.getUrlsImg(entrenamiento);
+
+            if(entrenamiento.estado === 'Activo'){
+                this.entrenamientos.push(entrenamiento);
+                this.getUrlsImg(entrenamiento);
+            }
+
           }
 
+
           console.log(this.entrenamientos)
+
+        
 
         },
         error => {
@@ -255,20 +281,22 @@ export class RutinasComponent implements OnInit {
 
   addEjercicioEdit(event: any) {
     //console.log(this.listaEjercicios);
-    //this.listEjerRutina = [];
+    this.listEjerRutinaEditNew = [];
 
     //this.entrenamientos=[];
-    /*
-    for (let $key in this.listaEjerciciosEdit) {
+    
+    for (let $key in this.listaEjerciciosEditNew) {
 
       let data: any = {
-        ejercicio: this.listaEjerciciosEdit[$key],
+        ejercicio: this.listaEjerciciosEditNew[$key],
         series: '',
         repeticiones: '',
         descanso: ''
       }
-      this.listEjerRutinaEdit.push(data);
-    }*/
+      this.listEjerRutinaEditNew.push(data);
+    }
+
+    console.log(this.listEjerRutinaEditNew)
 
 
 
@@ -322,8 +350,10 @@ export class RutinasComponent implements OnInit {
   }
 
 
-
-
+  onChangeTown(event): void {
+    const selectedTown = event;
+    console.log('selectedTown: ', selectedTown);
+  }
 
   editModal(rutina: Rutina) {
     this.new = false;
@@ -333,9 +363,14 @@ export class RutinasComponent implements OnInit {
   
     this.listEjerRutinaEdit = this.rutinaEdit.ejercicios;
 
-    
-    console.log(this.rutinaEdit);
-    console.log(this.listEjerRutinaEdit);
+    for (let key$ in this.listEjerRutinaEdit) {
+      let ejercicio = this.listEjerRutinaEdit[key$]['ejercicio'];
+      this.listaEjerciciosEdit.push(ejercicio)
+      this.listEjerRutinaEdit[key$]['series']=this.listEjerRutinaEdit[key$]['series']+'';
+      this.listEjerRutinaEdit[key$]['repeticiones']=this.listEjerRutinaEdit[key$]['repeticiones']+'';
+      this.listEjerRutinaEdit[key$]['descanso']=this.listEjerRutinaEdit[key$]['descanso']+'';
+      //this.seriesCopy.push(this.listEjerRutinaEdit[key$]['series']+'')
+    }
 
     //console.log(this.rutinaEdit);
 
@@ -385,6 +420,14 @@ export class RutinasComponent implements OnInit {
       }
       
     );
+  }
+
+
+  eliminarItem(i:any){
+    console.log(i);
+    this.listEjerRutinaEdit.splice(i, 1);
+
+    console.log(this.listEjerRutinaEdit)
   }
 
   loadingTrash(){

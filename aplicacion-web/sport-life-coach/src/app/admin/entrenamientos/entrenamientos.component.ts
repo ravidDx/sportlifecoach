@@ -99,11 +99,10 @@ export class EntrenamientosComponent implements OnInit {
       .subscribe(
         data => {
 
-
-
           for (let key$ in data) {
             let planEntrenamiento = data[key$];
             planEntrenamiento['_id'] = key$;
+
             this.planEntrenamientos.push(planEntrenamiento);
           }
 
@@ -133,7 +132,11 @@ export class EntrenamientosComponent implements OnInit {
           for (let key$ in data) {
             let rutina = data[key$];
             rutina['_id'] = key$;
-            this.rutinas.push(rutina);
+
+            if(rutina['estado']==='Activo'){
+              this.rutinas.push(rutina);
+            }
+           
           }
 
           console.log(this.rutinas)
@@ -159,7 +162,12 @@ export class EntrenamientosComponent implements OnInit {
           for (let key$ in data) {
             let deportista = data[key$];
             deportista['_id'] = key$;
-            this.deportistas.push(deportista);
+
+            if(deportista['estado']==='Activo'){
+              this.deportistas.push(deportista);
+            }
+
+            
           }
 
           console.log(this.deportistas)
@@ -188,7 +196,7 @@ export class EntrenamientosComponent implements OnInit {
 
   guardar() {
     if (this.new == true) {
-      console.log('*******************************')
+   
 
 
       var listRutinasEntr = this.listRutinasEntr;

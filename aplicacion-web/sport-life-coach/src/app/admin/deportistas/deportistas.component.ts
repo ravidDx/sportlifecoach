@@ -159,10 +159,8 @@ export class DeportistasComponent implements OnInit {
         data=>{
           
           var obj = Object.assign({},this.deportista);
-          console.log(obj,'objeto');
           obj['_id']=data['name'];
-          console.log(obj['_id'],'objeto');
-          console.log(data['name'],'data');
+        
 
           //Guardar credenciales email y pass en firebase
           this.guardarAuthUser(obj.email,obj.email);
@@ -242,7 +240,6 @@ export class DeportistasComponent implements OnInit {
       
     );
 
-    console.log(this.evaluacion)
 
   }
 
@@ -280,8 +277,6 @@ export class DeportistasComponent implements OnInit {
         
           this.dataSource.data = this.deportistas;
           this.dataSource.paginator = this.paginator;
-
-          console.log(this.dataSource.data)
                  
         },
         error=>{
@@ -295,9 +290,6 @@ export class DeportistasComponent implements OnInit {
   cargarId(indice:string, event:any){
     this.indiceData=indice;
     this.eventData = event;
-    console.log(this.indiceData);
-    
-    
   }
 
   cargarObjectBaja(deportista:Deportista, event:any){
@@ -402,7 +394,7 @@ export class DeportistasComponent implements OnInit {
   }
 
   select(event:any){
-    console.log(event)
+    
     //this.deportista.objetivo=event;
  
   }

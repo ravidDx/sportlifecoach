@@ -14,6 +14,7 @@ export class EjercicioComponent implements OnInit {
   imagenes:any = [];
   cargar:boolean=false;
 
+  
   entrenamiento:Entrenamiento = {
     tipo:"",
     titulo:"",

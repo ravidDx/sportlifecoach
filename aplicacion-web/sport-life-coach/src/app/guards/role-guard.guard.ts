@@ -17,17 +17,16 @@ export class RoleGuard implements  CanActivate{
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const rol = localStorage.getItem('rol');
-    console.log('next data rol '+next.data.role)
-    console.log('rol '+ rol)
+    console.log('Usuario rol: '+ rol)
     if (rol === next.data.role){
       console.log('entro');
       return true;
     }else{
       if(rol === 'super'){
-        console.log('siii');
+        console.log('super');
       }
       if(rol === 'admin'){
-        console.log('nooo');
+        console.log('admin');
       }
     }
     
