@@ -31,19 +31,19 @@
 
         <ion-row *ngIf="rol == 'Afiliado'" >
             <ion-col size="4" >
-                  <a>
+                  <a routerLink="/afiliado/perfil">
                     <ion-menu-toggle auto-hide="false">
                         <ion-avatar >
   
-                            <img [src]=deportista.foto > 
-  
+                            <img [src]=deportista.foto >
+                              
                         </ion-avatar>
                     </ion-menu-toggle>
                   </a>  
             </ion-col>
             <ion-col padding >
               <ion-menu-toggle auto-hide="false">
-                <div class="nick">Nickname</div>
+                <div class="nick">Nickname {{profile}}</div>
                 
                 <div class="user">{{deportista.nombre}}  {{deportista.apellido}} </div>
                 
@@ -56,14 +56,13 @@
       <ion-content>
 
 
-          <ion-list routerLink='/login' (click)="logout()">
+          <!--<ion-list routerLink='/login' (click)="logout()">
               <ion-menu-toggle auto-hide="false">
-
                 <ion-item  color="danger">
                     Cerrar Sesión L
                 </ion-item>
               </ion-menu-toggle>
-          </ion-list>
+          </ion-list>-->
         <ion-list *ngIf="provFb">
             <ion-menu-toggle auto-hide="false"  (click)="logoutFB()">
               <ion-item  color="danger">

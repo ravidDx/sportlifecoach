@@ -22,6 +22,13 @@ export class DeportistasService {
   return this._http.get<Deportista[]>(this.deportistasUrl);
 }
 
+editarDeportista(deportista:Deportista, indice:string){  
+  console.log(deportista.nombre, 'desde servicio');
+  console.log(indice, 'desde servicio');
+  let url =`${this.deportistaUrl}/${indice}.json`;
+  return this._http.put<Deportista>(url,deportista);
+}
+
 
 
   

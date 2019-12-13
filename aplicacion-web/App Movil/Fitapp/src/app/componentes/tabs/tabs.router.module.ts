@@ -87,6 +87,15 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'calculadora',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../../afiliado/calculadora/calculadora.module').then(m => m.CalculadoraPageModule)
+          }
+        ]
+      },
 
 
       { path: '**',           redirectTo: '/slides'}

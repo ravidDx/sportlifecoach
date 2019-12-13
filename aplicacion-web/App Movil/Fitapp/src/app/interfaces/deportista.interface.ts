@@ -4,8 +4,8 @@ export interface Deportista{
 	email:string;
 	telefono:string;
 	fechaN:any;
-	peso:string;
-	altura:string;
+	peso:any;
+	altura:any;
 	foto:String;
     genero:String;
     objetivo:String;

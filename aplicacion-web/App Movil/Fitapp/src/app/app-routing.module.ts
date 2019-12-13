@@ -28,6 +28,9 @@ const routes: Routes = [
 
   { path: 'recetas', loadChildren: './afiliado/recetas/recetas.module#RecetasPageModule' },
   { path: 'receta/:id', loadChildren: './afiliado/receta/receta.module#RecetaPageModule' },
+  { path: 'afiliado/perfil', loadChildren: './afiliado/perfil/perfil.module#PerfilPageModule' },
+  { path: 'calculadora', loadChildren: './afiliado/calculadora/calculadora.module#CalculadoraPageModule' },
+
 
 
 

@@ -24,6 +24,8 @@ img {
     margin-bottom: 30px;
     //size: 60px;
 }
+
+
 ion-label {
     color:white;
     font-size: 25px;
@@ -58,12 +60,23 @@ ion-text{
     margin-right: 40px;
 }
 
-ion-img{
+.icon {
     max-width: 45vw;
     max-height: 45vh;
     display:blok;
     margin: 0 auto;
 }
+
+.premium {
+    max-width: 80vw;
+    max-height: 70vh;
+    display:blok;
+    margin: 0 auto;
+}
+
+/*ion-img{
+    
+}*/
 
 ion-icon {
     font-size: 40px;
@@ -74,4 +87,25 @@ ion-avatar {
     height:100% !important;  
     max-width: 100px !important;  //any size
     max-height:100px !important; 
+}
+
+.steps {
+   font-size: 15px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+h3{
+    font-size: 15px;
+    color:white;
+    margin-top:10px;
+    margin-bottom: 0px;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+.no {
+    margin:0px;
 }

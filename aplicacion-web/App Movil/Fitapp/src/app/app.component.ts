@@ -50,9 +50,11 @@ export class AppComponent {
   rootPage: any = SlidePage;
   showSplash = true; // <-- show animation
   public usuario: any = {}; // para llenar el usuario en caso que si existir un usuario logeado
-  public provFb: Boolean = false;
-  public provGp: Boolean = false;
-  public provFi: Boolean = false;
+  public provFb: Boolean ;
+  public provGp: Boolean ;
+  public provFi: Boolean ;
+
+
 
   constructor(
     private platform: Platform,
@@ -66,32 +68,17 @@ export class AppComponent {
     this.initializeApp();
     // para saber si existe un usuario logeado
     this.AFauth.authState.subscribe(user => {
-      console.log('Estado del usuario', user);
+      // console.log('Estado del usuario', user);
       // this.usuario.uid = user.uid;
       // console.log(this.usuario.uid + 'uid');
       // this.usuario.nombre = user.displayName;
       // console.log(this.usuario.nombre + 'uid');
 
-      if (!user) {
-        this.usuario.nombre = 'Nuevo Usuario';
-        console.log(this.usuario.nombre);
-        this.router.navigate(['/login']);
-      } else {
-        // console.log('dentro else app');
-
-        this.rol = localStorage.getItem('rol');
-        this.email = localStorage.getItem('email');
-     
-
-        if(this.rol === 'Afiliado'){
-          this.getDeportista();
-
-        }else{
-
-          this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
-            this.usuario = us;
-          });
-
+        if (!user) {
+          this.usuario.nombre = 'Nuevo Usuario';
+          console.log(this.usuario.nombre);
+          this.router.navigate(['/login']);
+        } else {
 
           if (user.providerData[0].providerId === 'facebook.com') {
             console.log('facebook');
@@ -110,36 +97,26 @@ export class AppComponent {
             this.provFb = false;
           }
 
+          // console.log('dentro else app');
           this.router.navigate(['/tabs/home']);
-          this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
-            this.usuario = us;
-          });
+          this.rol = localStorage.getItem('rol');
+          this.email = localStorage.getItem('email');
 
-          if (user.providerData[0].providerId === 'facebook.com') {
-            console.log('facebook');
-            this.provFb = true;
-            this.provGp = false;
-            this.provFi = false;
-          } else if (user.providerData[0].providerId === 'google.com') {
-            console.log('gmail');
-            this.provGp = true;
-            this.provFb = false;
-            this.provFi = false;
-          } else if (user.providerData[0].providerId === 'password') {
-            console.log('firebase');
-            this.provFi = true;
-            this.provGp = false;
-            this.provFb = false;
-
+          if(this.rol === 'Afiliado'){
+            this.getDeportista();
+            // console.log(this.getDeportista());
+           
+          }else{
+            this.DBFire.object('usuarios/' + user.uid).valueChanges().subscribe( us => {
+              this.usuario = us;
+            });
           }
         }
-      }
     });
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       timer(3000).subscribe(() => this.showSplash = false);
@@ -157,7 +134,6 @@ export class AppComponent {
   logoutGP() {
     this.authService.logOutGooglePlus();
   }
-
 
 
   getDeportista(){
