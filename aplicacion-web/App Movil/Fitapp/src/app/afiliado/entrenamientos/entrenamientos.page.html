@@ -14,18 +14,25 @@
 <ion-content class="fondo">
 
         <ion-slides pager="true" [options]="slideOpts" class='sliderMain'>
-            <ion-slide *ngFor="let item of planEntrenamientoRamificado;let i = index" >
+            <ion-slide *ngFor="let item of planEntrenamiento['planEntren'];let i = index" >
 
                     <ion-card>
                             <ion-card-header>
                                     <ion-grid>
                                             <ion-row>
-                                                <ion-col size="6">
-                                                        {{item['semana']}} 
+                                                <ion-col size="4">
+                                                    <p>{{item['semana']}} </p>
+                                                    <p>{{item['dia']}}</p>
                                                 </ion-col>
-                                                <ion-col size="6">
-                                                        {{item['dia']}}
-                                                    </ion-col>
+                                  
+                                                <ion-col size="1">
+                                                       
+                                                </ion-col>
+
+                                               <ion-col size="7">
+                                                    <ion-button expand="block" color='warning' (click)="editarProgreso(item)">Sin terminar {{item['terminado']}}</ion-button>
+
+                                               </ion-col>
                                             </ion-row>
                                     </ion-grid>
                             </ion-card-header>
@@ -38,8 +45,8 @@
                                             <ion-list-header>
                                                 Hoy vamos a realizar la siguiente rutina
                                             </ion-list-header>
-                                            
-                                            <ion-item *ngFor="let item2 of planEntrenamientoRamificado[i]['ejercicios']; let j = index"  (click)="viewEjercicio(item2)" >
+                                           
+                                            <ion-item *ngFor="let item2 of planEntrenamiento['planEntren'][i]['ejercicios']; let j = index"  (click)="viewEjercicio(item2)" >
                                                 <ion-avatar slot="start">
                                                 <img [src]="item2['ejercicio']['imagen']">
                                                 </ion-avatar>
@@ -59,24 +66,10 @@
                             </ion-card-content>
                     </ion-card>
 
-     
-
-                                        
-
-                    
-                
-               
-
-
-
-                
- 
-
  
             </ion-slide>
 
-            
- 
+             
         </ion-slides>
 
        

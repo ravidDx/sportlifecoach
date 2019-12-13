@@ -12,6 +12,7 @@ import { ToasterService } from '../../services/toaster.service';
 import { RutinaService } from '../../services/rutina.service';
 import { DeportistaService } from '../../services/deportista.service';
 import { PlanEntrenamientoService } from '../../services/plan-entrenamiento.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -71,6 +72,9 @@ export class EntrenamientosComponent implements OnInit {
   listRutinas: any[] = [];
 
   deportistasAsignados: any[] = [];
+
+
+  planEntrenamientoRamificado:any[]=[];
 
 
 
@@ -197,29 +201,43 @@ export class EntrenamientosComponent implements OnInit {
   guardar() {
     if (this.new == true) {
    
-
-
       var listRutinasEntr = this.listRutinasEntr;
       var estado = 'Activo';
-      var progreso = '0 %';
+      var progreso = '0';
       var fecha = this.getFechaActual();
 
       for (let $key in this.deportistasAsignados) {
-        var planEntrenamiento: PlanEntrenamiento = {
-          deportista: this.deportistasAsignados[$key],
-          rutinas: listRutinasEntr,
-          duracion: "",
-          fechaCreacion: fecha,
-          estado: estado,
-          progreso: progreso,
-        }
+          this.planEntrenamientoRamificado=[];
+          var planEntrenamiento: PlanEntrenamiento = {
+            deportista: this.deportistasAsignados[$key],
+            rutinas: listRutinasEntr,
+            duracion: "",
+            fechaCreacion: fecha,
+            estado: estado,
+            progreso: progreso,
+            
+          }
+
+        //console.log(planEntrenamiento)
+
+        let planRamificado=this.getArrayPlanEntrenamiento(planEntrenamiento);
+
+        planEntrenamiento['planEntren']=planRamificado;
+        let numDiasEntrenamiento = this.planEntrenamientoRamificado.length;
+        let progresoPorDia = (100/numDiasEntrenamiento)
+        planEntrenamiento['numDias']=numDiasEntrenamiento;
+        planEntrenamiento['progresoPorDia']=progresoPorDia;
+
+
+        console.log(planEntrenamiento)
 
         this.nuevoPlanEntrenamiento(planEntrenamiento);
-        // this.clearForm();
+         this.clearForm();
         this.closeModal();
         this._toasterService.Success('Plan de entrenamiento guardado OK !!');
 
-      }
+      }//fin for
+
     } else {
       this._planEntrenamientoService.editarPlanEntrenamiento(this.planEntrenamiento, this.planEntrenamientoEdit['_id']).subscribe(
         data => {
@@ -371,5 +389,70 @@ export class EntrenamientosComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+
+
+  getArrayPlanEntrenamiento(planEntrenamiento:any){
+
+    let rutinas = planEntrenamiento.rutinas;
+ 
+
+    for(let key$ in rutinas){
+      let data = rutinas[key$];
+      let rutina = data.rutina;
+      let dias = data.dias;
+      let semanas = data.semanas
+
+      let ejercicios = rutina.ejercicios
+
+      console.log(data);
+      console.log(rutina.titulo)
+      console.log(ejercicios)
+
+      for(let key1$ in semanas){
+        let semana = semanas[key1$];
+        console.log(semana)
+        for(let key2$ in dias){
+          let dia = dias[key2$];
+          console.log(dia);
+
+          let obj={
+            semana:semana,
+            dia:dia,
+            ejercicios:ejercicios,
+            terminado:false
+
+          }
+          this.planEntrenamientoRamificado.push(obj);
+
+
+        }//for3
+      }//for2
+
+    }//for 1
+
+
+    console.log(this.planEntrenamientoRamificado);
+    let numDiasEntrenamiento = this.planEntrenamientoRamificado.length;
+    let progresoPorDia = (100/numDiasEntrenamiento)
+    console.log(numDiasEntrenamiento);
+    console.log(progresoPorDia);
+
+
+    return this.planEntrenamientoRamificado;
+
+  }
+
+
+  clearForm(){
+    this.planEntrenamiento.deportista={};
+    this.planEntrenamiento.rutinas=[];
+    this.planEntrenamiento.duracion='';
+    this.planEntrenamiento.fechaCreacion={};
+    this.planEntrenamiento.estado='';
+    this.planEntrenamiento.progreso='';
+    this.listRutinasEntr=[];
+  }
+
 
 }

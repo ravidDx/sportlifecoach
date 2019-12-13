@@ -61,7 +61,14 @@ export class EntrenamientosPage implements OnInit {
 
 
   
-  editarProgreso(){
+  editarProgreso(item:any){
+
+
+    let diaRutina=item;
+    let numDiasEntrenamiento = this.planEntrenamiento['numDiasEntrenamiento'];
+    let progresoPorDia = this.planEntrenamiento['progresoPorDia'];
+    let progreso = parseInt(this.planEntrenamiento['progreso']) + progresoPorDia;
+    this.planEntrenamiento['progreso'] = progreso;
 
     this.btn=true;
     console.log(this.btn,'listo');
@@ -69,6 +76,13 @@ export class EntrenamientosPage implements OnInit {
       this.color="success";
       this.text="Finalizado"
     }
+
+    diaRutina['terminado']=true
+
+    console.log(diaRutina);
+    console.log(this.planEntrenamiento)
+
+
     /*
     console.log('editar progreso');
     let rutinas  = this.planEntrenamiento.rutinas;
@@ -85,12 +99,15 @@ export class EntrenamientosPage implements OnInit {
     
    progreso = (100*this.numeroTotalFinalizado) /numRutinas;
 */
-   this.planEntrenamiento.progreso = 50+'';
+   //this.planEntrenamiento.progreso = 50+'';
 
    let indice = this.planEntrenamiento['_id']
 
    this._planEntrenamientoService.editarPlanEntrenamiento(this.planEntrenamiento, indice).subscribe(
     data => {
+      console.log('guardado con exito');
+
+      
  
 
     },
@@ -140,12 +157,15 @@ export class EntrenamientosPage implements OnInit {
                 //console.log('entro 1 vez');
                 planEntrenamiento['_id']=key$;
                 this.planEntrenamiento = planEntrenamiento;
-
-                this.getArrayPlanEntrenamiento();
+                //this.planEntrenamientoRamificado = this.planEntrenamiento['planEntren'];
+                //this.getArrayPlanEntrenamiento();
                 break; //romper ciclo for
               }
+
               
             }
+
+
           
           
             console.log(this.planEntrenamiento)
@@ -177,8 +197,8 @@ export class EntrenamientosPage implements OnInit {
     localStorage.setItem('totalFinalizado',this.numeroTotalFinalizado+"");
     
   
-
-    this.editarProgreso();
+    
+    //this.editarProgreso();
 
   }
 

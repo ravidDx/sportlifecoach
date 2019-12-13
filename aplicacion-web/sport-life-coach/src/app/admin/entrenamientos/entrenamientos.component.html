@@ -13,6 +13,8 @@
                 data-target="#dataModal">
                 <i class="fas fa-plus-circle"></i> Añadir
               </button>
+
+  
               <!--
                             <button mat-raised-button class="btn btn-info ml-auto" (click)="getDownload()" data-toggle="modal" data-target="#dataModal">
                                 <i class="fas fa-plus-circle"></i> get
@@ -58,8 +60,12 @@
                 <!-- Duracion Column -->
                 <ng-container matColumnDef="progreso">
                   <th mat-header-cell *matHeaderCellDef class="text-center"> Progreso </th>
-                  <td mat-cell *matCellDef="let element"> {{element.progreso}}</td>
+                  <td mat-cell *matCellDef="let element">  
+                      <mat-progress-bar mode="determinate" value="{{element.progreso}}"></mat-progress-bar>   
+                </td>
                 </ng-container>
+
+                
 
 
                 <!-- Dificultad Column -->
@@ -153,7 +159,8 @@
                   <mat-label>Elija un deportista</mat-label>
                   <mat-select disableRipple name="deportista" [(ngModel)]="deportistasAsignados" multiple
                     #deportista="ngModel" required>
-                    <mat-option *ngFor="let item of deportistas" [value]="item">{{item.nombre}} {{item.apellido}}
+                    <mat-option *ngFor="let item of deportistas" [value]="item">{{item.nombre}} {{item.apellido}} <span style="color: cornflowerblue;
+                      font-family: cursive;">(objetivo: {{item.objetivo}})</span>
                     </mat-option>
                   </mat-select>
                   <!--MSJ ERROR  DEPORTISTA-->
@@ -166,7 +173,8 @@
                   <mat-label>Elija un deportista</mat-label>
                   <mat-select disableRipple name='deportista' [(ngModel)]="deportistasAsignados" multiple
                     #deportista="ngModel" required>
-                    <mat-option *ngFor="let item of deportistas" [value]="item">{{item.nombre}} {{item.apellido}}
+                    <mat-option *ngFor="let item of deportistas" [value]="item">{{item.nombre}} {{item.apellido}} <span style="color: cornflowerblue;
+                      font-family: cursive;">(objetivo: {{item.objetivo}})</span>
                     </mat-option>
                   </mat-select>
                   <!--MSJ ERROR  DEPORTISTA-->
@@ -183,7 +191,9 @@
                 <mat-form-field *ngIf="new == true">
                   <mat-label>Lista de rutinas</mat-label>
                   <mat-select disableRipple name="tipo" [(ngModel)]="listRutinas" multiple #rutina="ngModel" required>
-                    <mat-option *ngFor="let item of rutinas" [value]="item" (click)="addRutina($event)">{{item.titulo}}
+                    <mat-option *ngFor="let item of rutinas" [value]="item" (click)="addRutina($event)">{{item.titulo}}  <span style="color: cornflowerblue;
+                      font-family: cursive;"> (nivel: {{item.dificultad}})</span> - <span style="color: chocolate;
+                      font-family: cursive;">(duracion: {{item.duracion}})</span>
                     </mat-option>
                   </mat-select>
                   <!--MSJ ERROR  RUTINAS-->
@@ -207,7 +217,8 @@
 
             <div class="row" *ngFor="let item of listRutinasEntr">
               <div class="col-md-6">
-                <p mat-line class="demo-2"> {{item.rutina.titulo}} </p>
+                <p mat-line class="demo-2" style="margin: 0px;"> {{item.rutina.titulo}} </p>
+                <span style="color: chocolate;font-family: cursive;font-size: small;">(Nivel {{item.rutina.dificultad}})</span>
               </div>
 
               <div class="col-md-3">
