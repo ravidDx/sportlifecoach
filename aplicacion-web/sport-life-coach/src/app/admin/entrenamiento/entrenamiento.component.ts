@@ -85,6 +85,8 @@ export class EntrenamientoComponent implements OnInit {
 
             this.estado = this.planEntrenamiento.estado;
             this.listSemanas = [];
+
+            this.planEntrenamiento.progreso =  parseInt(this.planEntrenamiento.progreso).toFixed(2)
            
             for(let key$ in this.planEntrenamiento.rutinas){
               let rutina = this.planEntrenamiento.rutinas[key$]
@@ -120,7 +122,7 @@ export class EntrenamientoComponent implements OnInit {
              }
             */
              console.log(this.entrenamiento);
-             console.log(this.planEntrenamiento.rutinas, 'este es');
+             console.log(this.planEntrenamiento, 'este es');
 
             
           

@@ -11,17 +11,30 @@
                           <a routerLink="/admin/entrenamientos" class="btn btn-primary btn-round" data-toggle="modal"
                           ><i class="fas fa-arrow-left"></i> Atrás</a>
                             <div class="row row-1 animated fadeInRight">
-    
-    
+
+                                <div class="col-lg-6" >
                                     <div class="card-body">
 
-                                            <h5 class="card-title" style="margin-bottom: 0px;"><strong>Informacion:</strong></h5>
-                                              
-                                            <p style="margin-bottom: 0px;font-family: cursive;font-size: large;color: forestgreen;">Deportista: <span style="color:black;">{{planEntrenamiento.deportista.nombre}} {{planEntrenamiento.deportista.apellido}}</span></p>
-                                            <p style="margin-bottom: 0px;font-family: cursive;font-size: large; color: forestgreen;">Objetivo: <span style="color:black;">{{planEntrenamiento.deportista.objetivo}}</span></p>
-                                            
-                                           
-                                        </div>
+                                        <h5 class="card-title" style="margin-bottom: 0px;"><strong>Informacion:</strong></h5>
+                                          
+                                        <p style="margin-bottom: 0px;font-family: cursive;font-size: large;color: forestgreen;">Deportista: <span style="color:black;">{{planEntrenamiento.deportista.nombre}} {{planEntrenamiento.deportista.apellido}}</span></p>
+                                        <p style="margin-bottom: 0px;font-family: cursive;font-size: large; color: forestgreen;">Objetivo: <span style="color:black;">{{planEntrenamiento.deportista.objetivo}}</span></p>
+                                       
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-6" >
+                                    <h5 class="card-title" style="margin-bottom: 0px;"><strong>Ejercicios completados</strong></h5>
+                                          
+                                    <p style="margin-bottom: 0px;font-family: cursive;font-size: large;color: forestgreen;"> <span style="color: tomato;
+                                      font-size: xx-large;">{{planEntrenamiento.progreso}} %</span></p>
+                                  
+
+                                </div>
+    
+    
+            
                           
                             </div>
     

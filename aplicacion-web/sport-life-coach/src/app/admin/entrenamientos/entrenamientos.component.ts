@@ -13,7 +13,7 @@ import { RutinaService } from '../../services/rutina.service';
 import { DeportistaService } from '../../services/deportista.service';
 import { PlanEntrenamientoService } from '../../services/plan-entrenamiento.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+declare var  $: any;
 
 @Component({
   selector: 'app-entrenamientos',
@@ -235,6 +235,7 @@ export class EntrenamientosComponent implements OnInit {
          this.clearForm();
         this.closeModal();
         this._toasterService.Success('Plan de entrenamiento guardado OK !!');
+        this.listar();
 
       }//fin for
 
@@ -256,7 +257,7 @@ export class EntrenamientosComponent implements OnInit {
   }
 
   closeModal() {
-    //$('#dataModal').modal('hide');
+    $('#dataModal').modal('hide');
   }
 
   Success(title: any) {
