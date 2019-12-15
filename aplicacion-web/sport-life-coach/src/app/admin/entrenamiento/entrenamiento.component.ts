@@ -86,7 +86,7 @@ export class EntrenamientoComponent implements OnInit {
             this.estado = this.planEntrenamiento.estado;
             this.listSemanas = [];
 
-            this.planEntrenamiento.progreso =  parseInt(this.planEntrenamiento.progreso).toFixed(2)
+            this.planEntrenamiento.progreso =  parseFloat(this.planEntrenamiento.progreso).toFixed(2)
            
             for(let key$ in this.planEntrenamiento.rutinas){
               let rutina = this.planEntrenamiento.rutinas[key$]

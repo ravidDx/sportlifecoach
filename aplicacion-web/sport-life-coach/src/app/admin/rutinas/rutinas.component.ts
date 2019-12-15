@@ -71,6 +71,10 @@ export class RutinasComponent implements OnInit {
   trash:any;
 
   entrenamientos: Entrenamiento[] = [];
+
+  entrenamientosNew:Entrenamiento[] = [];
+
+
   rutinas: Rutina[] = [];
 
   listaEjercicios: any[] = [];
@@ -372,6 +376,8 @@ export class RutinasComponent implements OnInit {
       //this.seriesCopy.push(this.listEjerRutinaEdit[key$]['series']+'')
     }
 
+    this.listarEjerciciosNewEdit();
+
     //console.log(this.rutinaEdit);
 
     //this.itemsInstrucciones=entrenamiento.instruccion;
@@ -382,6 +388,7 @@ export class RutinasComponent implements OnInit {
     this.indiceData= rutina['_id'];
     this.rutinaEdit= Object.assign({}, rutina);
     this.eventData = event;
+    console.log(rutina['estado'], 'será');
 
     if(rutina['estado'] == 'Activo'){
       this.titleConfirm='Esta seguro de dar de baja esta rutina?';
@@ -390,6 +397,33 @@ export class RutinasComponent implements OnInit {
       this.titleConfirm='Esta seguro de dar de alta esta rutina?';
   
     }
+
+
+
+
+  }
+
+
+
+  listarEjerciciosNewEdit(){
+
+    console.log('lista ejrecicio new')
+    this.entrenamientosNew= this.entrenamientos.slice();
+
+    for (let $key in this.entrenamientosNew) {
+        let id = parseInt($key);
+      for (let $key1 in this.listEjerRutinaEdit) {
+
+       // console.log(this.listEjerRutinaEdit[$key1])
+          if(this.listEjerRutinaEdit[$key1]['ejercicio']['_id'] === this.entrenamientosNew[$key]['_id'] ){            
+            this.entrenamientosNew.splice(id,1);
+            
+          }
+
+      }
+      
+    }
+
   }
 
   darBaja(){
@@ -433,9 +467,10 @@ export class RutinasComponent implements OnInit {
   loadingTrash(){
     this.trash = $(this.eventData.target).parent().find(`#${this.indiceData}`).hide();
     this.loadTrash = $(this.eventData.target).parent().find('img').show();
-    
+  
     this.trash.hide();
     this.loadTrash.show();
+    
   }
 
 

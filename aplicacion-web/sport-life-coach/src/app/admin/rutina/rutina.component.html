@@ -4,31 +4,25 @@
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-primary">
-                      <h4 class="card-title ">Rutina</h4>
+                      <h4 class="card-title "> <i class="fas fa-arrow-left" routerLink="/admin/rutinas"></i> Rutina</h4>
+
                   </div>
                   <div class="card-body">
-                    <a routerLink="/admin/rutinas" class="btn btn-primary btn-round" data-toggle="modal"
-                            ><i class="fas fa-arrow-left"></i> Atrás</a>
+                    
                       <div class="row row-1 animated fadeInRight">
 
+                            <div class="card card1" >
+                                    <h5 class="card-header cardhead"><strong>{{rutina.titulo | uppercase}}</strong></h5>
+                             
+                                    <div class="card-body">
+                                            <p style="margin-bottom: 0px;"><strong>Objetivo:</strong></p>
+                                            <p class="card-text">{{rutina.objetivo}}</p>
+              
+                                            <p class="card-text" style="margin-bottom: 0px;"> <strong>Duracion: </strong> {{rutina.duracion}} </p>
+                                            <p class="card-text" style="margin-bottom: 0px;"> <strong>Nivel de dificultad: </strong> {{rutina.dificultad}} </p>
+                                    </div>
+                            </div>
 
-                          <div class="card-body">
-
-                              <h5 class="card-title" style="margin-bottom: 0px;"><strong>{{rutina.titulo | uppercase}}</strong></h5>
-                                
-                              <p *ngIf="rutina.estado == 'Activo'" class="card-text subtitle-activo">{{rutina.estado}}</p>
-                              <p *ngIf="rutina.estado == 'Inactivo'" class="card-text subtitle-inactivo">{{rutina.estado}}</p>
-                              
-
-                              <p style="margin-bottom: 0px;"><strong>Objetivo:</strong></p>
-                              <p class="card-text">{{rutina.objetivo}}</p>
-
-                              <p class="card-text" style="margin-bottom: 0px;"> <strong>Duracion: </strong> {{rutina.duracion}} </p>
-                              <p class="card-text" style="margin-bottom: 0px;"> <strong>Nivel de dificultad: </strong> {{rutina.dificultad}} </p>
-                     
-                          
-
-                          </div>
                     
                       </div>
 

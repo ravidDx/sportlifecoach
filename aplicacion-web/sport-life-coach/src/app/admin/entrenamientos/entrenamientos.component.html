@@ -61,7 +61,8 @@
                 <ng-container matColumnDef="progreso">
                   <th mat-header-cell *matHeaderCellDef class="text-center"> Progreso </th>
                   <td mat-cell *matCellDef="let element">  
-                      <mat-progress-bar mode="determinate" value="{{element.progreso}}"></mat-progress-bar>   
+                      <span style="padding-right: 10px;">{{element.progreso}}%</span> <progress max="100" value="{{element.progreso}}"> </progress> 
+                      
                 </td>
                 </ng-container>
 
@@ -71,8 +72,8 @@
                 <!-- Dificultad Column -->
                 <ng-container matColumnDef="fecha">
                   <th mat-header-cell *matHeaderCellDef class="text-center"> Fecha asignada </th>
-                  <td mat-cell *matCellDef="let element"> {{element.fechaCreacion.dd}} / {{element.fechaCreacion.mm}} /
-                    {{element.fechaCreacion.yyyy}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.fechaIninio.dd}} / {{element.fechaIninio.mm}} /
+                    {{element.fechaIninio.yyyy}} </td>
                 </ng-container>
 
 
@@ -137,7 +138,7 @@
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #eff1f3;">
         <h5 class="modal-title" id="exampleModalLabel">
           <span *ngIf="new == true"><i class="fas fa-running"></i>&nbsp;Nuevo Entrenamiento</span>
           <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Entrenamiento</span>
@@ -187,6 +188,35 @@
 
 
             <div class="row">
+                <div class="col-md-12">
+                  
+                    <mat-form-field *ngIf="new == true">
+                        <input matInput [matDatepicker]="picker" placeholder="Fecha de inicio de entrenamiento" name="fechaN"
+                          [(ngModel)]="fechaEntrenamiento" #date="ngModel" required >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <!--MSJ ERROR DATE-->
+                        <mat-error *ngIf="date.errors && (date.dirty || date.touched)">
+                          <span *ngIf="date.errors.required">Campo no puede estar vacío</span>
+                        </mat-error>
+                      </mat-form-field>
+        
+                      <mat-form-field *ngIf="new == false">
+                        <input matInput [matDatepicker]="picker" placeholder="Fecha de inicio de entrenamiento" name="fechaN"
+                          [(ngModel)]="fechaEntrenamiento" #date="ngModel" required >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <!--MSJ ERROR DATE-->
+                        <mat-error *ngIf="date.errors && (date.dirty || date.touched)">
+                          <span *ngIf="date.errors.required">Campo no puede estar vacío</span>
+                        </mat-error>
+                      </mat-form-field>
+                  
+                </div>
+              </div>
+
+
+            <div class="row">
               <div class="col-md-12">
                 <mat-form-field *ngIf="new == true">
                   <mat-label>Lista de rutinas</mat-label>
@@ -221,7 +251,7 @@
                 <span style="color: chocolate;font-family: cursive;font-size: small;">(Nivel {{item.rutina.dificultad}})</span>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-3" >
                 <mat-form-field *ngIf="new == true">
                   <mat-label>Dias de Entrenamiento</mat-label>
                   <mat-select disableRipple name="dia" [(ngModel)]="item.dias" multiple #day="ngModel" required>
@@ -245,7 +275,7 @@
                 </mat-form-field>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-3" >
                 <mat-form-field *ngIf="new == true">
                   <mat-label>Semanas de Entrenamiento</mat-label>
                   <mat-select disableRipple name="semana" [(ngModel)]="item.semanas" multiple #week="ngModel" required>
@@ -269,6 +299,8 @@
                 </mat-form-field>
               </div>
 
+  
+
             </div>
 
 
@@ -281,9 +313,11 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 
-          <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
-          <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]=btnSave>Editar</button>
-
+          <button type="submit" *ngIf="new == true" class="btn btn-primary" [disabled]="form.invalid" [hidden]='btnDisabled'>Guardar</button>
+          <button type="submit" *ngIf="new == false" class="btn btn-primary" [disabled]=form.invalid [hidden]='btnDisabled'>Editar</button>
+          <button *ngIf="load == true" type="submit" class="btn btn-primary" [disabled]='true'>
+              <div class="loader"></div>
+          </button>
 
         </div>
       </form>

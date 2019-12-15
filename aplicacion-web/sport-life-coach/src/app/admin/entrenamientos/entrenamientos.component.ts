@@ -77,7 +77,12 @@ export class EntrenamientosComponent implements OnInit {
   planEntrenamientoRamificado:any[]=[];
 
 
+  labelPositionPlan = 'personalizado';
 
+  fechaEntrenamiento ='';
+  
+  load=false;
+  btnDisabled = false;
 
 
   constructor(private _rutinaService: RutinaService,
@@ -89,6 +94,7 @@ export class EntrenamientosComponent implements OnInit {
     this.listarRutinas();
     this.listarDeportistas();
 
+
   }
 
   ngOnInit() {
@@ -98,6 +104,7 @@ export class EntrenamientosComponent implements OnInit {
 
   listar() {
 
+      this.planEntrenamientos = [];
 
     this._planEntrenamientoService.consultarPlanEntrenamientos()
       .subscribe(
@@ -106,7 +113,7 @@ export class EntrenamientosComponent implements OnInit {
           for (let key$ in data) {
             let planEntrenamiento = data[key$];
             planEntrenamiento['_id'] = key$;
-
+            planEntrenamiento['progreso'] = parseFloat(planEntrenamiento['progreso']).toFixed(2);
             this.planEntrenamientos.push(planEntrenamiento);
           }
 
@@ -199,8 +206,18 @@ export class EntrenamientosComponent implements OnInit {
   }
 
   guardar() {
+
+    
     if (this.new == true) {
-   
+
+      this.disabledButton(true);
+
+      let ff = new Date(this.fechaEntrenamiento);
+      let fechaEntre = {
+        dd:ff.getDate(),
+        mm:ff.getMonth()+1,
+        yyyy:ff.getFullYear()
+      }
       var listRutinasEntr = this.listRutinasEntr;
       var estado = 'Activo';
       var progreso = '0';
@@ -227,19 +244,20 @@ export class EntrenamientosComponent implements OnInit {
         let progresoPorDia = (100/numDiasEntrenamiento)
         planEntrenamiento['numDias']=numDiasEntrenamiento;
         planEntrenamiento['progresoPorDia']=progresoPorDia;
+        planEntrenamiento['fechaIninio']=fechaEntre;
 
 
         console.log(planEntrenamiento)
 
         this.nuevoPlanEntrenamiento(planEntrenamiento);
-         this.clearForm();
-        this.closeModal();
-        this._toasterService.Success('Plan de entrenamiento guardado OK !!');
-        this.listar();
+       
 
       }//fin for
 
     } else {
+
+      this.disabledButton(true);
+
       this._planEntrenamientoService.editarPlanEntrenamiento(this.planEntrenamiento, this.planEntrenamientoEdit['_id']).subscribe(
         data => {
           console.log(data);
@@ -253,6 +271,8 @@ export class EntrenamientosComponent implements OnInit {
           console.log(error);
         });
     }
+
+    
 
   }
 
@@ -268,6 +288,13 @@ export class EntrenamientosComponent implements OnInit {
   nuevoPlanEntrenamiento(planEntrenamiento: PlanEntrenamiento) {
     this._planEntrenamientoService.nuevoPlanEntrenamiento(planEntrenamiento).subscribe(
       data => {
+        
+        this.clearForm();
+        this.closeModal();
+        this._toasterService.Success('Plan de entrenamiento guardado OK !!');
+        this.disabledButton(false);
+        this.listar();
+
 
         //this._toasterService.Success('Entrenamiento guardado OK !!');
 
@@ -276,6 +303,8 @@ export class EntrenamientosComponent implements OnInit {
         console.log('ERROR');
         this._toasterService.Error(' Error al guardar !!');
         console.log(error);
+        this.disabledBtn(false);
+        this.loading(false);
 
 
       }
@@ -322,6 +351,7 @@ export class EntrenamientosComponent implements OnInit {
       yyyy: yyyy
     }
 
+  
     return fecha;
   }
   //Obtencion de fecha
@@ -389,6 +419,7 @@ export class EntrenamientosComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource)
   }
 
 
@@ -450,9 +481,28 @@ export class EntrenamientosComponent implements OnInit {
     this.planEntrenamiento.rutinas=[];
     this.planEntrenamiento.duracion='';
     this.planEntrenamiento.fechaCreacion={};
+    this.planEntrenamiento['fechaIninio']={};
     this.planEntrenamiento.estado='';
     this.planEntrenamiento.progreso='';
     this.listRutinasEntr=[];
+    this.fechaEntrenamiento='';
+    this.deportistasAsignados=[];
+    this.listRutinas=[];
+    
+  }
+
+
+  disabledButton(valor:boolean){
+    this.disabledBtn(valor);
+    this.loading(valor);
+  }
+
+  disabledBtn(access:boolean){
+    this.btnDisabled = access;
+  }
+
+  loading(load:boolean){
+    this.load = load;
   }
 
 

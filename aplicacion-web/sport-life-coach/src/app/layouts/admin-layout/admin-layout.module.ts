@@ -43,6 +43,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { PreloadComponent } from '../../loading/preload/preload.component';
 
+import {ProgressBarModule} from "angular-progress-bar";
+
+
+
+
+
 /*
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { GestureConfig } from '@angular/material';
@@ -98,6 +104,7 @@ import {
     MatBadgeModule,
     MatCheckboxModule,
     MatSliderModule,
+    ProgressBarModule,
     HttpClientModule
   ],
   declarations: [

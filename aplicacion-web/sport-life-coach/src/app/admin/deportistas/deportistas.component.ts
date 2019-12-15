@@ -68,6 +68,9 @@ export class DeportistasComponent implements OnInit {
   indiceData:any;
   eventData:any; 
 
+  gifMale="https://firebasestorage.googleapis.com/v0/b/miapp-158221.appspot.com/o/uploads%2Fbmi-male-loop.gif?alt=media&token=9f326bc4-65d9-4739-a0fc-d9d20f756ddb";
+  gifFemale="https://firebasestorage.googleapis.com/v0/b/miapp-158221.appspot.com/o/uploads%2Fbmi-female-loop.gif?alt=media&token=f1813f80-a240-45df-a704-8ea140b5f565";
+  
   tiposObjetivo:string[] = ['Perder peso y quemar grasa','Ganar masa muscular y fuerza', 'Vivir de forma saludable y mantener mi peso'];
 
   
@@ -151,7 +154,13 @@ export class DeportistasComponent implements OnInit {
     if(this.new==true){
       this.disabledButton(true);
 
-      this.deportista.foto = 'https://www.nicepng.com/png/full/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png'
+
+      if(this.deportista.genero === 'male'){
+        this.deportista.foto = "https://firebasestorage.googleapis.com/v0/b/miapp-158221.appspot.com/o/uploads%2Fbmi-male-loop.gif?alt=media&token=9f326bc4-65d9-4739-a0fc-d9d20f756ddb";
+      }else if(this.deportista.genero === 'female'){
+        this.deportista.foto = 'https://firebasestorage.googleapis.com/v0/b/miapp-158221.appspot.com/o/uploads%2Fbmi-female-loop.gif?alt=media&token=f1813f80-a240-45df-a704-8ea140b5f565';
+      }
+      
       this.deportista.estado = 'Activo';
       this.deportista.rol = 'Afiliado',
 
@@ -161,7 +170,6 @@ export class DeportistasComponent implements OnInit {
           var obj = Object.assign({},this.deportista);
           obj['_id']=data['name'];
         
-
           //Guardar credenciales email y pass en firebase
           this.guardarAuthUser(obj.email,obj.email);
 
@@ -414,6 +422,7 @@ export class DeportistasComponent implements OnInit {
       mm:mm,
       yyyy:yyyy
     }
+  
 
     return fecha;
   }

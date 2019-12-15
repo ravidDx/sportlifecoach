@@ -3,8 +3,9 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary">
+          <div class="card-header card-header-primary" style="background-color: #eff1f3;">
             <h4 class="card-title ">Listado de Rutinas</h4>
+            
           </div>
           <div class="card-body">
 
@@ -88,18 +89,22 @@
                     <button mat-raised-button title="perfil" type="button" [routerLink]="['/admin/rutina',element._id ]"
                       class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#dataModal"><i
                         class="fas fa-eye" id="iconEdit"></i></button>
-                    <button mat-raised-button title="editar" type="button" (click)="editModal(element)"
+                   
+                      <button *ngIf="element.estado == 'Activo'" mat-raised-button title="editar" type="button" (click)="editModal(element)"
                       class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal"><i
+                        class="fas fa-edit" id="iconEdit"></i></button>
+                        <button *ngIf="element.estado == 'Inactivo'" mat-raised-button title="editar" type="button" (click)="editModal(element)"
+                      class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#dataModal" disabled><i
                         class="fas fa-edit" id="iconEdit"></i></button>
 
                         <button *ngIf="element.estado == 'Activo'" mat-raised-button title="dar de baja" type="button"
                         (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger"
                         data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock-open"
-                          [id]="element._id"></i> <img class='load' > </button>
+                          [id]="element._id"></i> <img class='load' src="assets/gif/cargando-loading-031.gif"> </button>
                       <button *ngIf="element.estado == 'Inactivo'" mat-raised-button title="dar de alta" type="button"
                         (click)="cargarObjectBaja(element, $event)" class="btn btn-sm btn-outline-danger"
                         data-toggle="modal" data-target="#modalDeleted"> <i class="fas fa-lock" [id]="element._id"></i>
-                        <img class='load' > </button>
+                        <img class='load' src="assets/gif/cargando-loading-031.gif"> </button>
 
 
                   </td>
@@ -133,7 +138,7 @@
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #eff1f3;">
         <h5 class="modal-title" id="exampleModalLabel">
           <span *ngIf="new == true"><i class="fas fa-running"></i>&nbsp;Nuevo Rutina</span>
           <span *ngIf="new == false"><i class="fas fa-edit"></i>&nbsp;Editar Rutina</span>
@@ -414,7 +419,7 @@
                   <mat-form-field>
                     <mat-label>Añadir nuevos ejercicios</mat-label>
                     <mat-select disableRipple name="tipo" [(ngModel)]="listaEjerciciosEditNew" multiple  >
-                      <mat-option *ngFor="let item of entrenamientos" [value]="item" (click)="addEjercicioEdit($event,item)">
+                      <mat-option *ngFor="let item of entrenamientosNew" [value]="item" (click)="addEjercicioEdit($event,item)">
                         {{item.titulo}} <span style="color: cornflowerblue;
                         font-family: cursive;">({{item.tipo}})</span> </mat-option>
                     </mat-select>

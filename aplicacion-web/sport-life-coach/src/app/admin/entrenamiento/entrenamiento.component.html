@@ -4,40 +4,31 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Entrenamiento</h4>
+                            <h4 class="card-title "><i class="fas fa-arrow-left" routerLink="/admin/entrenamientos"></i>  Entrenamiento</h4>
                         </div>
                         <div class="card-body">
                           
-                          <a routerLink="/admin/entrenamientos" class="btn btn-primary btn-round" data-toggle="modal"
-                          ><i class="fas fa-arrow-left"></i> Atrás</a>
-                            <div class="row row-1 animated fadeInRight">
-
-                                <div class="col-lg-6" >
-                                    <div class="card-body">
-
-                                        <h5 class="card-title" style="margin-bottom: 0px;"><strong>Informacion:</strong></h5>
-                                          
-                                        <p style="margin-bottom: 0px;font-family: cursive;font-size: large;color: forestgreen;">Deportista: <span style="color:black;">{{planEntrenamiento.deportista.nombre}} {{planEntrenamiento.deportista.apellido}}</span></p>
-                                        <p style="margin-bottom: 0px;font-family: cursive;font-size: large; color: forestgreen;">Objetivo: <span style="color:black;">{{planEntrenamiento.deportista.objetivo}}</span></p>
-                                       
-                                    </div>
-
+                          <div class="row animated fadeInRight">
+                              <div class="col-sm-6">
+                                <div class="card">
+                                  <div class="card-body">
+                                    <h5 class="card-title"><span style="font-family: cursive;">{{planEntrenamiento.deportista.nombre}} {{planEntrenamiento.deportista.apellido}}</span></h5>
+                                    <p class="card-text"><span style="font-family: cursive;">Objetivo: </span> {{planEntrenamiento.deportista.objetivo}}</p>
+                              
+                                  </div>
                                 </div>
-
-                                <div class="col-lg-6" >
-                                    <h5 class="card-title" style="margin-bottom: 0px;"><strong>Ejercicios completados</strong></h5>
-                                          
-                                    <p style="margin-bottom: 0px;font-family: cursive;font-size: large;color: forestgreen;"> <span style="color: tomato;
-                                      font-size: xx-large;">{{planEntrenamiento.progreso}} %</span></p>
-                                  
-
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="card">
+                                  <div class="card-body">
+                                    <h5 class="card-title" style="font-family: cursive;">Ejercicios completados</h5>
+                                    <p> <span class="spanPorcen">{{planEntrenamiento.progreso}} %</span> <progress max="100" value="{{planEntrenamiento.progreso}}"> </progress> </p>
+                                  </div>
                                 </div>
-    
-    
-            
-                          
+                              </div>
                             </div>
-    
+
+                   
                             <hr>
                             <div class="row">
                               <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let item of listSemanas; let i=index" (click)="viewRutina(item)" data-toggle="modal"

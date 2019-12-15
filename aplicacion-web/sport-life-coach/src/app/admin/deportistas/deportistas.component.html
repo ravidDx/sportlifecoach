@@ -133,7 +133,7 @@
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #eff1f3;">
         <h5 class="modal-title" id="exampleModalLabel">
           <span *ngIf="new == true"><i class="fas fa-running"></i> Nuevo Deportista</span>
           <span *ngIf="new == false"><i class="fas fa-edit"></i> Editar Deportista</span>
@@ -364,16 +364,36 @@
 
           <div class="row section-radio">
             <div class="col-md-12">
+
+   
+
               <label id="radio-group-label">Genero (requerido)*</label>
 
               <mat-radio-group *ngIf="new == true" [(ngModel)]="deportista.genero" name="genero">
-                <mat-radio-button class="radio-1" value="male" checked ><i class="fas fa-male"></i></mat-radio-button>
-                <mat-radio-button value="female" ><i class="fas fa-female"></i></mat-radio-button>
+
+                <mat-radio-button class="radio-1" value="male" checked >             
+                  <div class="card-avatar" style="width: 70px;padding-right: 10px;">
+                    <img class="img" [src]="gifMale" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button value="female" >
+                    <div class="card-avatar" style="width: 70px;padding-right: 10px;">
+                        <img class="img" [src]="gifFemale" />
+                    </div>                  
+                </mat-radio-button>
               </mat-radio-group>
 
               <mat-radio-group *ngIf="new == false" [(ngModel)]="deportistaEdit.genero" name="genero">
-                <mat-radio-button class="radio-1" value="male" checked><i class="fas fa-male"></i></mat-radio-button>
-                <mat-radio-button value="female"><i class="fas fa-female"></i></mat-radio-button>
+                <mat-radio-button class="radio-1" value="male" checked>
+                    <div class="card-avatar" style="width: 70px;padding-right: 10px;">
+                        <img class="img" [src]="gifMale" />
+                    </div>
+                </mat-radio-button>
+                <mat-radio-button value="female">
+                    <div class="card-avatar" style="width: 70px; padding-right: 10px;">
+                        <img class="img" [src]="gifFemale" />
+                    </div> 
+                </mat-radio-button>
               </mat-radio-group>
             </div>
           </div>
