@@ -69,7 +69,7 @@ export class DietasComponent implements OnInit {
     porciones: "",
     ingredientes: [],
     preparacion: [],
-    imagen: '',
+    imagen: 'assets/images/foto.png',
     estado: ''
   }
 
@@ -132,12 +132,14 @@ export class DietasComponent implements OnInit {
 
       this.dietaEdit.ingredientes = this.itemsIngredientes;
       this.dietaEdit.preparacion = this.itemsPreparacion;
-      this.dietaEdit.imagen = this.dietaEdit['imagenId']
+      this.dietaEdit.imagen = this.dietaEdit['idImg']
 
 
       if (this.files.length == 0) {
 
         this.editarDieta();
+        console.log('no actualiza imagen')
+        console.log(this.dietaEdit);
 
       } else {
 
@@ -146,7 +148,7 @@ export class DietasComponent implements OnInit {
 
         _this._dietaService.onUpload(this.files[0].data, id);
         _this.dietaEdit.imagen = id;
-        console.log(this.dieta);
+        console.log(this.dietaEdit);
 
         this.editarDieta();
 
@@ -185,7 +187,7 @@ export class DietasComponent implements OnInit {
 
 
   editarDieta() {
-    delete this.dietaEdit['imagenId'];
+    delete this.dietaEdit['idImg'];
     this._dietaService.editarDieta(this.dietaEdit, this.dietaEdit["_id"]).subscribe(
       data => {
         this.btnSave = false;
@@ -347,6 +349,10 @@ export class DietasComponent implements OnInit {
     this.new = true;
     this.itemsIngredientes = [{ id: 1, value: '' }];
     this.itemsPreparacion = [{ id: 1, value: '' }];
+
+    this.files=[];
+
+    this.dieta.imagen='assets/images/foto.png';
   }
 
 
@@ -454,6 +460,8 @@ export class DietasComponent implements OnInit {
         file.sub.unsubscribe();
       }
       this.removeFileFromArray(file);
+      this.dietaEdit.imagen="assets/images/foto.png";
+
     }
   }
 
@@ -533,7 +541,62 @@ export class DietasComponent implements OnInit {
   }
 
 
+  public imagePath:any;
+      
+  onSelectFile(event:any,val:any) { // called each time file input changes
+    
+    let typeFile = event.target.files[0].type;
+    let sizeFile = event.target.files[0].size;
+
+
+
+    if(typeFile === 'image/jpeg' || typeFile === 'image/png'  ){
+    
+      if(sizeFile <= 1048576){
+  
+        if (event.target.files && event.target.files[0]) {
+          var reader = new FileReader();
+          this.imagePath = event.target.files;
+          reader.readAsDataURL(event.target.files[0]); // read file as data url
+          reader.onload = (event) => { // called once readAsDataURL is completed
+            if(val==0){
+              this.dieta.imagen = reader.result; //add source to image
+            }else{
+              this.dietaEdit.imagen = reader.result; //add source to image
+            }
+            
+          }
+        }
+
+      }else{
+        this._toasterService.Error('La imagen sobrepasa el tamaño maximo !!');
+      }
+
+
+
+    }
+
+  }
+
+  selectedFile = null;
+
+  cancelFileImg(val:any){
+
+    this.files=[];
+    if(val == 0){
+      this.dieta.imagen="assets/images/foto.png";  
+    }else{
+      this.dietaEdit.imagen="assets/images/foto.png";
+    }
+    
+  }
+
+
+
 }
+
+
+
 
 
 export class FileUploadModel {
