@@ -256,7 +256,10 @@
         shape="round" expand="block" fill="solid">CALCULAR</ion-button>
       <div *ngIf="gpi" class="pasos ">
         <ion-item>
-          <ion-label>El calculo del peso ideal : {{p_ideal | number:'1.1-1' }}</ion-label>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/pesoideal.png">
+          </ion-thumbnail>
+          <ion-label>Tú peso ideal : {{p_ideal | number:'1.1-1' }}</ion-label>
         </ion-item>
       </div>
     </form>
@@ -384,14 +387,23 @@
         shape="round" expand="block" fill="solid">CALCULAR</ion-button>
       <div *ngIf="caldi" class="pasos ">
         <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/kcalnec.png">
+          </ion-thumbnail>
           <ion-text>Necesita : {{calorias | number:'1.1-1' }} kilo calorías diarias
             para mantener el peso</ion-text>
         </ion-item>
         <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/kcalper.jpg">
+          </ion-thumbnail>
           <ion-text>{{calorias-500 | number:'1.1-1' }} kilo calorías al día hay que consumir
             para bajar de peso 0.5kg a la semana</ion-text>
         </ion-item>
         <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/kcal.png">
+          </ion-thumbnail>
           <ion-text>Necesita : {{calorias+500 | number:'1.1-1' }} kilo calorías diarias
             para ganar 0.5kg a la semana</ion-text>
         </ion-item>
@@ -489,8 +501,22 @@
         shape="round" expand="block" fill="solid">CALCULAR</ion-button>
       <div *ngIf="calquem" class="pasos ">
         <ion-item>
-          <ion-text>Por cada minuto quemarás {{quemadas | number:'1.2-2' }} kcal.
-            Si continuas la actividad durante 1 hora quemarás {{quemadas*60 | number:'1.2-2' }} kcal.</ion-text>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/1min.png">
+          </ion-thumbnail>
+          <ion-text>Por cada minuto quemarás {{quemadas | number:'1.2-2' }} kcal.</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/time.png">
+          </ion-thumbnail>
+          <ion-text>En {{time}} min quemarás {{quemadas*time | number:'1.2-2' }} kcal.</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="assets/icon/1hora.png">
+          </ion-thumbnail>
+          <ion-text>Si continuas la actividad durante 1 hora quemarás {{quemadas*60 | number:'1.2-2' }} kcal.</ion-text>
         </ion-item>
       </div>
     </form>

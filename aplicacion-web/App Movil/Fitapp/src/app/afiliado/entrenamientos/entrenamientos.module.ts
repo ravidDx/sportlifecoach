@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { EntrenamientosPage } from './entrenamientos.page';
+import { ModalPage } from '../modal/modal.page';
+import { ModalPageModule } from '../modal/modal.module';
 
 const routes: Routes = [
   {
@@ -18,9 +20,12 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, ModalPageModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EntrenamientosPage]
+  declarations: [EntrenamientosPage],
+  entryComponents: [
+    ModalPage
+  ]
 })
 export class EntrenamientosPageModule {}

@@ -158,6 +158,7 @@ export class CalculadoraPage implements OnInit {
     this.met = this.calquem_form.value.met;
     this.weigth = this.calquem_form.value.weigth;
     this.quemadas = this.met * 0.0175 * this.weigth;
+    this.time = this.calquem_form.value.time;
     console.log(this.quemadas);
   }
 

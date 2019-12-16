@@ -6,6 +6,9 @@ import {PlanEntrenamiento} from '../../interfaces/planEntrenamiento.interface';
 //Services
 import {EntrenamientosService} from '../../servicios/entrenamientos.service';
 
+//modal
+import { ModalController } from '@ionic/angular';
+import {ModalPage} from '../modal/modal.page';
 
 @Component({
   selector: 'app-entrenamientos',
@@ -48,13 +51,19 @@ export class EntrenamientosPage implements OnInit {
       btn:boolean=false;
 
 
-  constructor(private _planEntrenamientoService:EntrenamientosService,private _router:Router) {
+  constructor(private _planEntrenamientoService:EntrenamientosService,private _router:Router, public modalController: ModalController) {
     this.email = localStorage.getItem('email');
 
     this.listar();
    }
 
 
+   async modal() {
+    const modal = await this.modalController.create({
+      component: ModalPage
+    });
+    return await modal.present();
+  }
 
   ngOnInit() {
   }
@@ -77,6 +86,7 @@ export class EntrenamientosPage implements OnInit {
       this.text="Finalizado"
     }
 
+    this.modal();
     diaRutina['terminado']=true
 
     console.log(diaRutina);
@@ -116,13 +126,7 @@ export class EntrenamientosPage implements OnInit {
     }
 
   );
-
-   
-
- 
-
-
-
+  
 
   }
 

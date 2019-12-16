@@ -249,50 +249,51 @@
             <hr>
 
             <div class="row">
-              <div class="col-md-6">
-                Ingredientes (máx. 10 items) <button mat-button color="primary" class='btn-add btn-ico' (click)="addIngrediente()"
-                  type="button"> <i class="fas fa-plus-circle"></i> </button>
-                <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedIngrediente()" type="button"> <i
-                    class="fas fa-minus-circle"></i> </button>
+                <div class="col-md-6">
+                  Ingredientes (máx. 10 items) <button mat-button color="primary" class='btn-add btn-ico' (click)="addIngrediente()"
+                    type="button"> <i class="fas fa-plus-circle"></i> </button>
+                  <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedIngrediente()" type="button"> <i
+                      class="fas fa-minus-circle"></i> </button>
 
 
-                <mat-form-field class="add-item" *ngFor="let item of itemsIngredientes; let i = index">
-                  <span matPrefix>- &nbsp;</span>
+                  <mat-form-field class="add-item" *ngFor="let item of itemsIngredientes; let i = index">
+                    <span matPrefix>- &nbsp;</span>
 
-                  <textarea matInput type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" #ing="ngModel"
-                      required> </textarea>
+                    <textarea matInput type="text" name="ingre_{{item.id}}" [(ngModel)]="item.value" #ing="ngModel"
+                        required> </textarea>
 
-                  <!--MSJ ERROR INGREDIENTES-->
-                  <mat-error *ngIf="ing.errors && (ing.dirty || ing.touched)">
-                    <span *ngIf="ing.errors.required">Este campo no puede estar vacío</span>
-                  </mat-error>
-                </mat-form-field>
-
-
+                    <!--MSJ ERROR INGREDIENTES-->
+                    <mat-error *ngIf="ing.errors && (ing.dirty || ing.touched)">
+                      <span *ngIf="ing.errors.required">Este campo no puede estar vacío</span>
+                    </mat-error>
+                  </mat-form-field>
 
 
-              </div>
 
-              <div class="col-md-6">
-                  Preparacion (máx. 10 items)<button mat-button color="primary" class='btn-add btn-ico' (click)="addPreparacion()"
-                  type="button"><i class="fas fa-plus-circle"></i> </button>
-                <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedPreparacion()" type="button"> <i
-                    class="fas fa-minus-circle"></i> </button>
 
-                <mat-form-field class="add-item" *ngFor="let item of itemsPreparacion; let i = index">
-                  <span matPrefix>{{i+1}}.&nbsp;</span>
-                  <textarea matInput type="text" name="prep_{{item.id}}" [(ngModel)]="item.value" #prep="ngModel"
-                      required> </textarea>
-                  <!--MSJ ERROR PREPARACIONES-->
-                  <mat-error *ngIf="prep.errors && (prep.dirty || prep.touched)">
-                    <span *ngIf="prep.errors.required">Este campo no puede estar vacío</span>
-                  </mat-error>
-                </mat-form-field>
-              </div>
+                </div>
+
+                <div class="col-md-6">
+                    Preparacion (máx. 10 items)<button mat-button color="primary" class='btn-add btn-ico' (click)="addPreparacion()"
+                    type="button"><i class="fas fa-plus-circle"></i> </button>
+                  <button mat-button color="warn" class='btn-add btn-ico' (click)="deletedPreparacion()" type="button"> <i
+                      class="fas fa-minus-circle"></i> </button>
+
+                  <mat-form-field class="add-item" *ngFor="let item of itemsPreparacion; let i = index">
+                    <span matPrefix>{{i+1}}.&nbsp;</span>
+                    <textarea matInput type="text" name="prep_{{item.id}}" [(ngModel)]="item.value" #prep="ngModel"
+                        required> </textarea>
+                    <!--MSJ ERROR PREPARACIONES-->
+                    <mat-error *ngIf="prep.errors && (prep.dirty || prep.touched)">
+                      <span *ngIf="prep.errors.required">Este campo no puede estar vacío</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
 
             </div>
 
             <div class="row">
+
                 <div class="col-md-5">
                   <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == true">
                     <mat-icon>file_upload</mat-icon>
@@ -304,20 +305,16 @@
                     Actualizar imagen (.jpg o .png)
                     <p class='file_p' >tamaño máx. (1MB)</p>  
                   </button>
-                  <br />
+                  <br/>
   
                   <div *ngIf="new == true" style="text-align: center;">
-                    <a title="Cancel" (click)="cancelFileImg(0)">
-                      <mat-icon style="position:fixed;">cancel</mat-icon>
-                    </a>
+                 
                     <img [src]="dieta.imagen" class="card-img-modal"  />
   
                   </div>
   
                   <div *ngIf="new == false" style="text-align: center;">
-                    <a title="Cancel" (click)="cancelFileImg(1)">
-                      <mat-icon style="position:fixed;">cancel</mat-icon>
-                    </a>
+                 
                     <img [src]="dietaEdit.imagen" class="card-img-modal" />
   
                   </div>
@@ -328,22 +325,10 @@
                     accept="{{accept}}" style="display:none;" (change)="onSelectFile($event,1)" />
   
                 </div>
-  
-                <div class="col-md-7">
-  
 
-
-  
-                </div>
-              </div>
-
-
+            </div>
 
           </div>
-
-
-
-
         </div>
 
         <div class="modal-footer">

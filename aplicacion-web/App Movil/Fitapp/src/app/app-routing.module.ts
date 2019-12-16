@@ -30,6 +30,8 @@ const routes: Routes = [
   { path: 'receta/:id', loadChildren: './afiliado/receta/receta.module#RecetaPageModule' },
   { path: 'afiliado/perfil', loadChildren: './afiliado/perfil/perfil.module#PerfilPageModule' },
   { path: 'calculadora', loadChildren: './afiliado/calculadora/calculadora.module#CalculadoraPageModule' },
+  //{ path: 'modal', loadChildren: './afiliado/modal/modal.module#ModalPageModule' },
+
 
 
 
