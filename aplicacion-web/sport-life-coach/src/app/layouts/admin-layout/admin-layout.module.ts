@@ -43,7 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { PreloadComponent } from '../../loading/preload/preload.component';
 
-import {ProgressBarModule} from "angular-progress-bar";
+import {ProgressBarModule} from 'angular-progress-bar';
 
 
 

@@ -291,12 +291,14 @@
               <div class="col-md-12">
                 <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == true">
                   <mat-icon>file_upload</mat-icon>
-                  {{text}} ({{files.length}}) (requerido)*
+                  {{text}} (.jpg .gif o .png)
+                  <p class='file_p'>tamaño máx. (5MB)</p>
                 </button>
 
                 <button mat-button color="warn" (click)="onClick()" type="button" *ngIf="new == false">
                   <mat-icon>file_upload</mat-icon>
-                  Actualizar imagen ({{files.length}})
+                  Actualizar imagen (.jpg .gif o .png)
+                  <p class='file_p'>tamaño máx. (5MB)</p>
                 </button>
                 <br />
                 <ul>
