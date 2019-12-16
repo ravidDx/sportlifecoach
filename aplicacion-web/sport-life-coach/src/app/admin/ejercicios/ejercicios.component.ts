@@ -201,6 +201,7 @@ export class EjerciciosComponent implements OnInit {
           if(data.bytesTransferred === data.totalBytes){
             this.nuevoEntrenamiento(id);
           }
+          this.closeModal();
           
         },
         error=>{

@@ -45,12 +45,12 @@ export class DeportistasComponent implements OnInit {
   dataSource = new MatTableDataSource<Deportista>();
 
 
-  maxPeso = 150;
+  maxPeso = 200;
   minPeso = 30;
   thumbLabelPeso = true;
   valuePeso = 55;
 
-  maxAltura = 200;
+  maxAltura = 220;
   minAltura = 130;
   thumbLabelAltura = true;
   valueAltura = 170;
