@@ -25,6 +25,10 @@ export class ContentComponent implements OnInit {
   slider3 = 'url(../../../assets/img/slider/03.jpg)';
 
 
+  slider1Fondo = 'url(assets/img/slider/01.jpg)';
+  slider4Fondo = 'url(assets/img/slider/04.jpg)';
+
+
   /*SERVICIOS*/
   serviciosDelay =['0.0s','0.3s','0.6s','0.9s'];
   serviciosIcon= ['face','directions_run','fitness_center','favorite'];
@@ -192,7 +196,12 @@ export class ContentComponent implements OnInit {
   }
 
   applyParallax(){
-    const styles = {'background-image':this.slider1}
+    const styles = {'background-image':this.slider1Fondo}
+    return styles;
+  }
+
+  applyParallax2(){
+    const styles = {'background-image':this.slider4Fondo}
     return styles;
   }
 
